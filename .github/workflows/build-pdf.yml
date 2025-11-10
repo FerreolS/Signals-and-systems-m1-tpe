@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name:  setup fontist
-        uses: fontist/setup@v1
+        uses: fontist/setup@v2
       
       - name: Setup Typst
         uses: typst-community/setup-typst@v3
