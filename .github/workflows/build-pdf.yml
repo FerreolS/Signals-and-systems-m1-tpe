@@ -28,18 +28,17 @@ jobs:
       #     fontist install "Fira Code"
       #     fontist install "Open Sans"
 
+      - name: Install pdf2svg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pdf2svg fonts-cmu
       
       - name: Setup Typst
         uses: typst-community/setup-typst@v3
         
       - name: Build PDF from Typst sources
         run: |
-          typst compile src/Lecture-notes.typ Signals-and-systems-m1-tpe.pdf  --font-path ~/.fontist/fonts   
-
-      - name: Install poppler-utils (pdf2svg)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pdf2svg
+          typst compile src/Lecture-notes.typ Signals-and-systems-m1-tpe.pdf  
 
       - name: Convert first page from PDF to SVG
         run: | 
