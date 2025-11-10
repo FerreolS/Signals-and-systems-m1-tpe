@@ -7,8 +7,10 @@
 
 #let firstpage = [
   #set par(justify: true)
-  #lorem(50)
-  #octique("mark-github")
+  This document is written in #link("https://typst.app/docs/", "Typst"). The source files are available on GitHub:
+  #link("https://github.com/FerreolS/Signals-and-systems-m1-tpe", "FerreolS/Signals-and-systems-m1-tpe"). Please file an issue or submit a pull request for any typos or misunderstandings.
+
+  //#octique("mark-github")
 ]
 
 #let abstract = [
@@ -310,7 +312,8 @@ It is important to remember that, in this lecture, the terms "power" and "energy
 //=== Signal power
 
 == Systems
-Un systeme est un outil conceptuel puissant qui est utlisé dans un grande variété de domaines scientifiques et particulierement en physique. Dans cette abstraction, decrite @fig-system, un systeme transforme un signal d'entré en signal de sortie. 
+A system is a powerful conceptual tool used across a wide range of scientific fields, particularly in physics. In this abstraction, described in @fig-system, a system transforms an input signal into an output signal.
+
 
 #margin-note[
   #figure(
@@ -330,11 +333,6 @@ Un systeme est un outil conceptuel puissant qui est utlisé dans un grande vari�
 
 
 
-
-#lorem(60)
-
-
-#lorem(10)
 == Functions
 
 === Dirac
@@ -367,15 +365,9 @@ Un systeme est un outil conceptuel puissant qui est utlisé dans un grande vari�
 
 = Signaux alléatoires
 
-#lorem(60)
-
-#margin-note[This is a margin note that will appear on the outer margin.]
-
-#lorem(60)
 
 == Definitions
 
-#lorem(20)
 
 
 #bibliography("reference.bib", style: "american-geophysical-union")
