@@ -312,8 +312,6 @@ It is important to remember that, in this lecture, the terms "power" and "energy
 //=== Signal power
 
 == Systems
-A system is a powerful conceptual tool used across a wide range of scientific fields, particularly in physics. In this abstraction, described in @fig-system, a system transforms an input signal into an output signal.
-
 
 #margin-note[
   #figure(
@@ -329,9 +327,46 @@ A system is a powerful conceptual tool used across a wide range of scientific fi
     caption: [Block diagram of a system],
   ) <fig-system>
 ]
+A system is a powerful conceptual tool used across a wide range of scientific fields, particularly in physics. In this abstraction, described as a block diagram in @fig-system, a system transforms an input signal into an output signal.
+
+A seismometer is a good example of a system: the physical ground motion $x(t)$ is the input and the seismometer transforms it into an electrical voltage $y(t)$.
+The *description* of a system is *arbitrary*, and its inputs/outputs can be defined to facilitate calculations or the understanding of the system. For example, in the case of a seismometer the input can be ground displacement, its velocity, its acceleration, #etc.
+
+One of the main advantages of this description is that a system is *modular*: it can be decomposed into smaller elementary systems (#eg mass/spring system + transducer + analog digital converter + #etc) or be included in a larger system (#eg seismic source + rock medium + array of seismometers #etc).
 
 
 
+#figure(
+  diagram(
+    node-stroke: 0pt,
+    edge-stroke: 1pt,
+    node((0, 0), [`Ground motion`]),
+    edge("-|>", [`input`]),
+    node((2, 0), [`Seismometer`], stroke: 1pt, shape: rect),
+    edge("-|>", [`output`]),
+    node((4, 0), [`Electrical signal`]),
+  ),
+  caption: [Seismometer as an LTI measurement system],
+) <fig-seismometer>
+
+
+
+
+After digitization at sampling period T_s we obtain the discrete record y[n] = y(n T_s).
+
+/*
+
+Practical notes:
+- The measured y(t) contains both the true ground motion convolved with the instrument response and sensor/electronic noise.
+- Correct interpretation requires deconvolving the instrument response (inverse filtering) or applying the known transfer function in the frequency domain.
+- Real instruments have a natural frequency and damping (poles and zeros), limiting the frequency band where the LTI approximation holds.
+- Digitization imposes sampling and quantization constraints (aliasing, finite resolution).
+
+Notes:
+- "Linear" means superposition holds. "Time-invariant" means a shift in input causes same shift in output.
+- "Causal" means output at time t depends only on present and past inputs. "BIBO stable" means bounded input ⇒ bounded output.
+
+ */
 
 == Functions
 
