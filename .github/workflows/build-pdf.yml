@@ -25,13 +25,7 @@ jobs:
       - name: Build PDF from Typst sources
         run: |
           mkdir -p output
-          # Find all .typ files in src directory and compile them
-          find src -name "*.typ" -type f | while read -r file; do
-            filename=$(basename "$file" .typ)
-            echo "Building $file to output/${filename}.pdf"
-            typst compile "$file" "output/${filename}.pdf"
-          done
-          
+          typst compile Lecture-notes.typ output/Signals-and-systems-m1-tpe.pdf     
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
