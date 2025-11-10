@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'src/**/*.typ'
+    # paths:
+    #   - 'src/**/*.typ'
   workflow_dispatch:
 
 permissions:
@@ -19,19 +19,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
+      - name:  setup fontist
+        uses: fontist/setup@v1
+      
       - name: Setup Typst
         uses: typst-community/setup-typst@v3
         
       - name: Build PDF from Typst sources
         run: |
-          typst compile src/Lecture-notes.typ Signals-and-systems-m1-tpe.pdf     
+          fontist install "Fira Code"
+          typst compile src/Lecture-notes.typ Signals-and-systems-m1-tpe.pdf  --font-path ~/.fontist/fonts   
 
-      - name: Install poppler-utils (pdftocairo)
+      - name: Install poppler-utils (pdf2svg)
         run: |
           sudo apt-get update
           sudo apt-get install -y pdf2svg
 
-      - name: Convert first 2 pages of PDF to SVG
+      - name: Convert first page from PDF to SVG
         run: | 
           pdf2svg Signals-and-systems-m1-tpe.pdf Signals-and-systems-m1-tpe.svg
           mkdir output
