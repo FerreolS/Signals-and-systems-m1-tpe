@@ -19,17 +19,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name:  setup fontist
-        uses: fontist/setup@v2
+      # - name:  setup fontist
+      #   uses: fontist/setup@v2
+
+      # - name: install font
+      #   run: |
+      #     fontist update
+      #     fontist install "Fira Code"
+      #     fontist install "Open Sans"
+
       
       - name: Setup Typst
         uses: typst-community/setup-typst@v3
         
       - name: Build PDF from Typst sources
         run: |
-          fontist update
-          fontist install "Fira Code"
-          fontist install "Open Sans"
           typst compile src/Lecture-notes.typ Signals-and-systems-m1-tpe.pdf  --font-path ~/.fontist/fonts   
 
       - name: Install poppler-utils (pdf2svg)
