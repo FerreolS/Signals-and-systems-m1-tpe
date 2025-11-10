@@ -1,0 +1,41 @@
+name: Build PDF from Typst
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**/*.typ'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Typst
+        uses: typst-community/setup-typst@v3
+        
+      - name: Build PDF from Typst sources
+        run: |
+          mkdir -p output
+          # Find all .typ files in src directory and compile them
+          find src -name "*.typ" -type f | while read -r file; do
+            filename=$(basename "$file" .typ)
+            echo "Building $file to output/${filename}.pdf"
+            typst compile "$file" "output/${filename}.pdf"
+          done
+          
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
+          publish_branch: gh-pages
+          force_orphan: true
