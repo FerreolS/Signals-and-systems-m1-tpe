@@ -26,6 +26,24 @@ jobs:
         run: |
           mkdir -p output
           typst compile src/Lecture-notes.typ output/Signals-and-systems-m1-tpe.pdf     
+
+      - name: Install poppler-utils (pdftocairo)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+
+      - name: Convert first 2 pages of PDF to SVG
+        run: |
+          # Convert pages 1-2 to SVG files. pdftocairo produces files with suffix -1.svg and -2.svg
+          pdftocairo -svg -f 1 -l 2 output/Signals-and-systems-m1-tpe.pdf output/Signals-and-systems-m1-tpe-page.svg
+          # Normalize file names to predictable page1/page2 names
+          if [ -f output/Signals-and-systems-m1-tpe-page-1.svg ]; then
+            mv output/Signals-and-systems-m1-tpe-page-1.svg output/Signals-and-systems-m1-tpe-page1.svg
+          fi
+          if [ -f output/Signals-and-systems-m1-tpe-page-2.svg ]; then
+            mv output/Signals-and-systems-m1-tpe-page-2.svg output/Signals-and-systems-m1-tpe-page2.svg
+          fi
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
