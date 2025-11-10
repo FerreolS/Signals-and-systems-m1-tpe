@@ -29,7 +29,7 @@ jobs:
       - name: Install poppler-utils (pdftocairo)
         run: |
           sudo apt-get update
-          sudo apt-get install -y install pdf2svg
+          sudo apt-get install -y pdf2svg
 
       - name: Convert first 2 pages of PDF to SVG
         run: | 
