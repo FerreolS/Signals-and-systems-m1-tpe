@@ -311,7 +311,7 @@ It is important to remember that, in this lecture, the terms "power" and "energy
 
 //=== Signal power
 
-== Systems
+== Systems<sec-system>
 
 #margin-note[
   #figure(
@@ -328,12 +328,32 @@ It is important to remember that, in this lecture, the terms "power" and "energy
   ) <fig-system>
 ]
 A system is a powerful conceptual tool used across a wide range of scientific fields, particularly in physics. In this abstraction, described as a block diagram in @fig-system, a system transforms an input signal into an output signal.
+$
+  y(t) = S{x(t)}
+$
 
 A seismometer is a good example of a system: the physical ground motion $x(t)$ is the input and the seismometer transforms it into an electrical voltage $y(t)$.
 The *description* of a system is *arbitrary*, and its inputs/outputs can be defined to facilitate calculations or the understanding of the system. For example, in the case of a seismometer the input can be ground displacement, its velocity, its acceleration, #etc.
 
+
+=== Properties of systems<sec-system-properties>
+
+/ BIBO Stability: A system is said to be bounded input bounded output (BIBO) stable if the output is bounded for every bounded input to the system.
+
+/ Causality: A system is causal if the output at any time depends only on values of the input at the present time and in the past. If any value of the output signal depends on a future value of the input signal, then the system is non-causal.
+
+/ Linearity: A system is said to be linear if it satisfies the *principle of superposition* (additivity and homogeneity) where for any $(a_1,a_2) in CC^2$:
+$
+  S{a_1 x_1(t) + a_2 x_2(t)} & = S{a_1 x_1(t) } + S{a_2 x_2(t) } #margin-note[additivity] \
+                             & = a_1 S{x_1(t) } +a_2 S{x_2(t) } #margin-note[homogeneity]
+$
+
+
+/ Time invariance: A system is said to be time invariant if its behavior does not change over time. This means delaying the input by some amount simply delays the output by the same amount:
+$ y(t + tau) = S{x(t+ tau)} $
+
 === Modularity
-One of the main advantages of this description is that a system is *modular*: it can be decomposed into smaller elementary systems (#eg mass/spring system + transducer + analog to digital converter + #etc) or be included in a larger system (#eg seismic source + propagation medium + array of seismometers #etc) as illustrated @fig-seismometer.
+One of the main advantages of this description is that a system is *modular*: it can be decomposed into smaller elementary systems (#eg mass/spring system + transducer + analog to digital converter + #etc) or be included in a larger system (#eg seismic source + propagation medium + array of seismometers + #etc) as illustrated in @fig-seismometer.
 #figure(
   text(size: 8pt, diagram(
     label-size: 1pt,
@@ -358,8 +378,15 @@ One of the main advantages of this description is that a system is *modular*: it
       shape: rect,
     ),
   )),
-  caption: [Seismometer as an modular system],
+  caption: [Seismometer as a modular system],
 ) <fig-seismometer>
+
+
+=== Why studying systems?
+There are many reasons to describe a problem as a system. Depending on the final goal, one can use this formalism to study:
+- *output*: predicting the output from the input given a known system, #eg the _Deep Thought_ supercomputer answering _42_ to the _Ultimate Question of Life, the Universe, and Everything_.
+- *system*: characterizing the effect of the system (distortion, attenuation, #etc) on measurements, #eg understanding how the transmission medium is changing communication signals.
+- *input*: inferring the input from the output. This is often tackled within an "inverse problem" framework, #eg estimating the position and energy of an earthquake from seismograms, or estimating the question to which the answer is _42_.
 
 
 #margin-note[
@@ -367,7 +394,7 @@ One of the main advantages of this description is that a system is *modular*: it
     diagram(
       node-stroke: 0pt,
       edge-stroke: 1pt,
-      node((0, 0), $x(t]]$),
+      node((0, 0), $x(t)$),
       edge("-|>"),
       node((1, 0), [`ADC`], stroke: 1pt, shape: rect),
       edge("-|>"),
@@ -376,11 +403,12 @@ One of the main advantages of this description is that a system is *modular*: it
     caption: [Sampling system],
   ) <fig-sampling>
 ]
-=== Signal Sampling.
-The digitization is the process of converting an analog signal $x(t)$ in a discrete signal $x[n]$ usually done in practice by an analog to digital converter (ADC). The digitization is itself composed of two operations:
+=== Signal Sampling
+The digitization is the process of converting an analog signal $x(t)$ into a discrete signal $x[n]$, usually done in practice by an analog to digital converter (ADC). The digitization itself is composed of two operations:
 - *sampling* that goes from continuous time to discrete time
-- *quantization* that goes from continuous value to a finite number of level
-quantization being a non-linear operation will not be treated in this lecture.
+- *quantization* that goes from continuous value to a finite number of levels
+
+Quantization, being a non-linear operation, will not be treated in this lecture.
 
 The sampling of the function $f(t)$ with the sampling period $T_N$ is given by the equation:
 $
@@ -388,33 +416,8 @@ $
 $
 where $delta$ is the Dirac delta distribution described next section. The condition to perfectly reproduce $f(t)$ from $f[n]$ will be treated in @sec-sampling.
 
-=== Properties of systems
-
-/ BIBO Stability:
-The bounded input bounded output stability. We say a system is BIBO stable if 
-
-/ Causality:
-
-/ Linearity:
-
-/ Time invariance:
 
 
-Causal signals are signals that are zero for all negative time.
-If any value of the output signal depends on a future value of the input signal then the signal is non-causal.
-/*
-
-Practical notes:
-- The measured y(t) contains both the true ground motion convolved with the instrument response and sensor/electronic noise.
-- Correct interpretation requires deconvolving the instrument response (inverse filtering) or applying the known transfer function in the frequency domain.
-- Real instruments have a natural frequency and damping (poles and zeros), limiting the frequency band where the LTI approximation holds.
-- Digitization imposes sampling and quantization constraints (aliasing, finite resolution).
-
-Notes:
-- "Linear" means superposition holds. "Time-invariant" means a shift in input causes same shift in output.
-- "Causal" means output at time t depends only on present and past inputs. "BIBO stable" means bounded input ⇒ bounded output.
-
- */
 
 == Dirac delta  function
 
@@ -429,7 +432,7 @@ such that
 $
   integral_(-infinity)^(+infinity) delta(t) dif t = 1
 $
-It is a generalized function that appears only of an integral. It is often defined as the limit of a sequence of functions, #eg a sequence of Gaussian distributions centered at the origin with variance tending to zero.
+It is a generalized function that appears only under an integral. It is often defined as the limit of a sequence of functions, #eg a sequence of Gaussian distributions centered at the origin with variance tending to zero.
 
 === Properties
 
@@ -441,7 +444,7 @@ $
 $
   delta(a thin t) = 1 / abs(a) delta(t)
 $
-/ Symetry: $delta$ is even
+/ Symmetry: $delta$ is even
 $
   delta(t) = delta(-t)
 $
@@ -450,22 +453,27 @@ $
 
 === Heavyside step function
 
-The Heavyside function  or unit step function $H(t)$ is a step function defined as:
+The Heaviside function or unit step function $H(t)$ is a step function defined as:
 $
   H(t) = cases(
     0 quad & "if" t < 0 thin ",",
     1 quad & "if" t >= 0 .
   )
 $
-It is the indicatrice of $RR^+$.
-Two conventions exist wheter $H(0) = 1$ or $H(0) = 1/2$.
-It is related to the Dirac delta  function by:
+It is the indicator function of $RR^+$.
+Two conventions exist: whether $H(0) = 1$ or $H(0) = 1/2$.
+It is related to the Dirac delta function by:
 $
   (dif u(t)) / dif t = delta(t)
 $
 
 
 = Linear Time Invariant systems
+
+Among the properties of a system given in @sec-system, linearity and time invariance play a fundamental role in signal and system analysis. First, the linearity and time invariance properties are fortunately shared by numerous physical phenomena. In addition, signal and system analysis provides powerful tools to analyze LTI systems in great detail, going deep into their properties.
+
+The main reason LTI systems can be deeply analyzed is a consequence of the superposition property given in @sec-system-properties:
+if we can represent the input to an LTI system in terms of a linear combination of a set of basic signals, we can compute its output as the combination of its responses to these basic signals.
 
 == Linear Systems
 

@@ -45,6 +45,9 @@
 
   // Set figure numbering to include chapter number
   set figure(numbering: n => numbering("1.1", counter(heading).get().first(), n))
+  show figure: set text(8pt)
+  show figure.caption: set text(10pt)
+
 
   // Equate subnumbering does not work with chapter subnumbering)
   show: equate.with(breakable: false, sub-numbering: false)
@@ -197,11 +200,12 @@
     place(
       side,
       dx: if side == right { 50mm } else { -50mm },
-      dy: 0em,
+      dy: -0.5em,
       float: false,
       box(
         width: 45mm,
-        text(size: 8pt, content),
+        // text(size: 8pt, content),
+        content,
       ),
     )
   }
