@@ -332,28 +332,76 @@ A system is a powerful conceptual tool used across a wide range of scientific fi
 A seismometer is a good example of a system: the physical ground motion $x(t)$ is the input and the seismometer transforms it into an electrical voltage $y(t)$.
 The *description* of a system is *arbitrary*, and its inputs/outputs can be defined to facilitate calculations or the understanding of the system. For example, in the case of a seismometer the input can be ground displacement, its velocity, its acceleration, #etc.
 
-One of the main advantages of this description is that a system is *modular*: it can be decomposed into smaller elementary systems (#eg mass/spring system + transducer + analog digital converter + #etc) or be included in a larger system (#eg seismic source + rock medium + array of seismometers #etc).
-
-
-
+=== Modularity
+One of the main advantages of this description is that a system is *modular*: it can be decomposed into smaller elementary systems (#eg mass/spring system + transducer + analog to digital converter + #etc) or be included in a larger system (#eg seismic source + propagation medium + array of seismometers #etc) as illustrated @fig-seismometer.
 #figure(
-  diagram(
+  text(size: 8pt, diagram(
+    label-size: 1pt,
     node-stroke: 0pt,
     edge-stroke: 1pt,
-    node((0, 0), [`Ground motion`]),
-    edge("-|>", [`input`]),
-    node((2, 0), [`Seismometer`], stroke: 1pt, shape: rect),
-    edge("-|>", [`output`]),
-    node((4, 0), [`Electrical signal`]),
-  ),
-  caption: [Seismometer as an LTI measurement system],
+    node((0, 0), align(center)[`Seismic` \ `source`]),
+    edge("-|>"),
+    node((1, 0), [`Propagation` \ `medium`], stroke: 1pt, shape: rect),
+    edge("-|>"),
+    node((2, 0), [`transducer`], stroke: 1pt, shape: rect),
+    edge("-|>"),
+    node((3, 0), [`ADC`], stroke: 1pt, shape: rect),
+    edge("-|>"),
+    node((4, 0), [`preprocessing`], stroke: 1pt, shape: rect),
+    edge("-|>"),
+    node((5, 0), [`data`]),
+    node(
+      enclose: ((2, 0), (3, 0)),
+      height: 2cm,
+      align(top + center)[`Seismometer`],
+      stroke: 1pt,
+      shape: rect,
+    ),
+  )),
+  caption: [Seismometer as an modular system],
 ) <fig-seismometer>
 
 
+#margin-note[
+  #figure(
+    diagram(
+      node-stroke: 0pt,
+      edge-stroke: 1pt,
+      node((0, 0), $x(t]]$),
+      edge("-|>"),
+      node((1, 0), [`ADC`], stroke: 1pt, shape: rect),
+      edge("-|>"),
+      node((2, 0), $x[n]$),
+    ),
+    caption: [Sampling system],
+  ) <fig-sampling>
+]
+=== Signal Sampling.
+The digitization is the process of converting an analog signal $x(t)$ in a discrete signal $x[n]$ usually done in practice by an analog to digital converter (ADC). The digitization is itself composed of two operations:
+- *sampling* that goes from continuous time to discrete time
+- *quantization* that goes from continuous value to a finite number of level
+quantization being a non-linear operation will not be treated in this lecture.
+
+The sampling of the function $f(t)$ with the sampling period $T_N$ is given by the equation:
+$
+  f[n] = integral_(-infinity)^(+infinity) f(t) thin delta(t - n thin T_N) dif t thin ,
+$
+where $delta$ is the Dirac delta distribution described next section. The condition to perfectly reproduce $f(t)$ from $f[n]$ will be treated in @sec-sampling.
+
+=== Properties of systems
+
+/ BIBO Stability:
+The bounded input bounded output stability. We say a system is BIBO stable if 
+
+/ Causality:
+
+/ Linearity:
+
+/ Time invariance:
 
 
-After digitization at sampling period T_s we obtain the discrete record y[n] = y(n T_s).
-
+Causal signals are signals that are zero for all negative time.
+If any value of the output signal depends on a future value of the input signal then the signal is non-causal.
 /*
 
 Practical notes:
@@ -368,11 +416,54 @@ Notes:
 
  */
 
-== Functions
+== Dirac delta  function
 
-=== Dirac
+The Dirac delta  function (or distribution), also known as the unit impulse, is a generalized function on the real numbers, whose value is zero everywhere except at zero, and whose integral over the entire real line is equal to one:
+$
+  delta(t) = cases(
+    +infinity quad & "if" t = 0 thin ",",
+    0 quad & "otherwise."
+  )
+$
+such that
+$
+  integral_(-infinity)^(+infinity) delta(t) dif t = 1
+$
+It is a generalized function that appears only of an integral. It is often defined as the limit of a sequence of functions, #eg a sequence of Gaussian distributions centered at the origin with variance tending to zero.
 
-=== Heavyside
+=== Properties
+
+/ Translation:
+$
+  integral_(-infinity)^(+infinity) f(t) thin delta(t - tau) dif t = f(tau)
+$
+/ Scaling:
+$
+  delta(a thin t) = 1 / abs(a) delta(t)
+$
+/ Symetry: $delta$ is even
+$
+  delta(t) = delta(-t)
+$
+
+
+
+=== Heavyside step function
+
+The Heavyside function  or unit step function $H(t)$ is a step function defined as:
+$
+  H(t) = cases(
+    0 quad & "if" t < 0 thin ",",
+    1 quad & "if" t >= 0 .
+  )
+$
+It is the indicatrice of $RR^+$.
+Two conventions exist wheter $H(0) = 1$ or $H(0) = 1/2$.
+It is related to the Dirac delta  function by:
+$
+  (dif u(t)) / dif t = delta(t)
+$
+
 
 = Linear Time Invariant systems
 
@@ -396,7 +487,8 @@ Notes:
 
 = Discrete Fourier Transform
 
-== Sampling
+== Sampling<sec-sampling>
+
 
 = Signaux alléatoires
 
