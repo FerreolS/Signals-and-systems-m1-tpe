@@ -421,7 +421,7 @@ where $delta$ is the Dirac delta distribution described next section. The condit
 
 == Dirac delta  function
 
-The Dirac delta  function (or distribution), also known as the unit impulse, is a generalized function on the real numbers, whose value is zero everywhere except at zero, and whose integral over the entire real line is equal to one:
+The Dirac delta  function (or distribution) is a generalized function on the real numbers, whose value is zero everywhere except at zero, and whose integral over the entire real line is equal to one:
 $
   delta(t) = cases(
     +infinity quad & "if" t = 0 thin ",",
@@ -433,6 +433,15 @@ $
   integral_(-infinity)^(+infinity) delta(t) dif t = 1
 $
 It is a generalized function that appears only under an integral. It is often defined as the limit of a sequence of functions, #eg a sequence of Gaussian distributions centered at the origin with variance tending to zero.
+
+In discrete time, the delta function is also known as the unit impulse:
+$
+  delta[n] = cases(
+    1 quad & "if" n = 0 thin ",",
+    0 quad & "otherwise."
+  )
+$
+
 
 === Properties
 
@@ -464,7 +473,7 @@ It is the indicator function of $RR^+$.
 Two conventions exist: whether $H(0) = 1$ or $H(0) = 1/2$.
 It is related to the Dirac delta function by:
 $
-  (dif u(t)) / dif t = delta(t)
+  (dif ) / (dif t) H(t) = delta(t)
 $
 
 
@@ -475,8 +484,43 @@ Among the properties of a system given in @sec-system, linearity and time invari
 The main reason LTI systems can be deeply analyzed is a consequence of the superposition property given in @sec-system-properties:
 if we can represent the input to an LTI system in terms of a linear combination of a set of basic signals, we can compute its output as the combination of its responses to these basic signals.
 
-== Linear Systems
+== Discrete time LTI systems
+A discrete signal $x[n]$ can be represented as a sum of impulse:
+$
+  x[n] = sum_k x_k thin delta[n - k]
+$
+In this representation, an arbitrary sequence os a linear combination of
+shifted unit impulses $delta[n- k]$, where the weights in this linear combination are $x[k]$.
 
+If $S$ is a *linear system* then its output $y[n]$ is  simply the weighted linear combination of shifted unit impulse response:
+$
+  y[n] & = S(x[n])thin, \
+       & = S( sum_k x_k thin delta[n - k]) thin, \
+       & = sum_k x_k thin S(delta[n - k]) thin, \
+       & = sum_k x_k thin h_k[n - k]
+$
+where $h_k[n] =S(delta[n - k])$ denote the response of the linear system $S$ to the shifted unit impulse $delta[n - k]$.
+
+If the linear system $S$ is also time *invariant* all  $h_k[n]$  time-shifted version of $h_0[n]$ :
+$
+  h_k[n] = h_0[n]
+$
+Dropping the subscript $0$ of $h_0$ for convenience, we define the *impulse response* $h$ of the system:
+$
+  h[n] = h_0[n]
+$
+$h[n]$ being the output of the LTI system $S$ to the unit impulse $delta[n]$.
+
+Then for any LTI systems, its output depends only on the input and its impulse response:
+$
+  y[n] = sum_(k = -infinity)^(+infinity) x[n] thin h[n-k]
+$
+This is  a  *convolution sum* or superposition sum  and the oper-
+ation on the right-hand side is known as the convolution of the sequences x[n]
+and h[n].  This convolution is denoted with the symbol $*$ as in :
+$
+  y[n] = (x * h)[n].
+$
 == Convolution
 
 === Properties
