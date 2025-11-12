@@ -60,7 +60,7 @@ In this course, for simplicity, we will generally represent a signal as a functi
 
 
 === Continuous signals
-A continuous signal written $x(t)$ also called an analog signal is a function defined for all values of time (possibly in an interval). For example, the fluctuations in the current produced by a coil in an electromagnetic microphone is an continuous signal. Such signals can take any value in a continuous range. #ref(<fig-continuous-signal-a>) shows an example of a continuous signal.
+A continuous signal, written $x(t)$ and also called an analog signal, is a function defined for all values of time (possibly in an interval). For example, the fluctuations in the current produced by a coil in an electromagnetic microphone form a continuous signal. Such signals can take any value in a continuous range. #ref(<fig-continuous-signal-a>) shows an example.
 
 #margin-note[
   //#figure(
@@ -183,9 +183,9 @@ A continuous signal written $x(t)$ also called an analog signal is a function de
 
 
 === Discrete signals
-A discrete signal written $x[n]$ is defined only at discrete time intervals $n$.
-$x[n]$ is defined only for integer values $n$. It is sometimes refered as a discrete-time sequence.
-For example, the daily average temperature measured at a weather station is a discrete signal, as it is only known at specific times (once per day in this case). Discrete signals often also arise from sampling continuous signals at regular intervals.  #ref(<fig-discrete-signal>) shows an example of a discrete signal obtained by sampling the continuous signal presentd #ref(<fig-continuous-signal-a>).
+A discrete signal written $x[n]$ is defined only at discrete time indices $n$ (integers).
+It is sometimes referred to as a discrete-time sequence.
+For example, the daily average temperature measured at a weather station is a discrete signal, as it is only known at specific times (once per day in this case). Discrete signals often arise from sampling continuous signals at regular intervals.  #ref(<fig-discrete-signal>) shows a discrete signal obtained by sampling the continuous signal presented in #ref(<fig-continuous-signal-a>).
 
 A discrete signal (or discrete time signal) should not be confused with discrete valued signal (which can be either continuous or discrete time). A discrete valued signal also called quantized signal can take only a finite or countable number of values. An example of a discrete valued signal is a digital signal used in digital electronics, which can take only two values (0 and 1).
 
@@ -238,38 +238,9 @@ Discrete periodic signals are defined analogously. A discrete signal $x[n]$ is p
         }
       }
     }),
-    caption: [Three realizations of a non stationnary random signal],
+    caption: [Three realizations of a non-stationary random signal],
   ) <fig-random-signal>
 ]
-=== Random signals
-A random signal $X(t,s)$, also known as a stochastic process, is a function of time (or another variable) whose amplitude at any given time $t$ is a random variable.
-It is a set of functions of $t$, the set being indexed by $s$ as illustrated in #ref(<fig-random-signal>). A random signal is thus a bivariate quantity. When $s=s_i$ is fixed, we get a realization of the random process, denoted $X(t,s_i)$ or, more simply, $X_i (t)$. When $t$ is fixed, the random process reduces to a simple random variable. A random signal can be either continuous or discrete in time or value.
-
-A random signal is  *wide-sense stationary* if its mean and auto-covaiance are finite and independent of the choice of the origin of time:
-/* #math.equation(
-  block: true,
-  $&EE[X(t)] = mu , quad forall t in RR \
-  &EE[X(t) thin X^*(t + tau)] = gamma_X (tau)$,
-)<eq-random-stationnary> */
-/* $
-  & EE[X^2(t)] < infinity , quad forall t in RR \
-  //$<eq-random-stationnary-finite>
-  //$
-  & EE[X(t)] = mu , quad forall t in RR \
-  //$<eq-random-stationnary-mean>
-  //$
-  & EE[X(t) thin X^*(t + tau)] = gamma_X (tau) , quad forall t in RR .
-$<eq-random-stationnary> */
-$
-  EE[X^2(t)] < infinity , quad forall t in RR
-$<eq-random-stationnary-finite>
-$
-  EE[X(t)] = mu , quad forall t in RR
-$<eq-random-stationnary-mean>
-$
-  EE[X(t) thin X^*(t + tau)] = gamma_X (tau)
-$<eq-random-stationnary-correlation>
-$gamma_X (tau)$ is the correlation function.
 
 
 === Energy
@@ -280,9 +251,9 @@ The energy $E$ of a continuous signal $x(t)$ /* in the interval $[t_1, t_2]$ */ 
 ) <eq-signal-energy-interval>
 
  */
-$
+#rect(fill: silver)[$
   E = integral_(-infinity)^infinity |x(t)|^2 dif t
-$ <eq-signal-energy>
+$ <eq-signal-energy>]
 The unit of energy is the square of the unit of $x(t)$. In this context, this energy is not, strictly speaking, the same as the conventional notion of energy in physics (usually in joules).
 
 For some signals the integral in #ref(<eq-signal-energy>) might not converge: #eg if $x(t)$ or $x[n]$ is periodic. Such signals have infinite energy: $x(t)$ is not a square-integrable function (#ie does not belong to the $L^2$ space).
@@ -290,10 +261,11 @@ Signals of finite energy (#ie $E < infinity$) are often called energy signals.
 
 === Power
 Power $P$ of the signal $x(t)$ is defined as the amount of energy per unit time:
-#math.equation(
-  block: true,
-  $lim_(T->infinity) P = 1/(2 T) integral_(-T)^T |x(t)|^2 dif t$,
-) <eq-signal-power>
+#rect(fill: silver)[
+  #math.equation(
+    block: true,
+    $P = lim_(T->infinity) 1/(2 T) integral_(-T)^T |x(t)|^2 dif t$,
+  ) <eq-signal-power>]
 This quantity is useful to work with infinite energy signals. By construction, $P=0$ for energy signals (#ie $E < infinity$).
 Signals of non-zero but finite power (#ie $0 < P < infinity$) are often called power signals. Periodic or constant signals are examples of power signals. There are signals, like $x(t) = t$, with infinite power that are neither energy nor power signals.
 
@@ -307,7 +279,6 @@ $
 $<eq-power-discrete>
 
 It is important to remember that, in this lecture, the terms "power" and "energy" are used independently of whether these quantities are actually related to physical energy.
-
 
 //=== Signal power
 
@@ -329,7 +300,7 @@ It is important to remember that, in this lecture, the terms "power" and "energy
 ]
 A system is a powerful conceptual tool used across a wide range of scientific fields, particularly in physics. In this abstraction, described as a block diagram in @fig-system, a system transforms an input signal into an output signal.
 $
-  y(t) = S{x(t)}
+  y(t) = H{x(t)}
 $
 
 A seismometer is a good example of a system: the physical ground motion $x(t)$ is the input and the seismometer transforms it into an electrical voltage $y(t)$.
@@ -344,13 +315,13 @@ The *description* of a system is *arbitrary*, and its inputs/outputs can be defi
 
 / Linearity: A system is said to be linear if it satisfies the *principle of superposition* (additivity and homogeneity) where for any $(a_1,a_2) in CC^2$:
 $
-  S{a_1 x_1(t) + a_2 x_2(t)} & = S{a_1 x_1(t) } + S{a_2 x_2(t) } #margin-note[additivity] \
-                             & = a_1 S{x_1(t) } +a_2 S{x_2(t) } #margin-note[homogeneity]
+  H{a_1 x_1(t) + a_2 x_2(t)} & = H{a_1 x_1(t) } + H{a_2 x_2(t) } #margin-note[additivity] \
+                             & = a_1 H{x_1(t) } +a_2 H{x_2(t) } #margin-note[homogeneity]
 $
 
 
 / Time invariance: A system is said to be time invariant if its behavior does not change over time. This means delaying the input by some amount simply delays the output by the same amount:
-$ y(t + tau) = S{x(t+ tau)} $
+$ y(t + tau) = H{x(t+ tau)} $
 
 === Modularity
 One of the main advantages of this description is that a system is *modular*: it can be decomposed into smaller elementary systems (#eg mass/spring system + transducer + analog to digital converter + #etc) or be included in a larger system (#eg seismic source + propagation medium + array of seismometers + #etc) as illustrated in @fig-seismometer.
@@ -388,62 +359,68 @@ There are many reasons to describe a problem as a system. Depending on the final
 - *system*: characterizing the effect of the system (distortion, attenuation, #etc) on measurements, #eg understanding how the transmission medium is changing communication signals.
 - *input*: inferring the input from the output. This is often tackled within an "inverse problem" framework, #eg estimating the position and energy of an earthquake from seismograms, or estimating the question to which the answer is _42_.
 
+== Representation of signals
 
-#margin-note[
-  #figure(
-    diagram(
-      node-stroke: 0pt,
-      edge-stroke: 1pt,
-      node((0, 0), $x(t)$),
-      edge("-|>"),
-      node((1, 0), [`ADC`], stroke: 1pt, shape: rect),
-      edge("-|>"),
-      node((2, 0), $x[n]$),
-    ),
-    caption: [Sampling system],
-  ) <fig-sampling>
+=== Unit impulse
+In discrete time, the unit impulse also know as the delta function is the simplest discrete signal.
+#rect(fill: silver)[ $
+    delta[n] = cases(
+      1 quad & "if" n = 0 thin ",",
+      0 quad & "otherwise."
+    )
+  $
 ]
-=== Signal Sampling
-The digitization is the process of converting an analog signal $x(t)$ into a discrete signal $x[n]$, usually done in practice by an analog to digital converter (ADC). The digitization itself is composed of two operations:
-- *sampling* that goes from continuous time to discrete time
-- *quantization* that goes from continuous value to a finite number of levels
 
-Quantization, being a non-linear operation, will not be treated in this lecture.
+=== Representation of discrete time signal<sec-representation-discrete>
+Any discrete-time signal can be viewed as a sequence of scaled individual unit pulses:
+#rect(fill: silver)[$
+  x[n] = sum_(k=-infinity)^(+infinity) x[k] thin delta[n-k]
+$<eq-discrete-representation>]
+This can be used to represent any arbitrary sequence as a linear combination of
+shifted unit impulses $delta[n- k]$, where the weights are $x[k]$. This is sometimes called the _sifting property_ of the discrete-time unit impulse, where the impulse acts as a selector preserving only the value corresponding to $k=n$. The impulse functions form a *complete basis set* for discrete-time signals.
+The coefficient for each basis function is simply $x[k]$.
 
-The sampling of the function $f(t)$ with the sampling period $T_N$ is given by the equation:
+
+=== Dirac delta  function
+In continuous time we do not have a discrete sequence of values, but we can think of a continuous unit impulse function $delta_{Delta}$ as a pulse of width $Delta$:
 $
-  f[n] = integral_(-infinity)^(+infinity) f(t) thin delta(t - n thin T_N) dif t thin ,
-$
-where $delta$ is the Dirac delta distribution described next section. The condition to perfectly reproduce $f(t)$ from $f[n]$ will be treated in @sec-sampling.
-
-
-
-
-== Dirac delta  function
-
-The Dirac delta  function (or distribution) is a generalized function on the real numbers, whose value is zero everywhere except at zero, and whose integral over the entire real line is equal to one:
-$
-  delta(t) = cases(
-    +infinity quad & "if" t = 0 thin ",",
+  delta_(Delta)(t) = cases(
+    1/Delta quad & "if" abs(t) < Delta/2 thin ",",
     0 quad & "otherwise."
   )
+$<eq-delta-Delta>
+/*
+We consider  a "staircase" approximation, $x(t)$, to a
+continuous-time signal x(t):
 $
-such that
-$
-  integral_(-infinity)^(+infinity) delta(t) dif t = 1
-$
-It is a generalized function that appears only under an integral. It is often defined as the limit of a sequence of functions, #eg a sequence of Gaussian distributions centered at the origin with variance tending to zero.
+  tilde(x)(t) & = sum_(k=-infinity)^(+infinity) integral_(- Delta/2)^(Delta/2) x(t - k Delta) dif t \
+              & = sum_(k=-infinity)^(+infinity) integral_RR delta_(Delta)(t - k Delta) x(t) dif t
+$<eq-staircase>
+*/
+As $Delta -> 0$, $delta_Delta$ approaches the Dirac delta distribution.
+The Dirac delta function (or distribution) is a generalized function on the real numbers, whose value is zero everywhere except at zero, and whose integral over the entire real line is equal to one:
+#rect(fill: silver)[
+  $
+    delta(t) = cases(
+      +infinity quad & "if" t = 0 thin ",",
+      0 quad & "otherwise."
+    )
+  $
+  such that
+  $
+    integral_(-infinity)^(+infinity) delta(t) dif t = 1
+  $]
+It is a generalized function that appears only under an integral. It is often defined as the limit of a sequence of functions, such as the sequence defined in @eq-delta-Delta with decreasing $Delta$, or a sequence of Gaussian distributions centered at the origin with variance tending to zero.
 
-In discrete time, the delta function is also known as the unit impulse:
-$
-  delta[n] = cases(
-    1 quad & "if" n = 0 thin ",",
-    0 quad & "otherwise."
-  )
-$
+With this Dirac delta distribution, similarly to the discrete case @eq-discrete-representation, we can represent any continuous signal as:
+#rect(fill: silver)[
+  $
+    x(t) = integral_(-infinity)^(+infinity) x(tau) thin delta(t - tau) thin dif tau
+  $
+]
+Again this can be viewed as a "weighted sum" of shifted impulses where the weight on the impulse  $delta(t - tau)$ is $x(tau)$. Contrary to the discrete case, the Dirac delta distribution does not, strictly speaking, define a basis of the space of continuous signals as $delta$ itself does not belong to this space.
 
-
-=== Properties
+=== Properties of dirac delta distribution
 
 / Translation:
 $
@@ -462,19 +439,48 @@ $
 
 === Heavyside step function
 
-The Heaviside function or unit step function $H(t)$ is a step function defined as:
+The Heaviside function or unit step function $u(t)$ is a step function defined as:
 $
-  H(t) = cases(
+  u(t) = cases(
     0 quad & "if" t < 0 thin ",",
     1 quad & "if" t >= 0 .
   )
 $
 It is the indicator function of $RR^+$.
-Two conventions exist: whether $H(0) = 1$ or $H(0) = 1/2$.
+Two conventions exist: either $u(0) = 1$ or $u(0) = 1/2$.
 It is related to the Dirac delta function by:
 $
-  (dif ) / (dif t) H(t) = delta(t)
+  (dif ) / (dif t) u(t) = delta(t)
 $
+
+
+#margin-note[
+  #figure(
+    diagram(
+      node-stroke: 0pt,
+      edge-stroke: 1pt,
+      node((0, 0), $x(t)$),
+      edge("-|>"),
+      node((1, 0), [`ADC`], stroke: 1pt, shape: rect),
+      edge("-|>"),
+      node((2, 0), $x[n]$),
+    ),
+    caption: [Sampling system],
+  ) <fig-sampling>
+]
+
+== Sampling
+The digitization is the process of converting an analog signal $x(t)$ into a discrete signal $x[n]$, usually done in practice by an analog to digital converter (ADC). The digitization itself is composed of two operations:
+- *sampling* that goes from continuous time to discrete time
+- *quantization* that goes from continuous value to a finite number of levels
+
+Quantization, being a non-linear operation, will not be treated in this lecture.
+
+The sampling of the function $f(t)$ with the sampling period $Delta$ is given by the equation:
+$
+  f[n] = integral_(-infinity)^(+infinity) f(t) thin delta(t - n thin Delta) dif t thin ,
+$
+The condition to perfectly reproduce $f(t)$ from $f[n]$ will be treated in @sec-sampling.
 
 
 = Linear Time Invariant systems
@@ -485,35 +491,51 @@ The main reason LTI systems can be deeply analyzed is a consequence of the super
 if we can represent the input to an LTI system in terms of a linear combination of a set of basic signals, we can compute its output as the combination of its responses to these basic signals.
 
 == Discrete time LTI systems
-A discrete signal $x[n]$ can be represented as a sum of impulse:
-$
-  x[n] = sum_k x_k thin delta[n - k]
-$
-In this representation, an arbitrary sequence os a linear combination of
-shifted unit impulses $delta[n- k]$, where the weights in this linear combination are $x[k]$.
+As shown in @sec-representation-discrete, a discrete signal $x[n]$ can be represented as a sum of impulses:
+$x[n] = sum_k x[k] thin delta[n - k]$.
+In this representation, an arbitrary sequence is a linear combination of
+shifted unit impulses $delta[n- k]$, where the weights are $x[k]$.
 
-If $S$ is a *linear system* then its output $y[n]$ is  simply the weighted linear combination of shifted unit impulse response:
+=== Discrete time linear system
+If $H$ is a *linear system* then its output $y[n]$ is simply the weighted linear combination of shifted unit impulse responses:
 $
-  y[n] & = S(x[n])thin, \
-       & = S( sum_k x_k thin delta[n - k]) thin, \
-       & = sum_k x_k thin S(delta[n - k]) thin, \
-       & = sum_k x_k thin h_k[n - k]
+  y[n] & = H(x[n])thin, \
+       & = H(sum_k x[k] thin delta[n - k]) thin, \
+       & = sum_k x[k] thin H(delta[n - k]) thin, \
+       & = sum_k x[k] thin h_k [n - k]
 $
-where $h_k[n] =S(delta[n - k])$ denote the response of the linear system $S$ to the shifted unit impulse $delta[n - k]$.
+where $h_k [n] = H(delta[n - k])$ denotes the response of the linear system $H$ to the shifted unit impulse $delta[n - k]$.
 
-If the linear system $S$ is also time *invariant* all  $h_k[n]$  time-shifted version of $h_0[n]$ :
+In matrix–vector notation we define the input vector $Vx = [x_1, x_2, ..., x_{N-1}]^T$, the output $Vy = [y_0, y_1, ..., y_{M-1}]^T$; the linear system is described by the linear operator (matrix) $M_H$:
 $
-  h_k[n] = h_0[n]
+  Vy & = MH dot Vx
 $
-Dropping the subscript $0$ of $h_0$ for convenience, we define the *impulse response* $h$ of the system:
+$
+  vec(y_1, y_2, dots.v, y_(M-1)) & = x_1 vec(h_0[0], h_0[1], dots.v, h_0[N-1])
+                                   + x_2 vec(h_1[-1], h_1[0], dots.v, h_1[N-2])
+                                   + dots \
+                                 & = mat(
+                                     h_0[0], h_1[-1], ..., h_N [1-N];
+                                     h_0[1], h_1[0], ..., h_N [2-N];
+                                     dots.v, dots.v, dots.down, dots.v;
+                                     h_0[M-1], h_1[M-2], ..., h_N [M-N];
+                                   ) dot vec(x_1, x_2, dots.v, x_(N-1))
+$
+
+=== Discrete time linear time invariant system
+If the linear system $H$ is also *time invariant* all $h_k [n]$ are time-shifted versions of a single sequence $h_0[n]$:
+$
+  h_k [n] = h_0[n - k]
+$
+Dropping the subscript $0$ for convenience, we define the *impulse response* $h$ of the system:
 $
   h[n] = h_0[n]
 $
-$h[n]$ being the output of the LTI system $S$ to the unit impulse $delta[n]$.
+$h[n]$ being the output of the LTI system $H$ to the unit impulse $delta[n]$.
 
 Then for any LTI systems, its output depends only on the input and its impulse response:
 $
-  y[n] = sum_(k = -infinity)^(+infinity) x[n] thin h[n-k]
+  y[n] = sum_(k = -infinity)^(+infinity) x[k] thin h[n-k]
 $
 This is  a  *convolution sum* or superposition sum  and the oper-
 ation on the right-hand side is known as the convolution of the sequences x[n]
@@ -521,10 +543,116 @@ and h[n].  This convolution is denoted with the symbol $*$ as in :
 $
   y[n] = (x * h)[n].
 $
+
+The convolution matrix is then a band-diagonal matrix:
+$
+  MH = mat(
+    h[0], h[-1], ..., h[1-N];
+    h[1], h[0], ..., h[2-N];
+    dots.v, dots.v, dots.down, dots.v;
+    h[M-1], h[M-2], ..., h[M-N];
+  )
+$
+
+== Continuous time LTI system
+
+=== Continous time linear system
+Lets define, $h(t, tau)$  the response at time $t$ to a unit impulse $delta(t - tau)$ applied at time $tau$.
+Similarly to the discrete case, the output of the system is:
+$
+  y(t) = integral_(-infinity)^(+infinity) x(tau) thin h(t, tau) dif tau
+$<eq-continuous-linear>
+If we intuitively think of $x(t)$ as a "sum" of weighted shifted impulses (where
+the weight on the impulse $delta(t- tau)$ is $x(tau)$) this @eq-continuous-linear represents
+the superposition of the responses to each of these inputs, and by linearity, the weight
+on the response $h(t,tau)$ to the shifted impulse $delta(t- tau)$ is also $x(tau)$.
+
+=== Continous time linear time invariant system
+If, in addition to being linear, the system is time invariant, its response no longer depends on the instant $tau$ where the impulse was applied but only on the time difference $t - tau$:
+$
+  h (t, tau) = h (t - tau)thin.
+$
+With this definition, $h(t)$ is the  response of the system to the impulse $delta(t)$, that is the *impulse response* of the system.
+
+For _Linear Time Invariant_ system, @eq-continuous-linear become the *convolution integral*:
+#rect(fill: silver)[$
+    y(t) = integral_(-infinity)^(+infinity) x(tau) thin h(t- tau) dif tau
+  $<eq-continuous-convolution>
+]
+
+
+
 == Convolution
 
-=== Properties
+The convolution of two functions $f$ and $g$, written $f * g$, is defined as the integral of the product of the two functions after one is reflected and shifted:
+#rect(fill: silver)[$
+    (f*g)(t) = integral_(-infinity)^(+infinity) f(tau) thin g(t- tau) dif tau
+  $<eq-continuous-convolution>
+]
+This operation is well defined only if $f$ and $g$ decay sufficiently rapidly at infinity so that the integral exists. Existence conditions include:
+- $f$ and $g$ have compact support (then $f * g$ exists and also has compact support),
+- $f \in L^p$ and $g \in L^q$ with $1 \le 1/p + 1/q \le 2$, ensuring integrability (Young's convolution inequality).
 
+In physics, signals typically have finite energy or power, so these conditions are usually satisfied in practice.
+
+
+=== Properties of the convolution operation
+
+
+/ Commutativity:
+$
+  f * g = g * f
+$
+/ Associativity:
+$
+  f * (g * h) = (f * g) * h
+$
+/ Distributivity:
+$
+  f * (g + h) = f * g + f * h
+$
+/ Identity element:
+$
+  f * delta = f
+$
+/ Time reversal:
+$
+  (f * g)(-t) = f(-t) * g(-t)
+$
+/ Conjugation:
+$
+  overline(f * g) = overline(f) * overline(g)
+$
+/ Differentiation:
+$
+  (dif ) / (dif t) (f * g) = (dif f ) / (dif t) * g = f * (dif g ) / (dif t)
+$
+/ Integration:
+$
+  integral_(-infinity)^(+infinity) (f * g)(t) dif t = (integral_(-infinity)^(+infinity) f(t) dif t) thin (integral_(-infinity)^(+infinity) g(t) dif t)
+$
+/ Green function $G$ of a system with impulse response $h$:
+$
+  h * G = delta quad text("by definition")
+$
+
+=== Eigen functions of a LTI system
+An eigenfunction is a function $f$ for which the output of the operator is the same function, scaled by some constant:
+$
+  H{f} = lambda f thin,
+$
+where $lambda$ is the eigenvalue (a constant).
+
+Complex exponential functions are eigenfunctions of any LTI system. That is, when a complex exponential is applied as input to an LTI system, the output is simply a scaled version of the input:
+$
+  h * e^(j omega t) = lambda thin e^(j omega t)
+$
+
+$
+  h * e^(j omega t) &= integral_RR h(tau) thin e^(j omega (t - tau)) thin dif tau \
+  &= integral_RR h(tau) thin e^(j omega t) thin e^(-j omega tau) thin dif tau \
+  &= underbrace(e^(j omega t), text("eigen")\ text("function")) thin underbrace(integral_RR h(tau) thin e^(-j omega tau) thin dif tau, lambda text("(scalar)"))
+$
 = Fourier representation
 
 == Fourier series
@@ -547,6 +675,35 @@ $
 
 == Definitions
 
+=== Random signals
+A random signal $X(t,s)$, also known as a stochastic process, is a function of time (or another variable) whose amplitude at any given time $t$ is a random variable.
+It is a set of functions of $t$, the set being indexed by $s$ as illustrated in #ref(<fig-random-signal>). A random signal is thus a bivariate quantity. When $s=s_i$ is fixed, we get a realization of the random process, denoted $X(t,s_i)$ or, more simply, $X_i (t)$. When $t$ is fixed, the random process reduces to a simple random variable. A random signal can be either continuous or discrete in time or value.
+
+A random signal is *wide-sense stationary* if its mean and autocovariance are finite and independent of the choice of the origin of time:
+/* #math.equation(
+  block: true,
+  $&EE[X(t)] = mu , quad forall t in RR \
+  &EE[X(t) thin X^*(t + tau)] = gamma_X (tau)$,
+)<eq-random-stationnary> */
+/* $
+  & EE[X^2(t)] < infinity , quad forall t in RR \
+  //$<eq-random-stationnary-finite>
+  //$
+  & EE[X(t)] = mu , quad forall t in RR \
+  //$<eq-random-stationnary-mean>
+  //$
+  & EE[X(t) thin X^*(t + tau)] = gamma_X (tau) , quad forall t in RR .
+$<eq-random-stationnary> */
+$
+  EE[X^2(t)] < infinity , quad forall t in RR
+$<eq-random-stationnary-finite>
+$
+  EE[X(t)] = mu , quad forall t in RR
+$<eq-random-stationnary-mean>
+$
+  EE[X(t) thin X^*(t + tau)] = gamma_X (tau)
+$<eq-random-stationnary-correlation>
+$gamma_X (tau)$ is the correlation function.
 
 
 #bibliography("reference.bib", style: "american-geophysical-union")

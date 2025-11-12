@@ -7,11 +7,18 @@
 #import "@preview/equate:0.3.2": equate
 
 
+#let V(x) = math.bold(x)
+#let M(x) = math.bold(x)
+#let Vx = V([x])
+#let Vy = V([y])
+#let MH = M([H])
 
 // Macros
 #let eg = [_e.g._]
 #let ie = [_i.e._]
 #let etc = [_etc._]
+
+
 
 #let project(
   title: "",
