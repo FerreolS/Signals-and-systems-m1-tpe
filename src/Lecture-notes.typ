@@ -726,7 +726,8 @@ $
 $b_n$ and $c_n$ will describe the even and odd components of $x$ respectively.
 
 
-== Analysis and synthesis equations
+== Fourier Series Representation of Continuous Periodic Signal
+<sec-FourierSeries-continuous>
 
 The idea of decomposing any periodic function into the sum of simple oscillating functions was initially of proposed by Fourier in 1807. He stated that any periodic function $x(t)$ of period $T$ can be represented as a sum of complex exponentials of frequencies that are integer multiples of the fundamental frequency $omega_0 = (2 pi) / T$ as in the synthesis @eq-harmonic.
 
@@ -961,7 +962,7 @@ Demonstration:
 
 
 == Properties of Fourier Series
-
+<sec-FSeries-properties>
 
 / Linearity:
 $
@@ -1006,7 +1007,77 @@ $
 
 
 
-== Fourier Series of Discrete signals
+== Fourier Series Representation of Discrete Periodic Signals
+
+From @eq-discrete-periodic, a discrete time  signal is periodic with  period $N$ if:
+#math.equation(
+  block: true,
+  $x[n] = x[n + N], quad forall n in NN$,
+)<eq-discrete-periodic2>
+The fundamental frequency is $ω_0 = (2 π)/ N$ is defined from the fundamental period $N$, the smallest integer for which the    @eq-discrete-periodic2 holds.
+
+The set of all discrete time complex exponentials that are periodic with period $N$ is finite and given by:
+$
+  { e^(j thin ω_0 thin k thin n) thick : thick k = 0, 1, ..., N-1 }
+$
+as for any $k>=N$ or $k<0$:
+$
+  e^(j thin ω_0 thin k thin n) = e^(j thin ω_0 (k mod N) thin n)
+$
+
+=== Analysis-Synthesis Equations
+As for continous-time signal described @sec-FourierSeries-continuous, any discrete periodic signal $x[n]$ of period $N$ can be expressed as a weighted sum of these complex exponentials. The  analysis synthesis equation for discrete-time Fourier series are:
+#rect(fill: silver)[
+  $
+    hat(x)[k] & = 1/N ∑_(n=1)^(N) x[n] thin e^(-j thin omega_0 thin k thin n ), &  text(weight: "bold", "    analysis") \
+    //#label("eq-fourier-analysis") \
+         x[n] & = ∑_(k=1)^(N) hat(x)[k]thin e^(j thin ω_0 thin k thin n).       & text(weight: "bold", "    synthesis") // #label("eq-fourier-synthesis")
+  $
+]
+In these equations, the limits of the summation can be any contigous
+range in $NN$ (#eg $k=0,1,dots,N-1$ or $k= 1,2,dots,N$).
+
+
+=== Parseval Theorem:
+The Parseval theorem holds equivalently in discrete-time:
+#rect(fill: silver)[$
+  ∑_(n=1)^(n=N) abs(x[n])^2 = ∑_(k=1)^(k=N) abs(hat(x)[k])^2
+$ <eq-Parseval-series>]
+
+
+
+=== Properties of Discrete Time Fourier Series
+The properties of Fourier series decomposition for discrete time signal are similar to the continuous signal ones described in @sec-FSeries-properties.
+
+#show table.cell: set text(size: 9pt)
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    align: (left, center, center),
+    stroke: 0.5pt + silver,
+    table.header([*Property*], [*Time Domain*], [*Frequency Domain*]),
+    [Linearity], $z[n] = a thin x[n] + b thin y[n]$, $hat(z)[k] = a thin hat(x)[k] + b thin hat(y)[k]$,
+
+    [Time Shifting], $y[n] = x[n - n_0]$, $hat(y)[k] = e^(-j thin omega_0 thin k thin n_0) hat(x)[k]$,
+
+    [Time Reversal], $y[n] = x[-n]$, $hat(y)[k] = hat(x)[-k]$,
+
+    [Frequency Shifting], $y[n] = e^(j thin omega_0 thin k_0 thin n) thin x[n]$, $hat(y)[k] = hat(x)[k - k_0]$,
+
+    [Multiplication], $z[n] = x[n] thin y[n]$, $hat(z)[k] = sum_(ell=0)^(N-1) hat(x)[ell] thin hat(y)[k - ell]$,
+
+    [Conjugation], $y[n] = conj(x[n])$, $hat(y)[k] = conj(hat(x)[-k])$,
+
+    [First Difference], $y[n] = x[n] - x[n-1]$, $hat(y)[k] = (1 - e^(-j thin omega_0 thin k)) hat(x)[k]$,
+
+    [Symmetry for Real Signals], $x[n] in RR$, $hat(x)[-k] = conj(hat(x)[k])$,
+
+    [Even Real Signals], $x[n] = x[-n] in RR$, $hat(x)[k] in RR$,
+
+    [Odd Real Signals], $x[n] = -x[-n] in RR$, $hat(x)[k] in j thin RR$,
+  ),
+  caption: [Properties of Discrete Time Fourier Series],
+) <table-discrete-fourier-properties>
 
 = Fourier transform
 
