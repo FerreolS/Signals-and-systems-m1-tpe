@@ -2,7 +2,10 @@
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
 #import "@preview/cetz:0.4.2": canvas, draw, matrix, vector
 #import "@preview/suiji:0.4.0": *
+#import "@preview/cetz-plot:0.1.3": plot
+
 #let rng = gen-rng(42)
+#let opts = (x-tick-step: none, y-tick-step: none, size: (4, 2))
 
 
 #let firstpage = [
@@ -189,7 +192,7 @@ For example, the daily average temperature measured at a weather station is a di
 
 A discrete signal (or discrete time signal) should not be confused with discrete valued signal (which can be either continuous or discrete time). A discrete valued signal also called quantized signal can take only a finite or countable number of values. An example of a discrete valued signal is a digital signal used in digital electronics, which can take only two values (0 and 1).
 
-=== Periodic signals
+=== Periodic signals<sec-periodic-signal>
 A periodic signal is a signal that repeats itself at regular intervals over time. A continuous signal $x(t)$ is periodic if there exists a positive $T$ (the period) that satisfies the condition:
 #math.equation(
   block: true,
@@ -201,46 +204,7 @@ Discrete periodic signals are defined analogously. A discrete signal $x[n]$ is p
 #math.equation(
   block: true,
   $x[n] = x[n + N], quad forall n in NN$,
-) <eq-discrete-periodic>
-
-#margin-note[
-  #figure(
-    canvas(length: 1cm, {
-      import draw: *
-
-      let f = 1
-      let A = 1
-      let samples = 50
-      let t-max = 2
-
-      // Draw axes
-      line((-t-max - 0.1, 0), (t-max + 0.5, 0), mark: (end: ">"))
-      content((t-max + 0.5, -0.3), $t$)
-
-      line((0, -A - 0.5), (0, A + 0.5), mark: (end: ">"))
-      content((-0.3, A + 0.5), $X_i(t)$)
-
-      // Draw the sinusoidal curve
-      let noise = ()
-      for c in (blue, red, green) {
-        let prev-point = none
-        for i in range(-samples, samples + 1) {
-          (rng, noise) = normal(rng)
-          let t = i / samples * t-max
-          let noise-amp = 0.2 * A
-          let x = A * calc.sin(2 * calc.pi * f * t) * calc.exp(-calc.abs(t)) + noise-amp * noise
-          let curr-point = (t, x)
-
-          if prev-point != none {
-            line(prev-point, curr-point, stroke: c + 1.5pt)
-          }
-          prev-point = curr-point
-        }
-      }
-    }),
-    caption: [Three realizations of a non-stationary random signal],
-  ) <fig-random-signal>
-]
+)<eq-discrete-periodic>
 
 
 === Energy
@@ -537,9 +501,7 @@ Then for any LTI systems, its output depends only on the input and its impulse r
 $
   y[n] = sum_(k = -infinity)^(+infinity) x[k] thin h[n-k]
 $
-This is  a  *convolution sum* or superposition sum  and the oper-
-ation on the right-hand side is known as the convolution of the sequences x[n]
-and h[n].  This convolution is denoted with the symbol $*$ as in :
+This is a *convolution sum* or superposition sum, and the operation on the right-hand side is known as the convolution of the sequences x[n] and h[n].  This convolution is denoted with the symbol $*$ as in :
 $
   y[n] = (x * h)[n].
 $
@@ -556,8 +518,8 @@ $
 
 == Continuous time LTI system
 
-=== Continous time linear system
-Lets define, $h(t, tau)$  the response at time $t$ to a unit impulse $delta(t - tau)$ applied at time $tau$.
+=== Continuous time linear system
+Let us define $h(t, tau)$ as the response at time $t$ to a unit impulse $delta(t - tau)$ applied at time $tau$.
 Similarly to the discrete case, the output of the system is:
 $
   y(t) = integral_(-infinity)^(+infinity) x(tau) thin h(t, tau) dif tau
@@ -567,7 +529,7 @@ the weight on the impulse $delta(t- tau)$ is $x(tau)$) this @eq-continuous-linea
 the superposition of the responses to each of these inputs, and by linearity, the weight
 on the response $h(t,tau)$ to the shifted impulse $delta(t- tau)$ is also $x(tau)$.
 
-=== Continous time linear time invariant system
+=== Continuous time linear time invariant system
 If, in addition to being linear, the system is time invariant, its response no longer depends on the instant $tau$ where the impulse was applied but only on the time difference $t - tau$:
 $
   h (t, tau) = h (t - tau)thin.
@@ -621,7 +583,7 @@ $
 $
 / Conjugation:
 $
-  overline(f * g) = overline(f) * overline(g)
+  conj(f * g) = conj(f) * conj(g)
 $
 / Differentiation:
 $
@@ -636,8 +598,8 @@ $
   h * G = delta quad text("by definition")
 $
 
-=== Eigen functions of a LTI system
-An eigenfunction is a function $f$ for which the output of the operator is the same function, scaled by some constant:
+=== Eigenfunctions of an LTI system
+An eigenfunction is a function $f$ for which the output of the operator is the same function scaled by some constant:
 $
   H{f} = lambda f thin,
 $
@@ -647,21 +609,406 @@ Complex exponential functions are eigenfunctions of any LTI system. That is, whe
 $
   h * e^(j omega t) = lambda thin e^(j omega t)
 $
+Demonstration
+#math.equation(
+  block: true,
+  $
+    h * e^(j omega t) &= integral_RR h(tau) thin e^(j omega (t - tau)) thin dif tau \
+    &= integral_RR h(tau) thin e^(j omega t) thin e^(-j omega tau) thin dif tau \
+    &= underbrace(e^(j omega t), text("eigen")\ text("function")) thin underbrace(integral_RR h(tau) thin e^(-j omega tau) thin dif tau, lambda text("(scalar)"))
+  $,
+)
+This property is extremely important because the effect of an LTI system on a linear combination of complex exponentials is, thanks to the superposition property, the same complex exponentials weighted by the eigenvalues $lambda$ that can be computed independently once and for all.
 
-$
-  h * e^(j omega t) &= integral_RR h(tau) thin e^(j omega (t - tau)) thin dif tau \
-  &= integral_RR h(tau) thin e^(j omega t) thin e^(-j omega tau) thin dif tau \
-  &= underbrace(e^(j omega t), text("eigen")\ text("function")) thin underbrace(integral_RR h(tau) thin e^(-j omega tau) thin dif tau, lambda text("(scalar)"))
-$
-= Fourier representation
+If we can decompose any input signal as a sum of complex exponentials, then computing the output of any LTI system is trivial:
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+    h *(a_1 e^(j omega_1 t) + a_2 e^(j omega_2 t)) &= a_1 thin h * e^(j omega_1 t) + a_2 thin h * e^(j omega_2 t)\
+    &=a_1 thin lambda_1 thin e^(j omega_1 t) + a_2 thin lambda_2 thin e^(j omega_2 t).
+  $,
+)
+with
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+    lambda_1 & = integral_RR h(tau) thin e^(-j omega_1 tau) thin dif tau \
+    lambda_2 & = integral_RR h(tau) thin e^(-j omega_2 tau) thin dif tau
+  $,
+)
 
-== Fourier series
+
+= Fourier Series
+
+To use the fact the complex exponentials are eigenfunction of LTI systems, one has to decompose the input signal in complex exponentials. First we will see that any periodic signals can be decomposed as a sum of complex exponential functions and how thanks to Fourier series, than we will expand to any aperiodic signals (using Fourier transform).
 
 == Harmonic Signals
 
-== Linear Time Invariant systems
+As stated in @sec-periodic-signal, a signal is periodic if for some $T>0$:
+$
+  x(t) = x(t + T), quad forall t in RR .
+$
 
-== Fourier transform
+
+A complex exponential $e^(j omega t)$ is periodic of period $T$ if and only if
+#math.equation(
+  block: true,
+  $
+        & e^(j omega t) & = & e^(j omega (t +T)) \
+        &               & = & e^(j omega t) e^(j omega T) \
+    <=> & e^(j omega T) & = & 1 \
+    <=> & omega         & = & n thin (2 pi) / T, quad forall n in ZZ
+  $,
+)
+Every  signal $x(t)$ that is linear combination of complex exponentials, periodic of period $T$ can be expressed as:
+$
+  x(t) = sum_(k=-infinity)^(+infinity) a_k e^(j k thin omega_0 ),
+$<eq-harmonic>
+where $omega_0 = (2 pi) / T$ is the fundamental frequency (or pulsation). This @eq-harmonic is referred to as the synthesis equation. The signal $x$ is a *harmonic signal* with frequencies that are integer multiples of the fundamental frequency $omega_0$ (the harmonics). The coefficients $a_k = rho_k thin e^(j thin phi_n)$ are complex and can also be expressed in terms of phase and amplitude. The component $a_0$ corresponding to the mean of $x$ is sometimes called the DC component.
+
+=== Real harmonic signal
+/* Real harmonic signals are the real part of complex harmonic signals:
+#math.equation(
+  block: true,
+  $
+    x(t) & =sum_(k=-infinity)^(+infinity) Re(a_k e^(j k thin omega_0 )).
+    //       & = sum_(k=-infinity)^(+infinity) b_k cos(k thin omega_0),
+  $,
+) */
+#margin-note(rect(fill: silver)[
+  #align(center)[*Euler formulae*]
+  #math.equation(
+    block: true,
+    numbering: none,
+    $
+      cos(theta) & = (e^(j thin theta) + e^(-j thin theta) )/2 \
+      sin(theta) & = (e^(j thin theta) - e^(-j thin theta) )/(2j)
+    $,
+  )])
+Using Euler formula and defining  $a_k = b_k + j c_k$, we can rewrite @eq-harmonic:
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+    x(t) // = &sum_(k=-infinity)^(+infinity)( Re(a_k) e^(j k thin omega_0 ) + j thin Im(c_(k)) e^(j k thin omega_0 )), \
+    = & a_0 + sum_(n=1)^(+infinity)( a_n e^(j n thin omega_0 ) + a_(-n) e^(-j n thin omega_0 )) \
+    = & a_0 + sum_(n=1)^(+infinity) ((a_n + a_(-n))/2 cos(n thin omega_0) - j (a_n - a_(-n))/(2) sin(n thin omega_0)) \
+    = & a_0 + sum_(n=1)^(+infinity) ((Re(a_n) + Re(a_(-n)))/2 cos(n thin omega_0) + (Im(a_n) - Im(a_(-n)))/(2) sin(n thin omega_0)) \
+    & + j sum_(n=1)^(+infinity)( (Im(c_n) + Im(c_(-n)))/2 cos(n thin omega_0) - (Re(c_n) - Re(c_(-n)))/2 sin(n thin omega_0))
+    //       & = sum_(k=-infinity)^(+infinity) b_k cos(k thin omega_0),
+  $,
+)
+
+Real harmonic signals are  complex harmonic signals with zero imaginary part:
+#math.equation(
+  block: true,
+  $
+    x(t) & =sum_(k=-infinity)^(+infinity) Re(a_k e^(j k thin omega_0 )), &\
+    & = a_0 + sum_(n=1)^(+infinity) ((Re(a_n) + Re(a_(-n)))/2 cos(n thin omega_0) + (Im(a_n) - Im(a_(-n)))/(2) sin(n thin omega_0)) &\
+    & = a_0 + sum_(n=1)^(+infinity) b_n cos(n thin omega_0) + c_n sin(n thin omega_0)) & \
+    & = a_0 + sum_(n=1)^(+infinity) rho_n cos(n thin omega_0 + phi_n) &
+  $,
+)
+where we define:
+$
+    b_n & =(Re(a_n) + Re(a_(-n)))/2    &                                                  \
+    c_n & = (Im(a_n) - Im(a_(-n)))/(2) &                                                  \
+  rho_n & = sqrt(b_n^2 + c_n^2)        & text(weight: "bold", "cartesian representation") \
+  phi_n & = arctan(c_n/b_n)            &     text(weight: "bold", "polar representation") \
+    a_n & = cases(
+            1/2 (b_n - j thin c_n) quad & "if" n < 0 thin ",",
+            a_n quad & "if" n = 0 thin ",",
+            1/2 (b_n + j thin c_n) quad & "if" n > 0 thin ".",
+          )                            &
+$
+$b_n$ and $c_n$ will describe the even and odd components of $x$ respectively.
+
+
+== Analysis and synthesis equations
+
+The idea of decomposing any periodic function into the sum of simple oscillating functions was initially of proposed by Fourier in 1807. He stated that any periodic function $x(t)$ of period $T$ can be represented as a sum of complex exponentials of frequencies that are integer multiples of the fundamental frequency $omega_0 = (2 pi) / T$ as in the synthesis @eq-harmonic.
+
+To determine Fourier coefficients $a_k$ from any periodic function $x(t)$ of period $T$ we will use two properties of periodic signal:
+- the integration of a periodic signal $x$ over any interval of length equals to its period $T$ is:
+$
+  integral_(T) x(t) thin dif t = integral_(t_0)^(t_0+T) x(t) thin dif t, quad forall t in RR.
+$
+- the integral of a complex exponential over a period $T$ is zero  excepted for $k=0$:
+#math.equation(
+  block: true,
+  $
+    1/T integral_T e^(-j k thin omega_0 t) thin dif t & = cases(
+                                                          1 quad k=0,
+                                                          0 quad text("otherwise")
+                                                        ) \
+                                                      & = delta[k]
+  $,
+)
+
+
+If any periodic signal $x(t)$ can be expressed as a weighted sum of complex exponentials thanks to the synthesis @eq-harmonic, then we can compute its correlation with a complex exponential of frequency $k omega_0$ for any $k in ZZ$ as fol lows:
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+    1/T integral_T x(t) thin e^(-j k thin omega_0 t) thin dif t & = 1/T integral_T sum_(ell=-infinity)^(+infinity) a_ell thin e^(j ell thin omega_0 t) thin e^(-j k thin omega_0 t) thin dif t, \
+    & = 1/T integral_T sum_(ell=-infinity)^(+infinity) a_ell thin e^(j (ell - k) thin omega_0 t) thin dif t, \
+    & = 1/T sum_(ell=-infinity)^(+infinity) integral_T a_ell thin e^(j (ell - k) thin omega_0 t) thin dif t, \
+    & = a_ell thin delta[ell - k],\
+    & = a_k
+  $,
+)
+
+This defines the #emph("analysis synthesis") set of equations of the Fourier series:
+#rect(fill: silver)[
+  $
+    hat(x)_k & = 1/T ∫_(t_0)^(t_0 + T) x(t) thin e^(-j k thin omega_0 t) thin dif t, & text(weight: "bold", "    analysis") \
+    //#label("eq-fourier-analysis") \
+    x(t) & = ∑_(k=-∞ )^(+∞) a_k e^(j k thin ω₀). & text(weight: "bold", "    synthesis") // #label("eq-fourier-synthesis")
+  $
+]
+Depending on the field, the Fourier series coefficients $hat(x)_k$ can be also denoted $hat(x)[k]$ or $X[k]$.
+
+
+== Convergence of Fourier Series
+
+/*
+#margin-note[
+  #figure(
+    canvas(
+      length: 1cm,
+      {
+        import draw: *
+        let order = 50
+        let f = 0.4
+        let A = 1
+        let samples = 150
+        let t-max = 2
+
+        // Draw axes
+        line((-t-max - 0.1, 0), (t-max + 0.5, 0), mark: (end: ">"))
+        content((t-max + 0.5, -0.3), $t$)
+
+        line((0, -A - 0.5), (0, A + 0.5), mark: (end: ">"))
+        content((-0.3, A + 0.5), $x_i(t)$)
+
+
+        let prev-point = none
+        for i in range(-samples, samples + 1) {
+          let t = i / samples * t-max
+          let x = A * sign(calc.sin(2 * calc.pi * f * t))
+          let curr-point = (t, x)
+          if prev-point != none {
+            line(prev-point, curr-point, stroke: 1.1pt)
+          }
+          prev-point = curr-point
+        }
+
+        let prev-point = none
+        for i in range(-samples, samples + 1) {
+          let t = i / samples * t-max
+          let x = 0 // 4 / calc.pi * calc.sin(2 * calc.pi * f * t)
+          for k in range(1, order) {
+            if calc.odd(k) {
+              x += A * 4 / calc.pi / k * calc.sin(2 * k * calc.pi * f * t)
+            }
+          }
+          let curr-point = (t, x)
+          if prev-point != none {
+            line(prev-point, curr-point, stroke: blue + 1.1pt)
+          }
+          prev-point = curr-point
+        }
+      },
+    ),
+    caption: [Gibbs phenomena],
+  ) <fig-gibbs>
+]
+
+ */
+The question of the convergence of Fourier series, #ie does all periodic function can be represented by its Fourier series?, was only solved by Dirichlet in 1829. He showed that the Fourier series of a periodic function $x(t)$ converges to $x(t)$ at all points where $x$ is continuous and to the average of the left-hand and right-hand limits at points of discontinuity, provided that:
+- $x(t)$ is absolutely integrable over a period, #ie $integral_(T) abs(x(t)) thin dif t < infinity$
+- $x(t)$ has a finite number of maxima and minima in any given period,
+- $x(t)$ has a finite number of discontinuities in any given period.
+
+#margin-note[
+
+  #let f = 0.4
+  #let A = 1
+  #let samples = 150
+  #let t-max = 2
+  #let square(x) = A * sign(calc.sin(2 * calc.pi * f * x))
+  #let square_serie(x, order: 5) = {
+    let y = 0
+    for k in range(1, order + 1) {
+      if calc.odd(k) {
+        y += A * 4 / calc.pi / k * calc.sin(2 * k * calc.pi * f * x)
+      }
+    }
+    return y
+  }
+  #figure(
+    canvas(
+      length: 1cm,
+      {
+        import draw: *
+
+        plot.plot(
+          ..opts,
+          x-format: plot.formats.multiple-of,
+          y-min: -1.5,
+          y-max: 1.5,
+          legend: "inner-north",
+          axis-style: "school-book",
+          {
+            let domain = (-t-max, +t-max)
+            plot.add(square, samples: samples, domain: domain, style: (stroke: black))
+            plot.add(x => square_serie(x, order: 1), samples: samples, domain: domain, style: (stroke: blue))
+            plot.add(x => square_serie(x, order: 3), samples: samples, domain: domain, style: (stroke: red))
+            plot.add(x => square_serie(x, order: 5), samples: samples, domain: domain, style: (stroke: green))
+            // plot.add(x => square_serie(x, order: 100), samples: samples * 10, domain: domain, style: (stroke: silver))
+          },
+        )
+      },
+    ),
+    caption: [First ($N=1,3,5$) orders of the Fourier series of a square wave],
+  ) <fig-square>
+
+  #figure(
+    canvas(
+      length: 1cm,
+      {
+        import draw: *
+
+        plot.plot(
+          ..opts,
+          x-format: plot.formats.multiple-of,
+          y-min: -1.5,
+          y-max: 1.5,
+          legend: "inner-north",
+          axis-style: "school-book",
+          {
+            let domain = (-0.75, 1.5)
+            plot.add(square, samples: samples, domain: domain, style: (stroke: black))
+            plot.add(
+              x => square_serie(x, order: 50),
+              samples: samples * 10,
+              domain: domain,
+              style: (stroke: blue + 0.5pt),
+            )
+            plot.add-anchor("pt", (1, 1))
+          },
+        )
+      },
+    ),
+    caption: [Gibbs phenomena  on the Fourier series (order $N=50$) of a square wave],
+  ) <fig-gibbs>
+]
+
+The point-wise convergence is only _almost everywhere_, meaning that the Fourier series may not converge to $x(t)$ for some points, #ie at discontinuities. Indeed, a truncated Fourier series approximation of a discontinuous signal will in general exhibit high-frequency ripples and overshoot x(t) near the discontinuities. These ripples, known as _Gibbs phenomena_, are present no matter how large the approximation order, as seen in @fig-gibbs (at least $9%$ overshoot for a unit square wave). However, large enough approximation order can always be chosen so as to guarantee that the total energy in these ripples is insignificant.
+$
+  lim_(N->+infinity) integral_T abs(x(t) - sum_(k=-N)^(k=+N) hat(x)_k thin e^(j thin k thin omega_0 thin t))^2 dif t = 0
+$
+
+/*
+However, the Fourier series of a periodic function $x(t)$ converges to $x(t)$ in the mean square sense if $x(t)$ is square integrable over a period, #ie $integral_(T) abs(x(t))^2 thin dif t < infinity$. */
+
+
+
+
+== Orthonormal basis of harmonic signals space
+The space of square-integrable periodic functions on the period $[0,T]$ forms the Hilbert space $L^2([0,T])$. This space is equipped with the inner product:
+$ inner(f, g) = 1/T integral_0^T f(t) thin overline(g(t)) thin dif t, $<eq-inner-product>
+where $overline(g(t))$  is the complex conjugate of $g(t)$. This inner product induces the norm:
+$
+  norm(f) = sqrt(inner(f, f))
+$
+
+The scalar product between two complex exponentials is:
+#math.equation(
+  block: true,
+  $
+    < e^(j k thin omega_0 ),e^(j ell thin omega_0 )> & = 1/T integral_0^T e^(j k thin omega_0 ) thin e^(-j ell thin omega_0 ) thin dif t,\
+    & = 1/T integral_0^T e^(j (k- ell) thin omega_0 ) thin dif t \
+    & = delta[k -ell]
+  $,
+)
+That means that ${e^(j k thin omega_0 ) thick : thick k in ZZ}$ forms an *orthonormal basis* of  $L^2([0,T])$.  In other words, any square-integrable periodic function can be represented as a Fourier series as defined by the analysis-synthesis equations above.
+
+== Parseval theorem
+
+The Parseval theorem states that the energy of a signal $x(t)$ over a period $T$ is equal to the sum of the squared magnitudes of its Fourier series coefficients:
+
+#rect(fill: silver)[$
+  1/T ∫_0^T abs(x(t))^2 thin dif t = ∑_(k=-∞)^(k=+∞) abs(hat(x)_k)^2
+$ <eq-Parseval-series>]
+
+Demonstration:
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+    1/T ∫_0^T abs(x(t))^2 thin dif t & = 1/T integral_0^T x(t) thin conj(x)(t) thin dif t \
+    & = 1/T integral_0^T ∑_(k=-∞)^(k=+∞) hat(x)_k thin e^(j thin k thin ω_0 thin t) conj(∑_(k=-∞)^(k=+∞) hat(x)_k thin e^(j thin k thin ω_0 thin t)) thin dif t \
+    & = 1/T integral_0^T ∑_(k=-∞)^(k=+∞) hat(x)_k thin e^(j thin k thin ω_0 thin t) ∑_(k=-∞)^(k=+∞) conj(hat(x)_k) thin e^(-j thin k thin ω_0 thin t) thin dif t \
+    & = 1/T ∑_(k=-∞)^(k=+∞) ∑_(k'=-∞)^(k'=+∞) ∫_0^T hat(x)_k conj(hat(x)_k') thin e^(j thin (k - k') thin ω_0 thin t) thin dif t \
+    & =1/T ∑_(k=-∞)^(k=+∞) ∑_(k'=-∞)^(k'=+∞) hat(x)_k conj(hat(x)_k')thin T thin δ[k-k'] \
+    & = ∑_(k=-∞)^(k=+∞) abs(hat(x)_k)^2
+  $,
+)
+
+
+== Properties of Fourier Series
+
+
+/ Linearity:
+$
+  z(t) = a thin x(t) + b thin y(t) <=> hat(z)_k = a thin hat(x)_k + b thin hat(z)_k
+$
+/ Time Shifting:
+$
+  y(t) = x(t - t_0) <=>hat(y)_k = e^(j thin k thin ω_0 thin t_0) hat(x)_k
+$
+/ Time reversal:
+$
+  y(t) = x(-t) <=> hat(y)_k = hat(x)_(-k)
+$
+/ Frequency Shifting:
+$
+  y(t) = e^(j thin k_0 thin omega_0 thin t) thin x(t) <=> hat(y)_k = hat(x)_(k - k_0)
+$
+/ Multiplication:
+$
+  z(t) = x(t) thin y(t) <=> hat(z)_k = sum_(ell=-infinity)^(+infinity) hat(x)_ell thin hat(y)_(k - ell)
+$
+/ Conjugation:
+$
+  y(t) = conj(x(t)) <=> hat(y)_k = conj(hat(x)_(-k))
+$
+/ Differentiation:
+$
+  y(t) = (dif x(t)) / (dif t) <=> hat(y)_k = j thin k thin omega_0 thin hat(x)_k
+$
+/ Symmetry for real signals:
+$
+  x(t) in RR <=> hat(x)_(-k) = conj(hat(x)_k)
+$
+/ Even  real signals:
+$
+  x(t) = x(-t) in RR <=> hat(x)_k in RR
+$
+/ Odd  real signals:
+$
+  x(t) = -x(-t) in RR <=> hat(x)_k in j thin RR
+$
+
+
+
+== Fourier Series of Discrete signals
+
+= Fourier transform
 
 === Filtering
 
@@ -670,10 +1017,51 @@ $
 == Sampling<sec-sampling>
 
 
-= Signaux alléatoires
+= Random signals
 
 
 == Definitions
+
+
+#margin-note[
+  #figure(
+    canvas(length: 1cm, {
+      import draw: *
+
+      let f = 1
+      let A = 1
+      let samples = 50
+      let t-max = 2
+
+      // Draw axes
+      line((-t-max - 0.1, 0), (t-max + 0.5, 0), mark: (end: ">"))
+      content((t-max + 0.5, -0.3), $t$)
+
+      line((0, -A - 0.5), (0, A + 0.5), mark: (end: ">"))
+      content((-0.3, A + 0.5), $X_i(t)$)
+
+      // Draw the sinusoidal curve
+      let noise = ()
+      for c in (blue, red, green) {
+        let prev-point = none
+        for i in range(-samples, samples + 1) {
+          (rng, noise) = normal(rng)
+          let t = i / samples * t-max
+          let noise-amp = 0.2 * A
+          let x = A * calc.sin(2 * calc.pi * f * t) * calc.exp(-calc.abs(t)) + noise-amp * noise
+          let curr-point = (t, x)
+
+          if prev-point != none {
+            line(prev-point, curr-point, stroke: c + 1.5pt)
+          }
+          prev-point = curr-point
+        }
+      }
+    }),
+    caption: [Three realizations of a non-stationary random signal],
+  ) <fig-random-signal>
+]
+
 
 === Random signals
 A random signal $X(t,s)$, also known as a stochastic process, is a function of time (or another variable) whose amplitude at any given time $t$ is a random variable.

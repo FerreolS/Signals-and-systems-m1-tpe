@@ -12,11 +12,15 @@
 #let Vx = V([x])
 #let Vy = V([y])
 #let MH = M([H])
-
+#let inner(a, b) = $lr(chevron.l #a, #b chevron.r)$
+#let conj(a) = $overline(#a)$
 // Macros
 #let eg = [_e.g._]
 #let ie = [_i.e._]
 #let etc = [_etc._]
+
+
+#let sign(x) = if x == 0 { 0 } else { calc.abs(x) / x }
 
 
 
@@ -48,7 +52,7 @@
   set text(font: body-font, lang: "en")
   show math.equation: set text(weight: 400)
   show heading: set text(font: sans-font)
-  set heading(numbering: "1.1")
+  set heading(numbering: "1.1.a")
 
   // Set figure numbering to include chapter number
   set figure(numbering: n => numbering("1.1", counter(heading).get().first(), n))
@@ -77,6 +81,8 @@
     if it.level > 2 {
       parbreak()
       text(11pt, style: "normal", weight: "black", it.body + ":")
+      // text(it.numbering.at(3) + ") " + it.body + ":")
+      //it.numbering.last()
     } else {
       it
     }
