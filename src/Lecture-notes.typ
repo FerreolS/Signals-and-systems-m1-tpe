@@ -68,7 +68,7 @@ A continuous signal, written $x(t)$ and also called an analog signal, is a funct
 #margin-note[
   //#figure(
 
-  #grid(columns: 2, gutter: 0.6em)[
+  #grid(columns: 1, gutter: 0.6em)[
     #figure(
       canvas(length: 1cm, {
         import draw: *
@@ -239,7 +239,7 @@ $
   E = sum_(n=-infinity)^infinity |x[n]|^2
 $<eq-energy-discrete>
 $
-  P = lim_(N ->infinity) 1/(2N+1) sum_(-N)^N |x[n]|^2
+  P = lim_(N ->infinity) 1/(2N+1) sum_(n=-N)^N |x[n]|^2
 $<eq-power-discrete>
 
 It is important to remember that, in this lecture, the terms "power" and "energy" are used independently of whether these quantities are actually related to physical energy.
@@ -285,7 +285,7 @@ $
 $
 
 
-/ Time invariance: A system is said to be time invariant if its behavior does not change over time. This means delaying the input by some amount simply delays the output by the same amount:
+/ Time invariance: A system is said to be time-invariant if its behavior does not change over time. This means delaying the input by some amount simply delays the output by the same amount:
 $ y(t + tau) = H{x(t+ tau)} $
 
 === Modularity
@@ -327,7 +327,7 @@ There are many reasons to describe a problem as a system. Depending on the final
 == Representation of signals
 
 === Unit impulse
-In discrete time, the unit impulse also know as the delta function is the simplest discrete signal.
+In discrete time, the unit impulse, also known as the delta function, is the simplest discrete signal.
 #rect(fill: silver)[ $
     delta[n] = cases(
       1 quad & "if" n = 0 thin ",",
@@ -346,7 +346,7 @@ shifted unit impulses $delta[n- k]$, where the weights are $x[k]$. This is somet
 The coefficient for each basis function is simply $x[k]$.
 
 
-=== Dirac delta  function
+=== Dirac delta function
 In continuous time we do not have a discrete sequence of values, but we can think of a continuous unit impulse function $delta_{Delta}$ as a pulse of width $Delta$:
 $
   delta_(Delta)(t) = cases(
@@ -362,7 +362,7 @@ $
               & = sum_(k=-infinity)^(+infinity) integral_RR delta_(Delta)(t - k Delta) x(t) dif t
 $<eq-staircase>
 */
-As $Delta -> 0$, $delta_Delta$ approaches the Dirac delta distribution.
+As $Delta -> 0$, $delta_(Delta)$ approaches the Dirac delta distribution.
 The Dirac delta function (or distribution) is a generalized function on the real numbers, whose value is zero everywhere except at zero, and whose integral over the entire real line is equal to one:
 #rect(fill: silver)[
   $
@@ -385,7 +385,7 @@ With this Dirac delta distribution, similarly to the discrete case @eq-discrete-
 ]
 Again this can be viewed as a "weighted sum" of shifted impulses where the weight on the impulse  $delta(t - tau)$ is $x(tau)$. Contrary to the discrete case, the Dirac delta distribution does not, strictly speaking, define a basis of the space of continuous signals as $delta$ itself does not belong to this space.
 
-=== Properties of dirac delta distribution
+=== Properties of the Dirac delta distribution
 
 / Translation:
 $
@@ -448,7 +448,7 @@ $
 The condition to perfectly reproduce $f(t)$ from $f[n]$ will be treated in @sec-sampling.
 
 
-= Linear Time Invariant systems
+= Linear Time-Invariant Systems
 
 Among the properties of a system given in @sec-system, linearity and time invariance play a fundamental role in signal and system analysis. First, the linearity and time invariance properties are fortunately shared by numerous physical phenomena. In addition, signal and system analysis provides powerful tools to analyze LTI systems in great detail, going deep into their properties.
 
@@ -487,8 +487,8 @@ $
                                    ) dot vec(x_1, x_2, dots.v, x_(N-1))
 $
 
-=== Discrete time linear time invariant system
-If the linear system $H$ is also *time invariant* all $h_k [n]$ are time-shifted versions of a single sequence $h_0[n]$:
+=== Discrete-Time Linear Time-Invariant System
+If the linear system $H$ is also *time-invariant* all $h_k [n]$ are time-shifted versions of a single sequence $h_0[n]$:
 $
   h_k [n] = h_0[n - k]
 $
@@ -530,14 +530,14 @@ the weight on the impulse $delta(t- tau)$ is $x(tau)$) this @eq-continuous-linea
 the superposition of the responses to each of these inputs, and by linearity, the weight
 on the response $h(t,tau)$ to the shifted impulse $delta(t- tau)$ is also $x(tau)$.
 
-=== Continuous time linear time invariant system
-If, in addition to being linear, the system is time invariant, its response no longer depends on the instant $tau$ where the impulse was applied but only on the time difference $t - tau$:
+=== Continuous-Time Linear Time-Invariant System
+If, in addition to being linear, the system is time-invariant, its response no longer depends on the instant $tau$ where the impulse was applied but only on the time difference $t - tau$:
 $
   h (t, tau) = h (t - tau)thin.
 $
 With this definition, $h(t)$ is the  response of the system to the impulse $delta(t)$, that is the *impulse response* of the system.
 
-For _Linear Time Invariant_ system, @eq-continuous-linear become the *convolution integral*:
+For Linear Time-Invariant systems, @eq-continuous-linear becomes the *convolution integral*:
 #rect(fill: silver)[$
     y(t) = integral_(-infinity)^(+infinity) x(tau) thin h(t- tau) dif tau
   $<eq-continuous-convolution>
@@ -594,7 +594,7 @@ $
 $
   integral_(-infinity)^(+infinity) (f * g)(t) dif t = (integral_(-infinity)^(+infinity) f(t) dif t) thin (integral_(-infinity)^(+infinity) g(t) dif t)
 $
-/ Green function $G$ of a system with impulse response $h$:
+/ Green's function $G$ of a system with impulse response $h$:
 $
   h * G = delta quad text("by definition")
 $
@@ -644,7 +644,7 @@ with
 
 = Fourier Series
 
-To use the fact the complex exponentials are eigenfunction of LTI systems, one has to decompose the input signal in complex exponentials. First we will see that any periodic signals can be decomposed as a sum of complex exponential functions and how thanks to Fourier series, than we will expand to any aperiodic signals (using Fourier transform).
+To use the fact that complex exponentials are eigenfunctions of LTI systems, one has to decompose the input signal into complex exponentials. First, we will see that any periodic signal can be decomposed as a sum of complex exponentials via Fourier series; then we will extend to aperiodic signals (using the Fourier transform).
 
 == Harmonic Signals
 
@@ -668,7 +668,7 @@ Every  signal $x(t)$ that is linear combination of complex exponentials, periodi
 $
   x(t) = sum_(k=-infinity)^(+infinity) a_k e^(j k thin omega_0 ),
 $<eq-harmonic>
-where $omega_0 = (2 pi) / T$ is the fundamental frequency (or pulsation). This @eq-harmonic is referred to as the synthesis equation. The signal $x$ is a *harmonic signal* with frequencies that are integer multiples of the fundamental frequency $omega_0$ (the harmonics). The coefficients $a_k = rho_k thin e^(j thin phi_n)$ are complex and can also be expressed in terms of phase and amplitude. The component $a_0$ corresponding to the mean of $x$ is sometimes called the DC component.
+where $omega_0 = (2 pi) / T$ is the fundamental frequency (or pulsation). This @eq-harmonic is referred to as the synthesis equation. The signal $x$ is a *harmonic signal* with frequencies that are integer multiples of the fundamental frequency $omega_0$ (the harmonics). The coefficients $a_k = rho_k thin e^(j thin phi_k)$ are complex and can also be expressed in terms of phase and amplitude. The component $a_0$ corresponding to the mean of $x$ is sometimes called the DC component.
 
 === Real harmonic signal
 /* Real harmonic signals are the real part of complex harmonic signals:
@@ -694,7 +694,7 @@ Using Euler formula and defining  $a_k = b_k + j c_k$, we can rewrite @eq-harmon
   block: true,
   numbering: none,
   $
-    x(t) // = &sum_(k=-infinity)^(+infinity)( Re(a_k) e^(j k thin omega_0 ) + j thin Im(c_(k)) e^(j k thin omega_0 )), \
+    x(t) // = &sum_(k=-infinity)^(+infinity)( Re(a_k) e^(j k thin omega_0 ) + j thin Im(c_k) e^(j k thin omega_0 )), \
     = & a_0 + sum_(n=1)^(+infinity)( a_n e^(j n thin omega_0 ) + a_(-n) e^(-j n thin omega_0 )) \
     = & a_0 + sum_(n=1)^(+infinity) ((a_n + a_(-n))/2 cos(n thin omega_0) - j (a_n - a_(-n))/(2) sin(n thin omega_0)) \
     = & a_0 + sum_(n=1)^(+infinity) ((Re(a_n) + Re(a_(-n)))/2 cos(n thin omega_0) + (Im(a_n) - Im(a_(-n)))/(2) sin(n thin omega_0)) \
@@ -728,10 +728,10 @@ $
 $b_n$ and $c_n$ will describe the even and odd components of $x$ respectively.
 
 
-== Fourier Series Representation of Continuous Periodic Signal
+== Fourier Series Representation of Continuous Periodic Signals
 <sec-FourierSeries-continuous>
 
-The idea of decomposing any periodic function into the sum of simple oscillating functions was initially of proposed by Fourier in 1807. He stated that any periodic function $x(t)$ of period $T$ can be represented as a sum of complex exponentials of frequencies that are integer multiples of the fundamental frequency $omega_0 = (2 pi) / T$ as in the synthesis @eq-harmonic.
+The idea of decomposing any periodic function into the sum of simple oscillating functions was initially  proposed by Fourier in 1807. He stated that any periodic function $x(t)$ of period $T$ can be represented as a sum of complex exponentials of frequencies that are integer multiples of the fundamental frequency $omega_0 = (2 pi) / T$ as in the synthesis @eq-harmonic.
 
 To determine Fourier coefficients $a_k$ from any periodic function $x(t)$ of period $T$ we will use two properties of periodic signal:
 - the integration of a periodic signal $x$ over any interval of length equals to its period $T$ is:
@@ -751,7 +751,7 @@ $
 )
 
 
-If any periodic signal $x(t)$ can be expressed as a weighted sum of complex exponentials thanks to the synthesis @eq-harmonic, then we can compute its correlation with a complex exponential of frequency $k omega_0$ for any $k in ZZ$ as fol lows:
+If any periodic signal $x(t)$ can be expressed as a weighted sum of complex exponentials thanks to the synthesis @eq-harmonic, then we can compute its correlation with a complex exponential of frequency $k omega_0$ for any $k in ZZ$ as follows:
 #math.equation(
   block: true,
   numbering: none,
@@ -764,7 +764,7 @@ If any periodic signal $x(t)$ can be expressed as a weighted sum of complex expo
   $,
 )
 
-This defines the #emph("analysis synthesis") set of equations of the Fourier series:
+This defines the #emph("analysis–synthesis") set of equations of the Fourier series:
 #rect(fill: silver)[
   $
     hat(x)_k & = 1/T ∫_(t_0)^(t_0 + T) x(t) thin e^(-j k thin omega_0 t) thin dif t, & text(weight: "bold", "    analysis") \
@@ -772,7 +772,7 @@ This defines the #emph("analysis synthesis") set of equations of the Fourier ser
     x(t) & = ∑_(k=-∞ )^(+∞) a_k e^(j k thin ω₀). & text(weight: "bold", "    synthesis") // #label("eq-fourier-synthesis")
   $
 ]
-Depending on the field, the Fourier series coefficients $hat(x)_k$ can be also denoted $hat(x)[k]$ or $X[k]$.
+Depending on the field, the Fourier series coefficients $hat(x)_k$ can also be denoted $hat(x)[k]$ or $X[k]$.
 
 
 == Convergence of Fourier Series
@@ -831,10 +831,6 @@ Depending on the field, the Fourier series coefficients $hat(x)_k$ can be also d
 ]
 
  */
-The question of the convergence of Fourier series, #ie does all periodic function can be represented by its Fourier series?, was only solved by Dirichlet in 1829. He showed that the Fourier series of a periodic function $x(t)$ converges to $x(t)$ at all points where $x$ is continuous and to the average of the left-hand and right-hand limits at points of discontinuity, provided that:
-- $x(t)$ is absolutely integrable over a period, #ie $integral_(T) abs(x(t)) thin dif t < infinity$
-- $x(t)$ has a finite number of maxima and minima in any given period,
-- $x(t)$ has a finite number of discontinuities in any given period.
 
 #margin-note[
 
@@ -876,7 +872,7 @@ The question of the convergence of Fourier series, #ie does all periodic functio
         )
       },
     ),
-    caption: [First ($N=1,3,5$) orders of the Fourier series of a square wave],
+    caption: [eq-fourier-transform-synthesis ($N=1,3,5$) orders of the Fourier series of a square wave],
   ) <fig-square>
 
   #figure(
@@ -909,6 +905,12 @@ The question of the convergence of Fourier series, #ie does all periodic functio
     caption: [Gibbs phenomena  on the Fourier series (order $N=50$) of a square wave],
   ) <fig-gibbs>
 ]
+
+The question of the convergence of Fourier series, #ie does all periodic function can be represented by its Fourier series?, was only solved by Dirichlet in 1829. He showed that the Fourier series of a periodic function $x(t)$ converges to $x(t)$ at all points where $x$ is continuous and to the average of the left-hand and right-hand limits at points of discontinuity, provided that:
+- $x(t)$ is absolutely integrable over a period, #ie $integral_(T) abs(x(t)) thin dif t < infinity$
+- $x(t)$ has a finite number of maxima and minima in any given period,
+- $x(t)$ has a finite number of discontinuities in any given period.
+
 
 The point-wise convergence is only _almost everywhere_, meaning that the Fourier series may not converge to $x(t)$ for some points, #ie at discontinuities. Indeed, a truncated Fourier series approximation of a discontinuous signal will in general exhibit high-frequency ripples and overshoot x(t) near the discontinuities. These ripples, known as _Gibbs phenomena_, are present no matter how large the approximation order, as seen in @fig-gibbs (at least $9%$ overshoot for a unit square wave). However, large enough approximation order can always be chosen so as to guarantee that the total energy in these ripples is insignificant.
 $
@@ -1044,18 +1046,19 @@ In these equations, the limits of the summation can be any contigous
 range in $NN$ (#eg $k=0,1,dots,N-1$ or $k= 1,2,dots,N$).
 
 
-=== Parseval Theorem:
+=== Parseval Theorem
 The Parseval theorem holds equivalently in discrete-time:
 #rect(fill: silver)[$
-  ∑_(n=1)^(n=N) abs(x[n])^2 = ∑_(k=1)^(k=N) abs(hat(x)[k])^2
-$ <eq-Parseval-series>]
+    ∑_(n=1)^(n=N) abs(x[n])^2 = ∑_(k=1)^(k=N) abs(hat(x)[k])^2
+  $ <eq-Parseval-series>
+]
 
 
 
 === Properties of Discrete Time Fourier Series
 The properties of Fourier series decomposition for discrete time signal are similar to the continuous signal ones described in @sec-FSeries-properties.
 
-#show table.cell: set text(size: 9pt)
+#show table.cell: set text(size: 10pt)
 #figure(
   table(
     columns: (auto, auto, auto),
@@ -1076,7 +1079,7 @@ The properties of Fourier series decomposition for discrete time signal are simi
 
     [First Difference], $y[n] = x[n] - x[n-1]$, $hat(y)[k] = (1 - e^(-j thin omega_0 thin k)) hat(x)[k]$,
 
-    [Symmetry for Real Signals], $x[n] in RR$, $hat(x)[-k] = conj(hat(x)[k])$,
+    [Symmetry ], $x[n] in RR$, $hat(x)[-k] = conj(hat(x)[k])$,
 
     [Even Real Signals], $x[n] = x[-n] in RR$, $hat(x)[k] in RR$,
 
@@ -1143,19 +1146,27 @@ The angular frequency Fourier transform can be made unitary as:
     x(t) & = 1/sqrt(2 pi) integral_RR hat(x)(omega) thin e^(j thin omega thin t) thin dif omega. & text(weight: "bold", "    Inverse transform") // #label("eq-fourier-transform-synthesis")
   $
 ]
+
+For periodic function of period $T$, the Fourier transform is defined only at discrete frequencies $ν = k/T$ with $k in ZZ$ and is related to the Fourier series coefficients as:
+$
+  hat(x)( ν) = ∑_(k=-∞)^(+∞) hat(x)_k thin δ(ν - k/T )thin .
+$
+
 == Convergence of Fourier transform
-The Fourier transform of a signal $x(t)$ exists at the same Dirichlet conditions stated in #ref(<sec-FourierSerie-Convergence>) that requires that:
+
+If  $x(t)$ is  square integrable over $RR$, #ie $integral_RR abs(x(t))^2 thin dif t < infinity$, then its Fourier transform exists and $hat(x)(omega)$ is also square integrable over $RR$.
+As in physics, many signal are of finite energy then  this condition holds in many application involving physical quantities.
+
+For periodic signals, the Fourier transform of a signal $x(t)$ exists under the same Dirichlet conditions stated in #ref(<sec-FourierSerie-Convergence>), which require that:
 - $x(t)$ is absolutely integrable over $RR$, #ie $integral_RR abs(x(t)) thin dif t < infinity$. //In this case, the Fourier transform $hat(x)(omega)$ is bounded and continuous.
 - $x(t)$ is of bounded variation (#ie there is finite number of maxima and minima within finite interval)
 - x(t) have a finite number of discontinuities within finite interval.
 
-An alternative condition is that  $x(t)$ is  square integrable over $RR$, #ie $integral_RR abs(x(t))^2 thin dif t < infinity$, then the Fourier transform $hat(x)(omega)$ is also square integrable over $RR$.
-As in physics, many signal are of finite energy then  this last condition holds in many application involving physical quantities.
-
 == Plancherel-Parseval theorem
 The Plancherel-Parseval theorem states that the total energy of a signal $x(t)$ is equal to the total energy of its Fourier transform $hat(x)(ν)$:
 #rect(fill: silver)[$
-  ∫_RR abs(x(t))^2 dif t = ∫_RR abs(hat(x)(ν))^2 dif ν
+  ∫_RR x(t)thin conj(y(t)) dif t & = ∫_RR hat(x)(ν) thin conj(hat(y)(ν))dif ν & quad text(weight: "bold", "inner product") \
+  ∫_RR abs(x(t))^2 dif t & = ∫_RR abs(hat(x)(ν))^2 dif ν & quad text(weight: "bold", "energy preservation")
 $ <eq-Parseval-transform>]
 Demonstration:
 #math.equation(
@@ -1233,6 +1244,15 @@ Demonstration:
   caption: [Properties of Continuous Fourier Transform],
 ) <table-continuous-fourier-properties>
 
+== Symmetry
+When the real and imaginary parts of a complex function are decomposed into their even and odd parts, there are four components, each with a specific symmetry property:
+- The real part of the Fourier transform of a real signal is an even function.
+- The imaginary part of the Fourier transform of a real signal is an odd function.
+- The real part of the Fourier transform of an imaginary signal is an odd function.
+- The imaginary part of the Fourier transform of an imaginary signal is an even function.
+
+The transform of a real-valued function thus exhibits conjugate symmetry.
+Conversely, if a function's Fourier transform has conjugate symmetry, the original function is real-valued.
 
 == Incertitude Principle
 The Fourier transform incertitude principle states that a signal cannot be simultaneously localized in time and frequency. More precisely,considering  a  centered signal ($∫_RR t thin x(t) dt = 0$) of unit energy ($∫_RR abs(x(t))^2 dt = 1$) for simplicity, if we define the time spread $Δ t$ and the frequency spread $Δ ν$ of a signal $x(t)$ as:

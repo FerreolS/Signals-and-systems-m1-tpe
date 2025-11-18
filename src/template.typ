@@ -22,6 +22,8 @@
 
 
 #let sign(x) = if x == 0 { 0 } else { calc.abs(x) / x }
+#let heaviside(x) = if x == 0 { 0 } else { calc.max(x, 0) / x }
+
 
 
 
@@ -73,20 +75,6 @@
     if it.element != none and it.element.func() == math.equation {
       // optional: wrap inside link, so whole label is linked
       link(it.target)[Eq.~#it]
-    } else {
-      it
-    }
-  }
-  // Set run-in subheadings, starting at level 3.
-  show heading: it => {
-    if it.level == 1 {
-      counter(math.equation).update(1)
-    }
-    if it.level > 2 {
-      parbreak()
-      text(11pt, style: "normal", weight: "black", it.body + ":")
-      // text(it.numbering.at(3) + ") " + it.body + ":")
-      //it.numbering.last()
     } else {
       it
     }
@@ -201,6 +189,20 @@
     },
   )
   counter(page).update(1)
+  // Set run-in subheadings, starting at level 3.
+  show heading: it => {
+    if it.level == 1 {
+      counter(math.equation).update(1)
+    }
+    if it.level > 2 {
+      parbreak()
+      text(11pt, style: "normal", weight: "black", it.body + ":")
+      // text(it.numbering.at(3) + ") " + it.body + ":")
+      //it.numbering.last()
+    } else {
+      it
+    }
+  }
 
   // Main body.
   set par(justify: true)
