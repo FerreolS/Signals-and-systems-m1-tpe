@@ -14,6 +14,7 @@
 #let MH = M([H])
 #let inner(a, b) = $lr(chevron.l #a, #b chevron.r)$
 #let conj(a) = $overline(#a)$
+#let dt = $dif t$
 // Macros
 #let eg = [_e.g._]
 #let ie = [_i.e._]

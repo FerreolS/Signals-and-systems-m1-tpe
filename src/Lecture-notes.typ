@@ -606,9 +606,10 @@ $
 where $lambda$ is the eigenvalue (a constant).
 
 Complex exponential functions are eigenfunctions of any LTI system. That is, when a complex exponential is applied as input to an LTI system, the output is simply a scaled version of the input:
-$
-  h * e^(j omega t) = lambda thin e^(j omega t)
-$
+#rect(fill: silver)[$
+    h * e^(j omega t) = lambda thin e^(j omega t)
+  $<eq-lti-eigenfunctions>
+]
 Demonstration
 #math.equation(
   block: true,
@@ -774,7 +775,7 @@ Depending on the field, the Fourier series coefficients $hat(x)_k$ can be also d
 
 
 == Convergence of Fourier Series
-
+<sec-FourierSerie-Convergence>
 /*
 #margin-note[
   #figure(
@@ -980,6 +981,10 @@ $
 $
   y(t) = e^(j thin k_0 thin omega_0 thin t) thin x(t) <=> hat(y)_k = hat(x)_(k - k_0)
 $
+/ Scaling:
+$
+  x(a thin t) = ∑_(k=-∞)^(+∞) hat(x)[k]thin e^(j thin k thin a ω_0 t)
+$
 / Multiplication:
 $
   z(t) = x(t) thin y(t) <=> hat(z)_k = sum_(ell=-infinity)^(+infinity) hat(x)_ell thin hat(y)_(k - ell)
@@ -1081,7 +1086,204 @@ The properties of Fourier series decomposition for discrete time signal are simi
 
 = Fourier transform
 
-=== Filtering
+As complex exponentials are eigen functions of  LTI  systems (see @eq-lti-eigenfunctions), the Fourier series decomposition of the output signal $y$ of an LTI of impulse response $h$ can be easyly computed from the Fourier series representation of the input signal $x$:
+#math.equation(
+  block: true,
+  $y(t) &= h * x \
+  &= h * (∑_(k=-∞)^(+∞) hat(x)_k thin e^(j thin ω_0 thin k thin t)),\
+  & = ∑_(k=-∞)^(+∞) hat(x)_k thin (h * e^(j thin ω_0 thin k thin t)), \
+  & = ∑_(k=-∞)^(+∞) hat(x)_k thin λ_k thin e^(j thin ω_0 thin k thin t), \
+  hat(y)_k &= hat(x)_k lambda_k$,
+)
+with
+$
+  λ_k = integral_RR h(tau) thin e^(-j thin omega_0 thin k thin tau) thin dif tau
+$<eq-λ>
+The operation on the right-hand side of @eq-λ is  Fourier transform of the impulse response $h$ taken at frequency $ω = k thin ω_0$.
+
+
+== Fourier transform of Continuous Signals
+The Fourier transform can be derived from the Fourier series representation of periodic signals by considering the limit when the period $T$ tends to infinity. In this case, the fundamental frequency $ω_0 = (2 π) / T$ tends to zero and the frequencies $k thin ω_0$ become continuous over the real line $RR$.
+
+/*
+The Fourier series synthesis equation thus becomes:
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+    x(t) & = sum_(k=-infinity)^(+infinity) hat(x)[k] thin e^(j thin k thin omega_0 thin t) \
+    & = sum_(k=-infinity)^(+infinity) hat(x)[k thin omega_0] thin omega_0 thin e^(j thin k thin omega_0 thin t) / omega_0 \
+    & = integral_RR hat(x)(omega) thin e^(j thin omega thin t) thin dif omega
+  $,
+)
+with
+$ hat(x)(omega) = 1/(2 pi) integral_RR x(t) thin e^(-j thin omega thin t) thin dif t $
+ */This defines the Fourier transform pair in angular frequency $ω$:
+#rect(fill: silver)[
+  $
+    hat(x)(omega) & = 1/(2 pi) integral_RR x(t) thin e^(-j thin omega thin t) thin dif t, & text(weight: "bold", "    Forward transform") \
+    //#label("eq-fourier-transform-analysis") \
+    x(t) & = integral_RR hat(x)(omega) thin e^(j thin omega thin t) thin dif omega. & text(weight: "bold", "    Inverse transform") // #label("eq-fourier-transform-synthesis")
+  $
+]
+or equivalently in ordinary frequency $ν$:
+#rect(fill: silver)[
+  $
+    hat(x)(ν) & = ∫_RR x(t) thin e^(-j thin 2π thin ν thin t) thin dif t, & text(weight: "bold", "    Forward transform") \
+    //#label("eq-fourier-transform-analysis") \
+    x(t) & = ∫_RR hat(x)(ν) thin e^(j thin 2 π thin ν thin t) thin dif omega. & text(weight: "bold", "    Inverse transform") // #label("eq-fourier-transform-synthesis")
+  $
+]
+The angular frequency Fourier transform can be made unitary as:
+#rect(fill: silver)[
+  $
+    hat(x)(omega) & = 1/sqrt(2 pi) integral_RR x(t) thin e^(-j thin omega thin t) thin dif t, & text(weight: "bold", "    Forward transform") \
+    //#label("eq-fourier-transform-analysis") \
+    x(t) & = 1/sqrt(2 pi) integral_RR hat(x)(omega) thin e^(j thin omega thin t) thin dif omega. & text(weight: "bold", "    Inverse transform") // #label("eq-fourier-transform-synthesis")
+  $
+]
+== Convergence of Fourier transform
+The Fourier transform of a signal $x(t)$ exists at the same Dirichlet conditions stated in #ref(<sec-FourierSerie-Convergence>) that requires that:
+- $x(t)$ is absolutely integrable over $RR$, #ie $integral_RR abs(x(t)) thin dif t < infinity$. //In this case, the Fourier transform $hat(x)(omega)$ is bounded and continuous.
+- $x(t)$ is of bounded variation (#ie there is finite number of maxima and minima within finite interval)
+- x(t) have a finite number of discontinuities within finite interval.
+
+An alternative condition is that  $x(t)$ is  square integrable over $RR$, #ie $integral_RR abs(x(t))^2 thin dif t < infinity$, then the Fourier transform $hat(x)(omega)$ is also square integrable over $RR$.
+As in physics, many signal are of finite energy then  this last condition holds in many application involving physical quantities.
+
+== Plancherel-Parseval theorem
+The Plancherel-Parseval theorem states that the total energy of a signal $x(t)$ is equal to the total energy of its Fourier transform $hat(x)(ν)$:
+#rect(fill: silver)[$
+  ∫_RR abs(x(t))^2 dif t = ∫_RR abs(hat(x)(ν))^2 dif ν
+$ <eq-Parseval-transform>]
+Demonstration:
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+    ∫_RR abs(x(t))^2 dif t & = ∫_RR x(t) thin conj(x(t)) thin dif t \
+    & = ∫_RR x(t) thin conj(∫_RR hat(x)(ν) thin e^(j thin 2 π thin ν thin t) thin dif ν) thin dif t \
+    & = ∫_RR x(t) thin ∫_RR conj(hat(x)(ν)) thin e^(-j thin 2 π thin ν thin t) thin dif ν thin dif t \
+    & = ∫_RR ∫_RR x(t) thin conj(hat(x)(ν)) thin e^(-j thin 2 π thin ν thin t) thin dif t thin dif ν \
+    & = ∫_RR conj(hat(x)(ν)) thin (∫_RR x(t) thin e^(-j thin 2 π thin ν thin t) thin dif t) thin dif ν \
+    & = ∫_RR abs(hat(x)(ν))^2 thin dif ν
+  $,
+)
+
+== Convolution theorem
+The convolution theorem states that the Fourier transform of the convolution of two signals is equal to the product of their Fourier transforms:
+#rect(fill: silver)[$
+  z(t) = x(t) * y(t) <=> hat(z)(ν) = hat(x)(ν) thin hat(y)(ν)
+$ <eq-convolution-theorem>]
+Demonstration:
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+    hat(z)(ν) & = ∫_RR z(t) thin e^(-j thin 2 π thin ν thin t) thin dif t \
+    & = ∫_RR (∫_RR x(τ) thin y(t - τ) thin dif τ) thin e^(-j thin 2 π thin ν thin t) thin dif t \
+    & = ∫_RR ∫_RR x(τ) thin y(t - τ) thin e^(-j thin 2 π thin ν thin t) thin dif τ thin dif t \
+    & = ∫_RR x(τ) thin (∫_RR y(t - τ) thin e^(-j thin 2 π thin ν thin t) thin dif t) thin dif τ \
+    & = ∫_RR x(τ) thin (∫_RR y(u) thin e^(-j thin 2 π thin ν thin (u + τ)) thin dif u) thin dif τ \
+    & = ∫_RR x(τ) thin e^(-j thin 2 π thin ν thin τ) thin (∫_RR y(u) thin e^(-j thin 2 π thin ν thin u) thin dif u) thin dif τ \
+    & = hat(x)(ν) thin hat(y)(ν)
+  $,
+)
+
+
+== Properties of the continuous Fourier transform
+<sec-FT-properties>
+
+#show table.cell: set text(size: 10pt)
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    align: (left, center, center),
+    stroke: 0.5pt + silver,
+    table.header([*Property*], [*Time Domain*], [*Frequency Domain*]),
+    [Linearity], $z(t) = a thin x(t) + b thin y(t)$, $hat(z)(ν) = a thin hat(x)(ν) + b thin hat(y)(ν)$,
+
+    [Time Shifting], $y(t) = x(t - t_0)$, $hat(y)(ν) = e^(-j thin 2π thin ν thin t_0) hat(x)(ν)$,
+
+    [Time Reversal], $y(t) = x(-t)$, $hat(y)(ν) = hat(x)(-ν)$,
+
+    [Frequency Shifting], $y(t) = e^(j thin 2π thin ν_0 thin t) thin x(t)$, $hat(y)(ν) = hat(x)(ν - ν_0)$,
+
+    [Time Scaling], $y(t) = x(a thin t)$, $hat(y)(ν) = 1/abs(a) hat(x)(ν/a)$,
+
+    [Convolution], $z(t) = x(t) * y(t)$, $hat(z)(ν) = hat(x)(ν) thin hat(y)(ν)$,
+
+    [Multiplication], $z(t) = x(t) thin y(t)$, $hat(z)(ν) = hat(x)(ν) * hat(y)(ν)$,
+
+    [Conjugation], $y(t) = conj(x(t))$, $hat(y)(ν) = conj(hat(x)(-ν))$,
+
+    [Differentiation], $y(t) = (dif) / (dif t) x(t)$, $hat(y)(ν) = j thin 2π thin ν thin hat(x)(ν)$,
+
+    [Integration],
+    $y(t) = integral_(-infinity)^t x(τ) dif τ$,
+    $hat(y)(ν) = (hat(x)(ν)) / (j thin 2π thin ν) + hat(x)(0) thin δ(ν)$,
+
+    [Symmetry ], $x(t) in RR$, $hat(x)(-ν) = conj(hat(x)(ν))$,
+
+    [Even Real Signals], $x(t) = x(-t) in RR$, $hat(x)(ν) in RR$,
+
+    [Odd Real Signals], $x(t) = -x(-t) in RR$, $hat(x)(ν) in j thin RR$,
+  ),
+  caption: [Properties of Continuous Fourier Transform],
+) <table-continuous-fourier-properties>
+
+
+== Incertitude Principle
+The Fourier transform incertitude principle states that a signal cannot be simultaneously localized in time and frequency. More precisely,considering  a  centered signal ($∫_RR t thin x(t) dt = 0$) of unit energy ($∫_RR abs(x(t))^2 dt = 1$) for simplicity, if we define the time spread $Δ t$ and the frequency spread $Δ ν$ of a signal $x(t)$ as:
+$
+  Δ t & = sqrt(∫_RR t^2 abs(x(t))^2 dif t) \
+  Δ ν & = sqrt(∫_RR ν^2 abs(hat(x)(ν))^2 dif ν)thin ,
+$
+then the incertitude principle states that:
+#math.equation(
+  block: true,
+  $Δ t thin Δ ν >= 1 / (4 π) thin .$,
+)
+In quantum mechanics, as  the momentum and position wave functions are Fourier transform pairs (up to a factor of the Planck constant), this inequality becomes the Heisenberg uncertainty principle.
+
+== Notable Fourier transforms
+#show table.cell: set text(size: 9pt)
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    align: (left, center, center),
+    stroke: 0.5pt + silver,
+    table.header([*Signal*], [*Time Domain*], [*Frequency Domain*]),
+    [Rectangle],
+    $"rect"(t) = cases(1 quad &"if" abs(t) < 1/2, 0 quad &"otherwise")$,
+    $hat("rect")(ν) = "sinc"(ν) = (sin(π ν))/(π ν)$,
+
+    [Sinc], $x(t) = "sinc"(t) = (sin(π t))/(π t)$, $hat(x)(ν) = "rect"(ν)$,
+
+    [Gaussian], $x(t) = e^(-π t^2)$, $hat(x)(ν) = e^(-π ν^2)$,
+
+    [Exponential decay], $x(t) = e^(-a t) u(t), quad a > 0$, $hat(x)(ν) = 1/(a + j 2π ν)$,
+
+    [Two-sided exponential], $x(t) = e^(-a abs(t)), quad a > 0$, $hat(x)(ν) = (2a)/(a^2 + (2π ν)^2)$,
+
+    [Dirac delta], $x(t) = δ(t)$, $hat(x)(ν) = 1$,
+
+    [Constant], $x(t) = 1$, $hat(x)(ν) = δ(ν)$,
+
+    [Complex exponential], $x(t) = e^(j 2π ν_0 t)$, $hat(x)(ν) = δ(ν - ν_0)$,
+
+    [Cosine], $x(t) = cos(2π ν_0 t)$, $hat(x)(ν) = 1/2 [δ(ν - ν_0) + δ(ν + ν_0)]$,
+
+    [Sine], $x(t) = sin(2π ν_0 t)$, $hat(x)(ν) = 1/(2j) [δ(ν - ν_0) - δ(ν + ν_0)]$,
+
+    [Sign], $x(t) = "sgn"(t) = cases(1 quad &t > 0, -1 quad &t < 0)$, $hat(x)(ν) = 1/(j π ν)$,
+
+    [Unit step], $x(t) = u(t)$, $hat(x)(ν) = 1/(j 2π ν) + 1/2 δ(ν)$,
+  ),
+  caption: [Notable Fourier Transform Pairs],
+) <table-fourier-transforms>
+
+
 
 = Discrete Fourier Transform
 
