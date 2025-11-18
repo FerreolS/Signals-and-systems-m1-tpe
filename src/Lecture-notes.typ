@@ -278,9 +278,10 @@ The *description* of a system is *arbitrary*, and its inputs/outputs can be defi
 / Causality: A system is causal if the output at any time depends only on values of the input at the present time and in the past. If any value of the output signal depends on a future value of the input signal, then the system is non-causal.
 
 / Linearity: A system is said to be linear if it satisfies the *principle of superposition* (additivity and homogeneity) where for any $(a_1,a_2) in CC^2$:
+
 $
-  H{a_1 x_1(t) + a_2 x_2(t)} & = H{a_1 x_1(t) } + H{a_2 x_2(t) } #margin-note[additivity] \
-                             & = a_1 H{x_1(t) } +a_2 H{x_2(t) } #margin-note[homogeneity]
+  H{a_1 x_1(t) + a_2 x_2(t)} & = H{a_1 x_1(t) } + H{a_2 x_2(t) } &  text(weight: "bold", "additivity") \
+                             & = a_1 H{x_1(t) } +a_2 H{x_2(t) }  & text(weight: "bold", "homogeneity")
 $
 
 

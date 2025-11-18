@@ -79,6 +79,9 @@
   }
   // Set run-in subheadings, starting at level 3.
   show heading: it => {
+    if it.level == 1 {
+      counter(math.equation).update(1)
+    }
     if it.level > 2 {
       parbreak()
       text(11pt, style: "normal", weight: "black", it.body + ":")
