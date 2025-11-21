@@ -10,10 +10,10 @@
 #show: exam.with(
   title: "Data Science",
   course: "TD 2",
-  date: "19 November 2025",
+  date: "25 November 2025",
   duration: none,
   student-info: none,
-  show-solutions: true, // Set to true to display solutions
+  show-solutions: sys.inputs.at("solutions", default: "true") == "true", // Set to true to display solutions
 )
 
 #let dt = $dif t$
@@ -82,7 +82,11 @@
 ]
 
 #subquestion(label: "b")[
-  How many terms are needed to capture 95% of the signal's power as a function of $α = 2 L/T$?
+
+  #let ratio = 0.95
+  #let percent = ratio * 100
+
+  How many terms are needed to capture $#percent$ % of the signal's power as a function of $α = 2 L/T$?
   #solution(lines: 0)[
     The power of the signal is :
     $
@@ -105,37 +109,42 @@
     $
     We need to find the smallest integer $K$ such that:
     $
-                                              P_K / P & >= 0.95 \
-      α + 2 ∑_(k=1)^(K) (sin^2(π k α)) / ( α k^2 π^2) & >= 0.95 \
+                                              P_K / P & >= #ratio \
+      α + 2 ∑_(k=1)^(K) (sin^2(π k α)) / ( α k^2 π^2) & >= #ratio \
     $
 
-    For $α=0.15$
-    #canvas(length: 1cm, {
+    #let α = 0.15
+    #let Nk = none
+    For $α=#α$
+    #canvas(length: 0.9cm, {
       import draw: *
 
-      let K = 14
-      let α = 0.05
+      let K = 15
 
       // Draw axes
       line((0, 0), (K, 0), mark: (end: ">"))
-      content((K + 0.5, -0.3), $k$)
+      content((K + 0.1, -0.3), $k$)
 
       line((0, 0), (0, 1 + 0.5), mark: (end: ">"))
       content((-0.3, 1 + 0.5), $P_k/P$)
 
-      line((0, 0.95), (K, 0.95), stroke: silver)
-      content((K + 0.5, 1), $0.95$)
+      line((0, ratio), (K - 0.5, ratio), stroke: silver)
+      content((K, 1), $#ratio$)
 
       // Draw the periodic sinusoidal curve
       let sk = α
       let prev-point = (0, sk)
       line((0, 0), (0, sk), stroke: blue + 1.5pt)
-      content((0, sk + 0.2), $#calc.round(sk, digits: 3)$)
+      content((-0.3, sk + 0.2), text(size: 9pt, $#calc.round(sk, digits: 3)$))
+      content((0, 0 - 0.2), text(size: 9pt, $0$))
+
       for k in range(1, K, step: 1) {
         sk = sk + 2 * calc.pow(calc.sin(calc.pi * k * α), 2) / (α * k * k * calc.pi * calc.pi)
         let curr-point = (k, sk)
         line((k, 0), curr-point, stroke: blue + 1.5pt)
-        content((k, sk + 0.2), $#calc.round(sk, digits: 3)$)
+        content((k, sk + 0.2), text(size: 9pt, $#calc.round(sk, digits: 3)$))
+        content((k, 0 - 0.2), text(size: 9pt, $#k$))
+        if Nk == none { if sk > ratio { Nk = k } }
         //if prev-point != none { line(prev-point, curr-point, stroke: blue + 1.5pt) }
         //prev-point = curr-point
         //
@@ -143,7 +152,7 @@
     })
 
 
-    By calculating the terms, we find that $N ≈ 10$ terms are needed to capture at least 95% of the signal's power.
+    By calculating the terms, we find that $N = #Nk$ terms are needed to capture at least 95% of the signal's power.
   ]
 ]
 
