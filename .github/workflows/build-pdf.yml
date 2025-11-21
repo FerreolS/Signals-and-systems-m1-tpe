@@ -5,7 +5,7 @@ on:
     branches:
       - master
     # paths:
-    #   - 'src/**/*.typ'
+    #   - 'lecture-notes/*.typ'
   workflow_dispatch:
 
 permissions:
@@ -38,7 +38,8 @@ jobs:
         
       - name: Build PDF from Typst sources
         run: |
-          typst compile src/Lecture-notes.typ Signals-and-systems-m1-tpe.pdf  --font-path /usr/share/fonts
+          typst compile lecture-notes/Lecture-notes.typ Signals-and-systems-m1-tpe.pdf  --font-path /usr/share/fonts
+          typst compile TDs/TD2.typ TD2.pdf  --font-path /usr/share/fonts
 
       - name: Convert first page from PDF to SVG
         run: | 

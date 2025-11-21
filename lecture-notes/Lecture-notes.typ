@@ -986,7 +986,7 @@ $
 $
 / Scaling:
 $
-  x(a thin t) = ∑_(k=-∞)^(+∞) hat(x)[k]thin e^(j thin k thin a ω_0 t)
+  y(t) = x(a thin t) <=> hat(y)_k = 1/abs(a) hat(x)[k / a]
 $
 / Multiplication:
 $
@@ -1086,7 +1086,7 @@ The properties of Fourier series decomposition for discrete time signal are simi
     [Odd Real Signals], $x[n] = -x[-n] in RR$, $hat(x)[k] in j thin RR$,
   ),
   caption: [Properties of Discrete Time Fourier Series],
-) <table-discrete-fourier-properties>
+)<table-discrete-fourier-properties>
 
 = Fourier transform
 
