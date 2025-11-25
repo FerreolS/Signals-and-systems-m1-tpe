@@ -48,12 +48,12 @@
 
     The Fourier series coefficients are:
     $
-      hat(x)[0] = 1 \
-      hat(x)[2] = -j/2 + 1 \
-      hat(x)[-2] = j/2 + 1 \
-      hat(x)[3] = sqrt(2)/4 (1- j) \
-      hat(x)[-3] = sqrt(2)/4(1 + j) \
-      hat(x)[k] = 0 text("for all other k")
+       hat(x)[0] & = 1 \
+       hat(x)[2] & = 1 - j/2 \
+      hat(x)[-2] & = 1 + j/2 \
+       hat(x)[3] & = sqrt(2)/4 (1- j) \
+      hat(x)[-3] & = sqrt(2)/4(1 + j) \
+       hat(x)[k] & = 0 text("for all other k")
     $
   ]
 ]
@@ -198,7 +198,7 @@
       }
     })
 
-
-    By calculating the terms, we find that $N = #Nk$ terms are needed to capture at least 95% of the signal's power.
+    #let NN = 2 * Nk + 1
+    By calculating the terms, we find that $N = 2*k + 1 = #NN$ terms are needed to capture at least 95% of the signal's power.
   ]
 ]
