@@ -82,6 +82,53 @@
 ]
 
 #subquestion(label: "b")[
+  Compute the Fourier series of the Dirac comb of period $T$:
+  $
+    y(t) = ∑_(k=-∞)^(+∞) δ(t - k T)
+  $
+  #solution(lines: 0)[
+    The Fourier series coefficients are given by:
+    $
+      hat(y)[k] = 1/T ∫_(-T/2)^(T/2) x(t) e^(-j k ω_0 t ) dif t
+    $
+    Evaluating the integral, we find that all coefficients are equal to $1/T$.
+  ]
+]
+#subquestion(label: "c")[
+  Compute the Fourier series of:
+  $
+    z(t) = y(t + T_1) - y(t - T_1)
+  $
+  #solution(lines: 0)[
+    Using linearity and time-shifting properties of the Fourier series, we find that the coefficients are:
+    $
+      hat(z)[k] & = hat(y)[k] (e^(j k T_1 ω_0) - e^(-j k T_1 ω_0)) \
+                & = hat(y)[k]thin (2j thin sin(k thin ω_0 thin T_1)) \
+                & = (2j) / T thin sin(k thin ω_0 thin T_1) \
+    $
+  ]
+]
+
+#subquestion(label: "d")[
+  Derive the solution of question (a) from the answer of question (c)
+  #solution(lines: 0)[
+    We can notice $z(t)$ is the derivative of $x(t)$, we can use the differentiation property
+    $
+      hat(z)[k] = j k ω_0 hat(x)[k]
+    $
+    Thus,
+    $
+      hat(x)[k] & = (hat(z)[k]) / (j k ω_0) quad ∀ k ≠ 0 \
+                & = (2 thin sin(k thin ω_0 thin T_1)) / (T thin k thin ω_0)
+    $
+    When $T_1 = L$, it is the same result as in question (a) if we take the mean $hat(x)[0] = 2 T_1/T$.
+
+
+  ]
+]
+
+
+#subquestion(label: "e")[
 
   #let ratio = 0.95
   #let percent = ratio * 100
@@ -153,51 +200,5 @@
 
 
     By calculating the terms, we find that $N = #Nk$ terms are needed to capture at least 95% of the signal's power.
-  ]
-]
-
-#subquestion(label: "c")[
-  Compute the Fourier series of the Dirac comb of period $T$:
-  $
-    y(t) = ∑_(k=-∞)^(+∞) δ(t - k T)
-  $
-  #solution(lines: 0)[
-    The Fourier series coefficients are given by:
-    $
-      hat(y)[k] = 1/T ∫_(-T/2)^(T/2) x(t) e^(-j k ω_0 t ) dif t
-    $
-    Evaluating the integral, we find that all coefficients are equal to $1/T$.
-  ]
-]
-#subquestion(label: "d")[
-  Compute the Fourier series of:
-  $
-    z(t) = y(t + T_1) - y(t - T_1)
-  $
-  #solution(lines: 0)[
-    Using linearity and time-shifting properties of the Fourier series, we find that the coefficients are:
-    $
-      hat(z)[k] & = hat(y)[k] (e^(j k T_1 ω_0) - e^(-j k T_1 ω_0)) \
-                & = hat(y)[k]thin (2j thin sin(k thin ω_0 thin T_1)) \
-                & = (2j) / T thin sin(k thin ω_0 thin T_1) \
-    $
-  ]
-]
-
-#subquestion(label: "e")[
-  Derive the solution of question (a) from the answer of question (c)
-  #solution(lines: 0)[
-    We can notice $z(t)$ is the derivative of $x(t)$, we can use the differentiation property
-    $
-      hat(z)[k] = j k ω_0 hat(x)[k]
-    $
-    Thus,
-    $
-      hat(x)[k] & = (hat(z)[k]) / (j k ω_0) quad ∀ k ≠ 0 \
-                & = (2 thin sin(k thin ω_0 thin T_1)) / (T thin k thin ω_0)
-    $
-    When $T_1 = L$, it is the same result as in question (a) if we take the mean $hat(x)[0] = 2 T_1/T$.
-
-
   ]
 ]
