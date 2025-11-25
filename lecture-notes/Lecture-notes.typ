@@ -231,6 +231,12 @@ Power $P$ of the signal $x(t)$ is defined as the amount of energy per unit time:
     $P = lim_(T->infinity) 1/(2 T) integral_(-T)^T |x(t)|^2 dif t$,
   ) <eq-signal-power>]
 This quantity is useful to work with infinite energy signals. By construction, $P=0$ for energy signals (#ie $E < infinity$).
+
+For periodic signals, this amounts to calculating the average power over a single period:
+$
+  P = 1/T ∫_(t_0)^(t_0 + T) |x(t)|^2 dt thin.
+$
+
 Signals of non-zero but finite power (#ie $0 < P < infinity$) are often called power signals. Periodic or constant signals are examples of power signals. There are signals, like $x(t) = t$, with infinite power that are neither energy nor power signals.
 
 

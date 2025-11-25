@@ -133,7 +133,7 @@
   #let ratio = 0.95
   #let percent = ratio * 100
 
-  How many terms are needed to capture $#percent$ % of the signal's power as a function of $α = 2 L/T$?
+  How many terms are needed to capture $#percent$ % of the signal $x(t)$ power as a function of $α = 2 L/T$?
   #solution(lines: 0)[
     The power of the signal is :
     $
