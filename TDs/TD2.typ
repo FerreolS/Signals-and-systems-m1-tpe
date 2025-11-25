@@ -51,8 +51,8 @@
        hat(x)[0] & = 1 \
        hat(x)[2] & = 1 - j/2 \
       hat(x)[-2] & = 1 + j/2 \
-       hat(x)[3] & = sqrt(2)/4 (1- j) \
-      hat(x)[-3] & = sqrt(2)/4(1 + j) \
+       hat(x)[3] & = sqrt(2)/4 (1+ j) \
+      hat(x)[-3] & = sqrt(2)/4(1 - j) \
        hat(x)[k] & = 0 text("for all other k")
     $
   ]
@@ -62,7 +62,7 @@
 #subquestion(label: "a")[ Compute the Fourier series of the periodic signal of period $T$ (taking $ω_0= (2π)/T$):
   $
     x(t) = cases(
-      1 quad text("if ") abs(t) <= L/2,
+      1 quad text("if ") abs(t) <= L,
       0 quad text("otherwise")
     )
   $

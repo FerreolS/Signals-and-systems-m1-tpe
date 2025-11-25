@@ -1255,7 +1255,7 @@ The transform of a real-valued function thus exhibits conjugate symmetry.
 Conversely, if a function's Fourier transform has conjugate symmetry, the original function is real-valued.
 
 == Incertitude Principle
-The Fourier transform incertitude principle states that a signal cannot be simultaneously localized in time and frequency. More precisely,considering  a  centered signal ($∫_RR t thin x(t) dt = 0$) of unit energy ($∫_RR abs(x(t))^2 dt = 1$) for simplicity, if we define the time spread $Δ t$ and the frequency spread $Δ ν$ of a signal $x(t)$ as:
+The Fourier transform incertitude principle states that a signal cannot be simultaneously localized in time and frequency. More precisely,considering  a  centered signal ($∫_RR t thin x(t) dt = 0$) of unit energy ($∫_RR abs(x(t))^2 dt = 1$) for simplicity, if we define the time spread (standard deviation) $Δ t$ and the frequency spread $Δ ν$ of a signal $x(t)$ as:
 $
   Δ t & = sqrt(∫_RR t^2 abs(x(t))^2 dif t) \
   Δ ν & = sqrt(∫_RR ν^2 abs(hat(x)(ν))^2 dif ν)thin ,
@@ -1304,6 +1304,8 @@ In quantum mechanics, as  the momentum and position wave functions are Fourier t
   caption: [Notable Fourier Transform Pairs],
 ) <table-fourier-transforms>
 
+
+== Application of Fourier Transform
 
 
 = Discrete Fourier Transform
