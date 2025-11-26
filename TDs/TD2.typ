@@ -170,7 +170,7 @@
 
       // Draw axes
       line((0, 0), (K, 0), mark: (end: ">"))
-      content((K + 0.1, -0.3), $k$)
+      content((K + 0.1, -0.3), $K$)
 
       line((0, 0), (0, 1 + 0.5), mark: (end: ">"))
       content((-0.3, 1 + 0.5), $P_k/P$)
@@ -199,6 +199,6 @@
     })
 
     #let NN = 2 * Nk + 1
-    By calculating the terms, we find that $N = 2*k + 1 = #NN$ terms are needed to capture at least 95% of the signal's power.
+    By calculating the terms, we find that $N = 2 thin K + 1 = #NN$ terms are needed to capture at least 95% of the signal's power.
   ]
 ]

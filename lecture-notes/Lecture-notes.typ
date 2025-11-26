@@ -1311,10 +1311,100 @@ In quantum mechanics, as  the momentum and position wave functions are Fourier t
 ) <table-fourier-transforms>
 
 
-== Application of Fourier Transform
+== Filtering
 
+Thanks to the convolution theorem of the Fourier transform, the action of a LTI system of impulse response $h$ on a signal $x$ is :
+$
+    y(t) & = (h*x)(t) \
+  hat(y) & = hat(h) thin hat(x) thin,
+$
+where $hat(h)$, the Fourier transform of $h$ is called the transfert function.
+
+We called the action of these LTI systems as a _Filtering_ of the input signal. It is important to understand that filters  acts on each frequencies independently. We can study the transfert function of filters either to understand their effect on signals or to design filters with specific frequency response. This is widely used in signal processing, communications, control systems, and many other fields. This study generaly amounts to study modulus and phase of the transfert function as a function of frequency:
+$
+  h(ν) = abs(hat(h)(ν)) thin e^(j thin φ(ν)) thin,
+$
+where $φ(ν)$ is  the phase response  and $abs(hat(h)(ν))$  is the magnitude response of the filter.
+
+Several categories of filters can be described:
+- Low-pass filters: These filters allow low-frequency components to pass through while attenuating high-frequency components. They are commonly used to remove high-frequency noise from signals.
+- High-pass filters: These filters allow high-frequency components to pass through while attenuating low-frequency components. They are used to eliminate low-frequency noise or drift.
+- Band-pass filters: These filters allow a specific range of frequencies to pass through while attenuating frequencies outside this range. They are used in applications such as audio processing and communications.
+- Band-stop filters: These filters attenuate a specific range of frequencies while allowing frequencies outside this range to pass through. They are used to eliminate unwanted frequency components, such as interference.
+- All-pass  filters: These filters allow all frequencies to pass through but alter the phase relationship between different frequencies.
+
+
+Filters can be easily combined  by multiplying their transfer functions. This property is particularly useful in designing complex filtering systems by cascading simpler filters.
+
+/*
+
+#math.equation(
+  block: true,
+  $
+    y & = (h * x) \
+    y(t) & = ∫_RR h(τ) thin ∫_RR hat(x)(ν) thin e^(j thin 2 π thin ν thin (t-τ)) thin dif ν dif τ \
+    & = ∫_RR hat(x)(ν) thin ∫_RR h(τ) thin e^(j thin 2 π thin ν thin (t-τ)) thin dif τ thin dif ν \
+    &= ∫_RR hat(x)(ν) thin (∫_RR h(τ) thin e^(-j thin 2 π thin ν thin τ) thin dif τ) thin e^(j thin 2 π thin ν thin t) thin dif ν\
+    hat(y)(ν) & = hat(x)(ν) thin hat(h)(ν)
+  $,
+) */
 
 = Discrete Fourier Transform
+
+== Discrete-Time Fourier Transform
+
+$x(t)$  is a continuous signal  and its Fourier transform is:
+$
+  hat(x)(ν) = ∫_RR x(t) thin e^(-j thin 2 π thin ν thin t) thin dif t
+$
+We define $x_T$ the signal $x$ sampled at interval of $T$ seconds, it becomes:
+$
+  hat(x_T)(ν) & = ∑_(n=-∞)^(+∞) T thin x(n T) e^(-j thin 2 π thin ν thin T thin n)
+$
+in angular frequencies, taking $ω = 2π thin ν T$, the function $hat(x)_(2π)(ω)$ became periodic of period $2π$.
+$hat(x_(2π))(ν)$ is called the Discrete-Time Fourier Transform (DTFT) of the discrete-time signal $x[n] = x(n T)$:
+$
+  hat(x_T)(ω) & = ∑_(n=-∞)^(+∞) x[n] thin e^(-j thin ω thin n), & text(weight: "bold", "    Forward DTFT") \
+  //#label("eq-dtft-analysis") \
+  x[n] & = 1/(2 π) ∫_(-π)^(π) hat(x_T)(ω) thin e^(j thin ω thin n) thin dif ω. & text(weight: "bold", "    Inverse DTFT") // #label("eq-dtft-synthesis")
+$
+
+== Discrete Fourier Transform
+
+The Discrete Fourier Transform (DFT) is a sampled version of the DTFT. It is defined for a finite-length discrete-time signal $x[n]$ of length $N$ as:
+#rect(fill: silver)[
+  $
+    hat(x)[k] & = 1/N ∑_(n=0)^(N-1) x[n] thin e^(-j thin 2 π thin k thin n / N ), & text(weight: "bold", "    Forward DFT") \
+    //#label("eq-dft-analysis") \
+         x[n] & = ∑_(k=0)^(N-1) hat(x)[k] thin e^(j thin 2 π thin k thin n / N).  & text(weight: "bold", "    Inverse DFT") // #label("eq-dft-synthesis")
+  $
+]
+where $ω_0 = e^(j thin 2 π thin k thin n / N)$ is the N-root of unity. We can defined the DFT matrix as :
+$
+  F_(N)[k,n] & = e^(-j thin 2 π thin k thin n / N) , quad k,n = 0, 1, ..., N-1 thin \
+  /*              & = mat(
+    1, 1, 1, ..., 1;
+    1, e^(-j thin 2 π / N), e^(-j thin 2 π 2 / N), ..., e^(-j thin 2 π (N-1) / N);
+    1, e^(-j thin 2 π 2 / N), e^(-j thin 2 π 4 / N), ..., e^(-j thin 2 π 2(N-1) / N);
+    ..., ..., ..., ..., ...;
+    1, e^(-j thin 2 π (N-1) / N), e^(-j thin 2 π 2(N-1) / N), ..., e^(-j thin 2 π (N-1)(N-1) / N);
+  ) \ */     & = mat(
+                 1, 1, 1, ..., 1;
+                 1, ω_N, ω_N^2, ..., ω_N^(N-1);
+                 1, ω_N^2, ω_N^4, ..., ω_N^(2(N-1));
+                 ..., ..., ..., ..., ...;
+                 1, ω_N^(N-1), ω_N^(2(N-1)), ..., ω_N^((N-1)(N-1));
+               )
+$
+There are several definition of the DFT:
+- Normalized DFT: where the forward and inverse transforms include a normalization factor of $1/sqrt(N)$.
+- Unitary DFT: where the forward transform includes a normalization factor of $1/N$
+//The DFT can be interpreted as the projection of the discrete signal $x[n]$ onto a set of orthogonal basis functions, which are complex exponentials of different frequencies. The DFT coefficients $hat(x)[k]$ represent the amplitude and phase of these frequency components in the original signal.
+
+The DFT can be computed efficiently using the Fast Fourier Transform (FFT) algorithm.
+
+== Properties
+
 
 == Sampling<sec-sampling>
 
