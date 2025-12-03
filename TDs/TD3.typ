@@ -58,12 +58,12 @@
     This shows that the Fourier transform of a Dirac comb is itself. The Dirac comb is an eigenfunction of the Fourier transform with unit eigenvalue.
   ]
   #subquestion(label: "b")[
-    Compute the Fourier transform of
+    Compute the Fourier transform the following Dirac comb (we define $ν_0 = 1/T$):
   ]
   $
     comb_T (t) = ∑_(n=-∞)^(+∞) delta(t - T thin n)
   $
-  We define $ν_0 = 1/T$.
+
   #solution(lines: 0)[
     Using the scaling property of the Fourier transform, we have:
     $
@@ -101,46 +101,46 @@
       FT{x(t)}(ν) & = 1/2 e^(-j π/2) ( e^(j ϕ) delta(ν - ν_x) - e^(-j ϕ) delta(ν + ν_x)) \
                   & = (e^(j (ϕ - π/2)))/2 delta(ν - ν_x) - (e^(-j (ϕ - π/2)))/2 delta(ν + ν_x)
     $
+
+    #canvas(
+      length: 1cm,
+      {
+        import draw: *
+
+        plot.plot(
+          ..opts,
+
+          size: (4, 2),
+          x-format: plot.formats.multiple-of,
+          y-min: -1,
+          y-max: 1,
+          legend: "inner-north",
+          axis-style: "school-book",
+          x-label: $ν$,
+          y-label: $|hat(x)(ν)|$,
+          name: "plot",
+          {
+            let domain = (-3., 3)
+
+            plot.add(((1, 0), (1, 1)), domain: domain, style: (mark: (end: ">", fill: blue), stroke: blue))
+            plot.add-anchor("dp", (1, 0))
+            plot.add(((-1, 0), (-1, 1)), domain: domain, style: (mark: (end: ">", fill: blue), stroke: blue))
+            plot.add-anchor("dm", (-1, 0))
+
+            plot.add(((-2, 0), (2, 0)), domain: domain, style: (stroke: 0pt))
+
+
+            //plot.add-vline(min: 0, max: 1, 1, style: (mark: (end: ">", fill: blue), stroke: blue))
+            //plot.add-vline(min: -0.5, max: 0, 0.5, style: (mark: (start: ">", fill: blue), stroke: blue))
+
+            //line((2.67, 0), (2.67, 4), mark: (end: ">", fill: black), stroke: 1.5pt)
+          },
+        )
+        content("plot.dp", [$ν_x$], anchor: "north", padding: .1)
+        content("plot.dm", [$-ν_x$], anchor: "north", padding: .1)
+      },
+    )
   ]
-  #canvas(
-    length: 1cm,
-    {
-      import draw: *
-
-      plot.plot(
-        ..opts,
-
-        size: (4, 2),
-        x-format: plot.formats.multiple-of,
-        y-min: -1,
-        y-max: 1,
-        legend: "inner-north",
-        axis-style: "school-book",
-        x-label: $ν$,
-        y-label: $|hat(x)(ν)|$,
-        name: "plot",
-        {
-          let domain = (-3., 3)
-
-          plot.add(((1, 0), (1, 1)), domain: domain, style: (mark: (end: ">", fill: blue), stroke: blue))
-          plot.add-anchor("dp", (1, 0))
-          plot.add(((-1, 0), (-1, 1)), domain: domain, style: (mark: (end: ">", fill: blue), stroke: blue))
-          plot.add-anchor("dm", (-1, 0))
-
-          plot.add(((-2, 0), (2, 0)), domain: domain, style: (stroke: 0pt))
-
-
-          //plot.add-vline(min: 0, max: 1, 1, style: (mark: (end: ">", fill: blue), stroke: blue))
-          //plot.add-vline(min: -0.5, max: 0, 0.5, style: (mark: (start: ">", fill: blue), stroke: blue))
-
-          //line((2.67, 0), (2.67, 4), mark: (end: ">", fill: black), stroke: 1.5pt)
-        },
-      )
-      content("plot.dp", [$ν_x$], anchor: "north", padding: .1)
-      content("plot.dm", [$-ν_x$], anchor: "north", padding: .1)
-    },
-  )
-
 ]
 
 
