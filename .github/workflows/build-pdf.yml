@@ -41,6 +41,8 @@ jobs:
           typst compile lecture-notes/Lecture-notes.typ Signals-and-systems-m1-tpe.pdf  --font-path /usr/share/fonts
           typst compile  --input solutions=false TDs/TD2.typ TD2.pdf  --font-path /usr/share/fonts
           typst compile  --input solutions=true TDs/TD2.typ TD2-correction.pdf --font-path /usr/share/fonts
+          typst compile  --input solutions=false TDs/TD3.typ TD3.pdf  --font-path /usr/share/fonts
+          typst compile  --input solutions=true TDs/TD3.typ TD3-correction.pdf --font-path /usr/share/fonts
 
 
       - name: Convert first page from PDF to SVG

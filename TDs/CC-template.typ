@@ -1,6 +1,25 @@
 // Exam Template for Typst
 // Customize the parameters below to create your exam
 
+
+#let VV(x) = { $bold(#x)$ }
+#let MM(x) = { $bold(#x)$ }
+
+#let Vx = VV([x])
+#let Vy = VV([y])
+#let MH = MM([H])
+#let Id = MM([I])
+#let diag = $op("diag")$
+
+#let inner(a, b) = $lr(chevron.l #a, #b chevron.r)$
+#let conj(a) = $overline(#a)$
+#let dt = $dif t$
+// Macros
+#let eg = [_e.g._]
+#let ie = [_i.e._]
+#let etc = [_etc._]
+
+
 #let exam(
   title: "Final Examination",
   course: "Course Name",
@@ -270,6 +289,8 @@
     ]
   }
 }
+
+
 
 /*
 #question()[
