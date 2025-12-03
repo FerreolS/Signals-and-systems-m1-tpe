@@ -7,11 +7,15 @@
 #import "@preview/equate:0.3.2": equate
 
 
-#let V(x) = math.bold(x)
-#let M(x) = math.bold(x)
-#let Vx = V([x])
-#let Vy = V([y])
-#let MH = M([H])
+#let VV(x) = { $bold(#x)$ }
+#let MM(x) = { $bold(#x)$ }
+
+#let Vx = VV([x])
+#let Vy = VV([y])
+#let MH = MM([H])
+#let Id = MM([I])
+#let diag = $op("diag")$
+
 #let inner(a, b) = $lr(chevron.l #a, #b chevron.r)$
 #let conj(a) = $overline(#a)$
 #let dt = $dif t$

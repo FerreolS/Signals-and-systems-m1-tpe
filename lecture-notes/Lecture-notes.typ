@@ -8,6 +8,7 @@
 #let opts = (x-tick-step: none, y-tick-step: none, size: (4, 2))
 
 
+
 #let firstpage = [
   #set par(justify: true)
   This document is written in #link("https://typst.app/docs/", "Typst"). The source files are available on GitHub:
@@ -1374,36 +1375,145 @@ $
 The Discrete Fourier Transform (DFT) is a sampled version of the DTFT. It is defined for a finite-length discrete-time signal $x[n]$ of length $N$ as:
 #rect(fill: silver)[
   $
-    hat(x)[k] & = 1/N ∑_(n=0)^(N-1) x[n] thin e^(-j thin 2 π thin k thin n / N ), & text(weight: "bold", "    Forward DFT") \
+    hat(x)[k] & = ∑_(n=0)^(N-1) x[n] thin e^(-j thin 2 π thin k thin n / N ), & text(weight: "bold", "    Forward DFT") \
     //#label("eq-dft-analysis") \
-         x[n] & = ∑_(k=0)^(N-1) hat(x)[k] thin e^(j thin 2 π thin k thin n / N).  & text(weight: "bold", "    Inverse DFT") // #label("eq-dft-synthesis")
+    x[n] & = 1/N ∑_(k=0)^(N-1) hat(x)[k] thin e^(j thin 2 π thin k thin n / N). & text(weight: "bold", "    Inverse DFT") // #label("eq-dft-synthesis")
   $
 ]
-where $ω_0 = e^(j thin 2 π thin k thin n / N)$ is the N-root of unity. We can defined the DFT matrix as :
+where $ω_N = e^(j thin (2 π) / N)$ is the Nth-root of unity.
+
+We can defined the DFT matrix  of size $N$ as :
 $
-  F_(N)[k,n] & = e^(-j thin 2 π thin k thin n / N) , quad k,n = 0, 1, ..., N-1 thin \
+      F_(N)[k,n] & = e^(-j thin 2 π (k thin n) / N) , quad k,n = 0, 1, ..., N-1 thin \
   /*              & = mat(
     1, 1, 1, ..., 1;
     1, e^(-j thin 2 π / N), e^(-j thin 2 π 2 / N), ..., e^(-j thin 2 π (N-1) / N);
     1, e^(-j thin 2 π 2 / N), e^(-j thin 2 π 4 / N), ..., e^(-j thin 2 π 2(N-1) / N);
     ..., ..., ..., ..., ...;
     1, e^(-j thin 2 π (N-1) / N), e^(-j thin 2 π 2(N-1) / N), ..., e^(-j thin 2 π (N-1)(N-1) / N);
-  ) \ */     & = mat(
-                 1, 1, 1, ..., 1;
-                 1, ω_N, ω_N^2, ..., ω_N^(N-1);
-                 1, ω_N^2, ω_N^4, ..., ω_N^(2(N-1));
-                 ..., ..., ..., ..., ...;
-                 1, ω_N^(N-1), ω_N^(2(N-1)), ..., ω_N^((N-1)(N-1));
-               )
+  ) \ */ MM(F)_N & = mat(
+                     1, 1, 1, ..., 1;
+                     1, ω_N, ω_N^2, ..., ω_N^(N-1);
+                     1, ω_N^2, ω_N^4, ..., ω_N^(2(N-1));
+                     ..., ..., ..., ..., ...;
+                     1, ω_N^(N-1), ω_N^(2(N-1)), ..., ω_N^((N-1)(N-1));
+                   )
 $
-There are several definition of the DFT:
-- Normalized DFT: where the forward and inverse transforms include a normalization factor of $1/sqrt(N)$.
-- Unitary DFT: where the forward transform includes a normalization factor of $1/N$
-//The DFT can be interpreted as the projection of the discrete signal $x[n]$ onto a set of orthogonal basis functions, which are complex exponentials of different frequencies. The DFT coefficients $hat(x)[k]$ represent the amplitude and phase of these frequency components in the original signal.
+the discrete Fourier transform becomes:
+#rect(fill: silver)[
+  $
+    hat(VV(x)) & = MM(F)_N ⋅ VV(x) ,          & text(weight: "bold", "    Forward DFT") \
+    //#label("eq-dft-analysis") \
+         VV(x) & = 1/N MM(F)^H_N ⋅ hat(VV(x)) & text(weight: "bold", "    Inverse DFT") // #label("eq-dft-synthesis")
+  $
+]
+where $MM(F)^H_N$ is the is Hermitian transpose or conjugate transpose:
+$ F^H_(N)[i,j] = conj(F_(N)[j,i]) $.
 
-The DFT can be computed efficiently using the Fast Fourier Transform (FFT) algorithm.
+As $MM(F)^H_N ⋅ MM(F)_N = 1/N Id ≠ Id$, this DFT matrix is not unitary. This lead to the unitary definition of the DFT matrix:
+#rect(fill: silver)[
+  $
+    MM(U)_N & = 1 / sqrt(N) MM(F)_N
+  $
+]
+and $MM(U)^H_N ⋅ MM(U)_N = Id$.
+
+
+The DFT can be computed efficiently using the Fast Fourier Transform (FFT) algorithm that applies the DFT matrix $MM(F)_N$ in $O(N thin log(N))$ operations.
 
 == Properties
+
+The properties of the Discrete Fourier Transform are similar to those of the continuous Fourier transform described in @sec-FT-properties. They can be derived from the properties of the DTFT.
+#show table.cell: set text(size: 10pt)
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    align: (left, center, center),
+    stroke: 0.5pt + silver,
+    table.header([*Property*], [*Time Domain*], [*Frequency Domain*]),
+    [Linearity], $z[n] = a thin x[n] + b thin y[n]$, $hat(z)[k] = a thin hat(x)[k] + b thin hat(y)[k]$,
+
+    [Time Shifting], $y[n] = x[n - n_0]$, $hat(y)[k] = e^(-j thin 2 π thin k thin n_0 / N) hat(x)[k]$,
+
+    [Frequency Shifting], $y[n] = e^(j thin 2 π thin k_0 thin n / N) thin x[n]$, $hat(y)[k] = hat(x)[(k - k_0) mod N]$,
+
+    [Time Reversal], $y[n] = x[-n mod N]$, $hat(y)[k] = hat(x)[-k mod N]$,
+
+    [Convolution],
+    $z[n] = (x * y)[n] = ∑_(m=0)^(N-1) x[m] thin y[(n - m) mod N]$,
+    $hat(z)[k] = hat(x)[k] thin hat(y)[k]$,
+
+    [Multiplication],
+    $z[n] = x[n] thin y[n]$,
+    $hat(z)[k] = 1/N ∑_(ell=0)^(N-1) hat(x)[ell] thin hat(y)[(k - ell) mod N]$,
+
+    [Conjugation], $y[n] = conj(x[n])$, $hat(y)[k] = conj(hat(x)[-k mod N])$,
+
+    [First Difference], $y[n] = x[n] - x[n-1 mod N]$, $hat(y)[k] = (1 - e^(-j thin 2 π thin k / N)) hat(x)[k]$,
+
+    [Symmetry ], $x[n] in RR$, $hat(x)[-k mod N] = conj(hat(x)[k])$,
+
+    [Even Real Signals], $x[n] = x[-n mod N] in RR$, $hat(x)[k] in RR$,
+    [Odd Real Signals], $x[n] = -x[-n mod N] in RR$, $hat(x)[k] in j thin RR$,
+  ),
+  caption: [Properties of Discrete Fourier Transform],
+) <table-dft-properties>
+
+== Discrete convolution matrix
+
+Given a finite-length discrete inpulse response $VV(h)$ of length $M$, the convolution matrix $MM(H)$ generated by $VV(h)$ for an input signal $VV(x)$ of size $N$ is defined as:
+$
+  VV(y) & = MM(H) ⋅ VV(x) \
+  MM(H) & = mat(
+            h[0], 0, 0, ..., 0;
+            h[1], h[0], 0, ..., 0;
+            h[2], h[1], h[0], ..., 0;
+            ..., ..., ..., ..., ...;
+            h[M-1], h[M-2], h[M-3], ..., h[0];
+            0, h[M-1], h[M-2], ..., h[1];
+            0, 0, h[M-1], ..., h[2];
+            ..., ..., ..., ..., ...;
+            0, 0, 0, ..., h[M-1];
+          )
+$
+This matrix is of size $(N + M - 1) x N$ and the output signal $VV(y)$ is then of size $N + M - 1$. This formulation supposed that the vector $VV(x)$ is zero outside its defined range.
+
+=== Circulant Matrices
+If we supposed the input vector periodic of period $N$,  the matrix $MM(H)$ becomes a Toeplitz circulant matrix of size $N x N$:
+$
+  MM(H) & = mat(
+            h[0], h[N-1], h[N-2], ..., h[1];
+            h[1], h[0], h[N-1], ..., h[2];
+            h[2], h[1], h[0], ..., h[3];
+            ..., ..., ..., ..., ...;
+            h[N-1], h[N-2], h[N-3], ..., h[0];
+          )
+$
+This matrix is  Toeplitz as each descending diagonal from left to right is constant.
+
+=== Diagonalization of convolution matrix
+The  circulant convolution matrix (a.k.a Toeplitz matrix) $MM(H)$ of size $N$ can be diagonalized using the DFT matrix $MM(F)_N$ as:
+#math.equation(
+  block: true,
+  $
+    MM(H) & = MM(F)^H_N ⋅ MM(Λ) ⋅ MM(F)_N
+    //MM(Λ) & = MM(F)_N ⋅ MM(H) ⋅ MM(F)^H_N
+  $,
+)
+where $MM(Λ)$ is a diagonal matrix containing the eigenvalues of $MM(H)$ given by the DFT of its first column:
+$
+  Λ_(k,k) = & hat(h)_k
+$
+In other word
+#math.equation(
+  block: true,
+  $
+    MM(H) & = MM(F)^H_N ⋅ diag(hat(h))⋅ MM(F)_N
+    //MM(Λ) & = MM(F)_N ⋅ MM(H) ⋅ MM(F)^H_N
+  $,
+)
+where $diag(hat(h))$ is the diagonal matrix containing the DFT of the impulse response $VV(h)$.
+
 
 
 == Sampling<sec-sampling>
