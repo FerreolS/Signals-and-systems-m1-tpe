@@ -1906,7 +1906,7 @@ For discrete signal the whitening matrix $MM(B)$  is the square-root of the prec
   block: true,
   $
     MM(B) & = MM(C)^(-1/2) \
-          & = MM(B)^(1/2) \
+          & = MM(W)^(1/2) \
           & = MM(F)^(-1) ⋅ diag(1/sqrt(hat(VV(hat(γ))_X)))⋅ MM(F)
   $,
 )
@@ -1915,19 +1915,22 @@ For discrete signal the whitening matrix $MM(B)$  is the square-root of the prec
 A Gaussian process is a random signal where any finite collection of samples follows a multivariate normal distribution.
 To generate such a Gaussian process with a specified autocovariance function $γ_X (τ)$, we just need to filter white Gaussian noise signal $n(t)$ with zero mean and unit variance by the inverse of the whitening filter.
 
-In the discrete case, if $VV(n)$ white Gaussian noise signal with zero mean and unit variance:
+In the discrete case, with $VV(n)$  a white Gaussian noise signal with zero mean and unit variance, the generated signal is:
+$
+  VV(x) & = MM(B)^(-1) ⋅ VV(n)
+$
+And its covariance matrix is:
 #math.equation(
   block: true,
   numbering: none,
   $
-      VV(x) & = MM(B)^(-1) ⋅ VV(n) \
     MM(C)_X & = EE(VV(x) ⋅ VV(x)^H) \
             & = EE(MM(B)^(-1) ⋅ VV(n) ⋅ (MM(B)^(-1) ⋅ VV(n))^H) \
             & = EE(MM(B)^(-1) ⋅ VV(n)⋅ VV(n)^H ⋅ MM(B)^(-H)) \
             & =MM(B)^(-1) ⋅ EE(VV(n)⋅ VV(n)^H) ⋅ MM(B)^(-H) \
             & = MM(B)^(-1) ⋅ MM(B)^(-H) \
             & = MM(F)^(-1) ⋅ diag(sqrt(hat(VV(hat(γ))_X)))⋅ MM(F) ⋅ MM(F)^(-1) ⋅ diag(sqrt(hat(VV(hat(γ))_X)))⋅ MM(F) \
-            & = MM(F)^(-1) ⋅ diag(hat(VV(hat(γ))_X)))⋅ MM(F) \
+            & = MM(F)^(-1) ⋅ diag(hat(VV(hat(γ))_X)))⋅ MM(F)
   $,
 )
 //The covariance function of random  process $x$  follows the autocovariance function $γ_X$ as ex
