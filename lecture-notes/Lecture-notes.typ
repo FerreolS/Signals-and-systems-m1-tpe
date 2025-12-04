@@ -947,7 +947,7 @@ The scalar product between two complex exponentials is:
     & = delta[k -ell]
   $,
 )
-That means that ${e^(j k thin omega_0 ) thick : thick k in ZZ}$ forms an *orthonormal basis* of  $L^2([0,T])$.  In other words, any square-integrable periodic function can be represented as a Fourier series as defined by the analysis-synthesis equations above.
+That means that ${e^(j k thin omega_0 ) thick : thick k in ZZ}$ forms an *orthonormal basis* of  $L^2([0,T])$.  In other words, every square-integrable periodic function can be represented as a Fourier series as defined by the analysis-synthesis equations above.
 
 == Parseval theorem
 
@@ -1031,17 +1031,17 @@ From @eq-discrete-periodic, a discrete time  signal is periodic with  period $N$
 )<eq-discrete-periodic2>
 The fundamental frequency is $ω_0 = (2 π)/ N$ is defined from the fundamental period $N$, the smallest integer for which the    @eq-discrete-periodic2 holds.
 
-The set of all discrete time complex exponentials that are periodic with period $N$ is finite and given by:
+The set of all discrete-time complex exponentials that are periodic with period $N$ is finite and given by:
 $
   { e^(j thin ω_0 thin k thin n) thick : thick k = 0, 1, ..., N-1 }
 $
-as for any $k>=N$ or $k<0$:
+since for any $k>=N$ or $k<0$:
 $
   e^(j thin ω_0 thin k thin n) = e^(j thin ω_0 (k mod N) thin n)
 $
 
 === Analysis-Synthesis Equations
-As for continous-time signal described @sec-FourierSeries-continuous, any discrete periodic signal $x[n]$ of period $N$ can be expressed as a weighted sum of these complex exponentials. The  analysis synthesis equation for discrete-time Fourier series are:
+As for continous-time signal described @sec-FourierSeries-continuous, any discrete periodic signal $x[n]$ of period $N$ can be expressed as a weighted sum of these complex exponentials. The analysis and synthesis equations for discrete-time Fourier series are:
 #rect(fill: silver)[
   $
     hat(x)[k] & = 1/N ∑_(n=1)^(N) x[n] thin e^(-j thin omega_0 thin k thin n ), &  text(weight: "bold", "    analysis") \
@@ -1049,7 +1049,7 @@ As for continous-time signal described @sec-FourierSeries-continuous, any discre
          x[n] & = ∑_(k=1)^(N) hat(x)[k]thin e^(j thin ω_0 thin k thin n).       & text(weight: "bold", "    synthesis") // #label("eq-fourier-synthesis")
   $
 ]
-In these equations, the limits of the summation can be any contigous
+In these equations, the limits of the summation can be any contiguous
 range in $NN$ (#eg $k=0,1,dots,N-1$ or $k= 1,2,dots,N$).
 
 
@@ -1062,8 +1062,8 @@ The Parseval theorem holds equivalently in discrete-time:
 
 
 
-=== Properties of Discrete Time Fourier Series
-The properties of Fourier series decomposition for discrete time signal are similar to the continuous signal ones described in @sec-FSeries-properties.
+=== Properties of Discrete-Time Fourier Series
+The properties of Fourier series decomposition for discrete-time signals are similar to the continuous signal ones described in @sec-FSeries-properties.
 
 #show table.cell: set text(size: 10pt)
 #figure(
@@ -1097,7 +1097,7 @@ The properties of Fourier series decomposition for discrete time signal are simi
 
 = Fourier transform
 
-As complex exponentials are eigen functions of  LTI  systems (see @eq-lti-eigenfunctions), the Fourier series decomposition of the output signal $y$ of an LTI of impulse response $h$ can be easyly computed from the Fourier series representation of the input signal $x$:
+As complex exponentials are eigenfunctions of LTI systems (see @eq-lti-eigenfunctions), the Fourier series decomposition of the output signal $y$ of an LTI system with impulse response $h$ can be easily computed from the Fourier series representation of the input signal $x$:
 #math.equation(
   block: true,
   $y(t) &= h * x \
@@ -1110,7 +1110,7 @@ with
 $
   λ_k = integral_RR h(tau) thin e^(-j thin omega_0 thin k thin tau) thin dif tau
 $<eq-λ>
-The operation on the right-hand side of @eq-λ is  Fourier transform of the impulse response $h$ taken at frequency $ω = k thin ω_0$.
+The operation on the right-hand side of @eq-λ is the Fourier transform of the impulse response $h$ taken at frequency $ω = k thin ω_0$.
 
 
 == Fourier transform of Continuous Signals
@@ -1154,20 +1154,20 @@ The angular frequency Fourier transform can be made unitary as:
   $
 ]
 
-For periodic function of period $T$, the Fourier transform is defined only at discrete frequencies $ν = k/T$ with $k in ZZ$ and is related to the Fourier series coefficients as:
+For periodic functions of period $T$, the Fourier transform is  non-zero only at discrete frequencies $ν = k/T$ with $k in ZZ$ and is related to the Fourier series coefficients as:
 $
-  hat(x)( ν) = ∑_(k=-∞)^(+∞) hat(x)_k thin δ(ν - k/T )thin .
+  hat(x)( ν) = ∑_(k=-∞)^(+∞) hat(x)_k thin δ(ν - k/T) .
 $
 
 == Convergence of Fourier transform
 
 If  $x(t)$ is  square integrable over $RR$, #ie $integral_RR abs(x(t))^2 thin dif t < infinity$, then its Fourier transform exists and $hat(x)(omega)$ is also square integrable over $RR$.
-As in physics, many signal are of finite energy then  this condition holds in many application involving physical quantities.
+Since many signals in physics are of finite energy, this condition holds in many applications involving physical quantities.
 
 For periodic signals, the Fourier transform of a signal $x(t)$ exists under the same Dirichlet conditions stated in #ref(<sec-FourierSerie-Convergence>), which require that:
-- $x(t)$ is absolutely integrable over $RR$, #ie $integral_RR abs(x(t)) thin dif t < infinity$. //In this case, the Fourier transform $hat(x)(omega)$ is bounded and continuous.
-- $x(t)$ is of bounded variation (#ie there is finite number of maxima and minima within finite interval)
-- x(t) have a finite number of discontinuities within finite interval.
+- $x(t)$ is absolutely integrable over $RR$, #ie $integral_RR abs(x(t)) thin dif t < infinity$.
+- $x(t)$ is of bounded variation (#ie there is a finite number of maxima and minima within any finite interval)
+- $x(t)$ has a finite number of discontinuities within any finite interval.
 
 == Plancherel-Parseval theorem
 The Plancherel-Parseval theorem states that the total energy of a signal $x(t)$ is equal to the total energy of its Fourier transform $hat(x)(ν)$:
@@ -1262,17 +1262,17 @@ The transform of a real-valued function thus exhibits conjugate symmetry.
 Conversely, if a function's Fourier transform has conjugate symmetry, the original function is real-valued.
 
 == Incertitude Principle
-The Fourier transform incertitude principle states that a signal cannot be simultaneously localized in time and frequency. More precisely,considering  a  centered signal ($∫_RR t thin x(t) dt = 0$) of unit energy ($∫_RR abs(x(t))^2 dt = 1$) for simplicity, if we define the time spread (standard deviation) $Δ t$ and the frequency spread $Δ ν$ of a signal $x(t)$ as:
+The Fourier transform uncertainty principle states that a signal cannot be simultaneously localized in time and frequency. More precisely, considering a centered signal ($∫_RR t thin x(t) dt = 0$) of unit energy ($∫_RR abs(x(t))^2 dt = 1$) for simplicity, if we define the time spread (standard deviation) $Δ t$ and the frequency spread $Δ ν$ of a signal $x(t)$ as:
 $
   Δ t & = sqrt(∫_RR t^2 abs(x(t))^2 dif t) \
   Δ ν & = sqrt(∫_RR ν^2 abs(hat(x)(ν))^2 dif ν)thin ,
 $
-then the incertitude principle states that:
+then the uncertainty principle states that:
 #math.equation(
   block: true,
   $Δ t thin Δ ν >= 1 / (4 π) thin .$,
 )
-In quantum mechanics, as  the momentum and position wave functions are Fourier transform pairs (up to a factor of the Planck constant), this inequality becomes the Heisenberg uncertainty principle.
+In quantum mechanics, since the momentum and position wave functions are related by a Fourier transform (up to Planck's constant), this inequality becomes the Heisenberg uncertainty principle.
 
 == Notable Fourier transforms
 #show table.cell: set text(size: 9pt)
@@ -1314,14 +1314,14 @@ In quantum mechanics, as  the momentum and position wave functions are Fourier t
 
 == Filtering
 
-Thanks to the convolution theorem of the Fourier transform, the action of a LTI system of impulse response $h$ on a signal $x$ is :
+Thanks to the convolution theorem of the Fourier transform, the action of an LTI system with impulse response $h$ on a signal $x$ is:
 $
     y(t) & = (h*x)(t) \
   hat(y) & = hat(h) thin hat(x) thin,
 $
-where $hat(h)$, the Fourier transform of $h$ is called the transfert function.
+where $hat(h)$, the Fourier transform of $h$, is called the transfer function.
 
-We called the action of these LTI systems as a _Filtering_ of the input signal. It is important to understand that filters  acts on each frequencies independently. We can study the transfert function of filters either to understand their effect on signals or to design filters with specific frequency response. This is widely used in signal processing, communications, control systems, and many other fields. This study generaly amounts to study modulus and phase of the transfert function as a function of frequency:
+We call the action of these LTI systems _filtering_ of the input signal. It is important to understand that filters act on each frequency independently. We can study the transfer function of filters either to understand their effect on signals or to design filters with specific frequency response. This is widely used in signal processing, communications, control systems, and many other fields. This study generally amounts to studying the magnitude and phase of the transfer function as a function of frequency:
 $
   h(ν) = abs(hat(h)(ν)) thin e^(j thin φ(ν)) thin,
 $
@@ -1332,7 +1332,7 @@ Several categories of filters can be described:
 - High-pass filters: These filters allow high-frequency components to pass through while attenuating low-frequency components. They are used to eliminate low-frequency noise or drift.
 - Band-pass filters: These filters allow a specific range of frequencies to pass through while attenuating frequencies outside this range. They are used in applications such as audio processing and communications.
 - Band-stop filters: These filters attenuate a specific range of frequencies while allowing frequencies outside this range to pass through. They are used to eliminate unwanted frequency components, such as interference.
-- All-pass  filters: These filters allow all frequencies to pass through but alter the phase relationship between different frequencies.
+- All-pass filters: These filters allow all frequencies to pass through but alter the phase of the signal.
 
 
 Filters can be easily combined  by multiplying their transfer functions. This property is particularly useful in designing complex filtering systems by cascading simpler filters.
@@ -1382,7 +1382,7 @@ The Discrete Fourier Transform (DFT) is a sampled version of the DTFT. It is def
 ]
 where $ω_N = e^(j thin (2 π) / N)$ is the Nth-root of unity.
 
-We can defined the DFT matrix  of size $N$ as :
+We can define the DFT matrix of size $N$ as:
 $
       F_(N)[k,n] & = e^(-j thin 2 π (k thin n) / N) , quad k,n = 0, 1, ..., N-1 thin \
   /*              & = mat(
@@ -1404,19 +1404,23 @@ the discrete Fourier transform becomes:
   $
     hat(VV(x)) & = MM(F)_N ⋅ VV(x) ,          & text(weight: "bold", "    Forward DFT") \
     //#label("eq-dft-analysis") \
-         VV(x) & = 1/N MM(F)^H_N ⋅ hat(VV(x)) & text(weight: "bold", "    Inverse DFT") // #label("eq-dft-synthesis")
+         VV(x) & = 1/N MM(F)^H_N ⋅ hat(VV(x)) & text(weight: "bold", "    Inverse DFT") \
+    // #label("eq-dft-synthesis")
+         VV(x) & = MM(F)^(-1)_N ⋅ hat(VV(x))
   $
 ]
-where $MM(F)^H_N$ is the is Hermitian transpose or conjugate transpose:
+where $MM(F)^H_N$ is the Hermitian transpose or conjugate transpose:
 $ F^H_(N)[i,j] = conj(F_(N)[j,i]) $.
 
-As $MM(F)^H_N ⋅ MM(F)_N = 1/N Id ≠ Id$, this DFT matrix is not unitary. This lead to the unitary definition of the DFT matrix:
+As $MM(F)^H_N ⋅ MM(F)_N = 1/N Id ≠ Id$, this DFT matrix is not unitary. This leads to the unitary definition of the DFT matrix:
 #rect(fill: silver)[
   $
     MM(U)_N & = 1 / sqrt(N) MM(F)_N
   $
 ]
 and $MM(U)^H_N ⋅ MM(U)_N = Id$.
+
+In this lecture, for the sake of simplicity we will use the unitary matrix as the DFT matrix $MM(F)_N = MM(U)_N$ such that  $MM(F)^(-1)_N = MM(U)^(H)_N$
 
 
 The DFT can be computed efficiently using the Fast Fourier Transform (FFT) algorithm that applies the DFT matrix $MM(F)_N$ in $O(N thin log(N))$ operations.
@@ -1461,7 +1465,7 @@ The properties of the Discrete Fourier Transform are similar to those of the con
 
 == Discrete convolution matrix
 
-Given a finite-length discrete inpulse response $VV(h)$ of length $M$, the convolution matrix $MM(H)$ generated by $VV(h)$ for an input signal $VV(x)$ of size $N$ is defined as:
+Given a finite-length discrete impulse response $VV(h)$ of length $M$, the convolution matrix $MM(H)$ generated by $VV(h)$ for an input signal $VV(x)$ of size $N$ is defined as:
 $
   VV(y) & = MM(H) ⋅ VV(x) \
   MM(H) & = mat(
@@ -1476,10 +1480,10 @@ $
             0, 0, 0, ..., h[M-1];
           )
 $
-This matrix is of size $(N + M - 1) x N$ and the output signal $VV(y)$ is then of size $N + M - 1$. This formulation supposed that the vector $VV(x)$ is zero outside its defined range.
+This matrix is of size $(N + M - 1) × N$ and the output signal $VV(y)$ is then of size $N + M - 1$. This formulation assumes that the vector $VV(x)$ is zero outside its defined range.
 
 === Circulant Matrices
-If we supposed the input vector periodic of period $N$,  the matrix $MM(H)$ becomes a Toeplitz circulant matrix of size $N x N$:
+If we assume the input vector is periodic with period $N$, the matrix $MM(H)$ becomes a Toeplitz circulant matrix of size $N × N$:
 $
   MM(H) & = mat(
             h[0], h[N-1], h[N-2], ..., h[1];
@@ -1489,14 +1493,14 @@ $
             h[N-1], h[N-2], h[N-3], ..., h[0];
           )
 $
-This matrix is  Toeplitz as each descending diagonal from left to right is constant.
+This matrix is Toeplitz as each descending diagonal from left to right is constant.
 
 === Diagonalization of convolution matrix
-The  circulant convolution matrix (a.k.a Toeplitz matrix) $MM(H)$ of size $N$ can be diagonalized using the DFT matrix $MM(F)_N$ as:
+The circulant convolution matrix (also known as Toeplitz matrix) $MM(H)$ of size $N$ can be diagonalized using the DFT matrix $MM(F)_N$ as:
 #math.equation(
   block: true,
   $
-    MM(H) & = MM(F)^H_N ⋅ MM(Λ) ⋅ MM(F)_N
+    MM(H) & = MM(F)^(-1)_N ⋅ MM(Λ) ⋅ MM(F)_N
     //MM(Λ) & = MM(F)_N ⋅ MM(H) ⋅ MM(F)^H_N
   $,
 )
@@ -1504,25 +1508,109 @@ where $MM(Λ)$ is a diagonal matrix containing the eigenvalues of $MM(H)$ given 
 $
   Λ_(k,k) = & hat(h)_k
 $
-In other word
+In other words,
 #math.equation(
   block: true,
   $
-    MM(H) & = MM(F)^H_N ⋅ diag(hat(h))⋅ MM(F)_N
+    MM(H) & = MM(F)^(-1)_N ⋅ diag(hat(h))⋅ MM(F)_N
     //MM(Λ) & = MM(F)_N ⋅ MM(H) ⋅ MM(F)^H_N
   $,
 )
 where $diag(hat(h))$ is the diagonal matrix containing the DFT of the impulse response $VV(h)$.
 
+=== Periodic Border Conditions
 
+When the convolution matrix $MM(H)$ is circulant, it implies periodic border conditions for the input signal $VV(x)$. This means that the signal is assumed to repeat itself outside its defined range. Specifically, for an input signal of length $N$, we have:
+$
+  x[n + N] = x[n] , quad forall n in ZZ thin .
+$
+This assumption may induce artifacts at the borders of the output signal, especially if the input signal has significant discontinuities at its boundaries.
 
 == Sampling<sec-sampling>
 
+When a continuous-time signal $x(t)$ is sampled at regular intervals of period $T$, the resulting discrete-time signal is given by:
+$
+  x[n] = x(n T) thin , quad n in ZZ thin .
+$
+The sampling frequency is defined as $f_s = 1 / T$.
+//The Nyquist frequency is defined as $f_N = f_s / 2$.
+
+=== Shannon-Nyquist sampling theorem
+When the continuous-time signal $x(t)$ is band-limited with a maximum frequency $f_max$ (i.e., its Fourier transform $hat(x)(ν) = 0$ for $abs(ν) > f_max$), the *Shannon-Nyquist sampling theorem* states:
+
+#rect(fill: silver)[
+  A continuous-time signal can be perfectly reconstructed from its samples if the sampling frequency satisfies:
+  $
+    f_s > 2 thin f_max thin .
+  $
+]
+
+If the sampling frequency is lower than twice the maximum frequency of the signal, *aliasing* occurs, leading to distortion in the reconstructed signal. Aliasing occurs when higher frequency components of the signal are misrepresented as lower frequency components in the sampled signal. Moiré patterns in images are a common example of aliasing.
+
+=== Border artifacts
+When sampling a continuous-time signal, border artifacts can occur due to the finite duration of the sampled signal. These artifacts are particularly noticeable when the original signal has discontinuities or rapid changes at the boundaries of the sampling interval.
+To mitigate border artifacts, several techniques can be employed:
+- Removing the slope: The mean slope of the signal before sampling can help reduce discontinuities at the borders.
+- Windowing: Applying a window function (#eg Gaussian, Hanning, ...) to the signal before sampling.
+- Padding: Extending the signal with additional samples (#eg zeros, mean, or mirrored values) can help minimize edge effects during processing.
 
 = Random signals
 
 
 == Definitions
+
+=== Discrete random variable
+A discrete random variable $X$ is a variable that can take on a countable number of distinct values, each associated with a specific probability. The probability mass function (PMF) $p_X(x)$ defines the probability that the random variable takes on the value $x$:
+#rect(fill: silver)[
+  $
+    p_X (x) = P(X = x) , quad forall x in S_X ,
+  $
+]
+where $S_X$ is the set of possible values of $X$. The PMF must satisfy the following properties:
+- Non-negativity: $p_X(x) >= 0 , quad forall x in S_X$
+- Normalization: $∑_(x in S_X) p_X(x) = 1$.
+
+
+=== Continuous random variable
+A continuous random variable $X$ is a variable that can take on an infinite number of values within a given range. The probability density function (PDF) $f_X(x)$ defines the likelihood that the random variable falls within an interval $[a, b]$ as:
+#rect(fill: silver)[
+  $ P(a <= X <= b) = ∫_a^b f_X (x) thin dif x $
+]
+It can also be defined by its cumulative distribution function $F_X (x)$:
+#rect(fill: silver)[
+  $
+    F_X (x) & = ∫_(-∞)^x f_X (u) dif u \
+    f_X (x) & = (dif) / (dif x) P(X <= x) , quad forall x in RR ,
+  $
+]
+The PDF must satisfy the following properties:
+- Non-negativity: $f_X(x) >= 0 , quad forall x in RR$
+- Normalization: $∫_RR f_X(x) thin dif x = 1$
+
+=== Moments
+
+The $n^("th")$ moment of a random variable $X$ is defined as the expected value of its $n^("th")$ power:
+$
+  EE[X^n] = cases(
+    ∑_(x in S_X) x^n thin p_X (x) quad & " discrete random variables",
+    ∫_RR x^n thin f_X (x) thin dif x quad & " continuous random variables"
+  )
+$
+
+- The first moment ($n=1$) is the mean or expected value $μ_X = EE[X]$.
+
+The $n^("th")$ central moment of a random variable $X$ is defined as the expected value of the $n^("th")$ power of the deviation of $X$ from its mean $μ_X$:
+$
+  EE[(X - μ_X)^n] = cases(
+    ∑_(x in S_X) (x - μ_X)^n thin p_X (x) quad & " discrete ",
+    ∫_RR (x - μ_X)^n thin f_X (x) thin dif x quad & " continuous "
+  )
+$
+- The second central moment ($n=2$) is the variance $σ^2_X$, which measures the spread of the random variable around its mean:
+$ σ^2_X & = EE[(X - μ_X)^2] \
+      & = EE[X^2] - μ_X^2 $,
+- The standard deviation $σ_X$ is the square root of the variance:
+$ σ_X = sqrt(σ^2_X) $.
 
 
 #margin-note[
@@ -1565,10 +1653,39 @@ where $diag(hat(h))$ is the diagonal matrix containing the DFT of the impulse re
 ]
 
 
-=== Random signals
+== Random signals
 A random signal $X(t,s)$, also known as a stochastic process, is a function of time (or another variable) whose amplitude at any given time $t$ is a random variable.
 It is a set of functions of $t$, the set being indexed by $s$ as illustrated in #ref(<fig-random-signal>). A random signal is thus a bivariate quantity. When $s=s_i$ is fixed, we get a realization of the random process, denoted $X(t,s_i)$ or, more simply, $X_i (t)$. When $t$ is fixed, the random process reduces to a simple random variable. A random signal can be either continuous or discrete in time or value.
 
+=== Correlation
+The correlation function between two random signals $X(t)$ and $Y(t)$ is defined as:
+#rect(fill: silver)[
+  $
+    Γ_(X Y) (t_1, t_2) = EE[X(t_1) thin conj(Y(t_2))] , quad forall t_1, t_2 in RR ,
+  $
+]
+The correlation function measures the statistical dependence between the values of both random signals at different times. It presents an Hermitian symmetry:
+$ Γ_(X Y) (t_1, t_2) = conj(Γ_(Y X) (t_2, t_1)) $.
+
+=== Autocorrelation
+When $X(t) = Y(t)$, the correlation function reduces to the *autocorrelation function*:
+#rect(fill: silver)[
+  $
+    Γ_X (t_1, t_2) = EE[X(t_1) thin conj(X(t_2))] , quad forall t_1, t_2 in RR ,
+  $]
+The autocorrelation function measures the statistical dependence of the random signal with itself at different times. It is a Hermitian function, real-valued along the diagonal, and $Γ_X (t_1, t_2) = conj(Γ_X (t_2, t_1))$.
+
+=== AutoCovariance
+The *autocovariance function* of a random signal $X(t)$ is defined as:
+#rect(fill: silver)[
+  $
+    C_X (t_1, t_2) & = EE[(X(t_1) - μ_X (t_1)) thin conj(X(t_2) - μ_X (t_2))] , quad forall t_1, t_2 in RR , \
+                   & = Γ_X (t_1, t_2) - μ_X (t_1) thin conj(μ_X (t_2))
+  $
+]
+The autocovariance function is also a Hermitian function with $C_X (t_1, t_2) = conj(C_X (t_2, t_1))$.
+
+=== Stationarity
 A random signal is *wide-sense stationary* if its mean and autocovariance are finite and independent of the choice of the origin of time:
 /* #math.equation(
   block: true,
@@ -1593,7 +1710,237 @@ $<eq-random-stationnary-mean>
 $
   EE[X(t) thin X^*(t + tau)] = gamma_X (tau)
 $<eq-random-stationnary-correlation>
-$gamma_X (tau)$ is the correlation function.
+$gamma_X (tau)$ is the correlation function:
+$
+  gamma_X (tau) = Γ(t, t + tau)
+$
+
+=== Ergodicity
+
+A random signal is *ergodic* if its time averages are equal to its ensemble averages. This means that statistical properties of the random signal can be estimated from a single realization over time, rather than needing multiple realizations. For an ergodic random signal, the following holds:
+- The time average of the signal equals its expected value:
+$
+  lim_(T → ∞) (1 / (2 T)) ∫_(- T)^T X(t) thin dif t = EE[X(t)] thin , quad forall t in RR .
+$
+- The time average of the autocorrelation equals its ensemble autocorrelation:
+$
+  lim_(T → ∞) (1 / (2 T)) ∫_(- T)^T X(t) thin conj(X(t + tau)) thin dif t = Γ_X (tau) , quad forall tau in RR .
+$
+
+=== Discrete random signal
+In the discrete case , the definitions are similar with $t in ZZ$.
+- For a discrete random signal $X$ and $Y$ of size $N$ and $M$ respectively, the *correlation matrix*  is a $N×M$ matrix  defined as:
+#rect(fill: silver)[
+  $
+    Γ_(X Y) [m, n] & = EE[X[m] thin conj(Y[n])] , quad forall m, n in ZZ , \
+       MM(Γ)_(X Y) & = EE[VV(X) ⋅ VV(Y)^H]
+  $
+]
+
+- When $Y = X$, the *autocorrelation matrix* is :
+$
+  MM(Γ)_X & = EE[X ⋅ X^H]
+$
+
+- the *autocovariance matrix* is:
+  $
+    MM(C)_X & = EE[X ⋅ X^H] - E[X]⋅E[X]^H
+  $
+By construction this autocovariance matrix is an Hermitian matrix and its diagonal is real valued and equal to the variance of the signal:
+$
+  σ^2_X [n] = C_X [n,n]
+$
+
+In the case of a wide-sense stationary discrete random signal, the autocovariance matrix is a Toeplitz matrix:
+$
+  C_X [m,n] & = γ_X [m - n] , quad forall m, n in ZZ thin .
+$
+As a consequence, the autocovariance matrix can be diagonalized using the DFT matrix:
+#math.equation(
+  block: true,
+  $
+    MM(C)_X & = MM(F)^(-1)_N ⋅ MM(Λ) ⋅ MM(F)_N
+  $,
+)
+where $MM(Λ)$ is a diagonal matrix containing the eigenvalues of $C_X$ given by the DFT of its first column:
+$ Λ_(k,k) = & hat(γ_X)_k $
+In other word
+#math.equation(
+  block: true,
+  $
+    MM(C)_X & = MM(F)^(-1)_N ⋅ diag(hat(γ_X))⋅ MM(F)_N
+  $,
+)
+where $diag(hat(γ_X))$ is the diagonal matrix containing the DFT of the autocovariance sequence $γ_X$.
+
+If it exists, the inverse of the covariance matrix $MM(W) = MM(C)^(-1)$ is called the *precision matrix*.
+
+== Fourier transform of random signals
+
+The Fourier transform of a random signal is itself a random signal in the frequency domain. The statistical properties of the Fourier transform of a random signal can be analyzed similarly to those of the original signal.
+
+=== Power Spectral Density
+
+For finite time random signal $X(t)$, we define the *Energy Spectral Density* is given by:
+$
+  S_X (ν) = abs(hat(X)(ν))^2
+$
+
+For a (wide-sense) stationary random signal $X(t)$, we define the *Power Spectral Density* (PSD) $S_X(ν)$ as:
+#rect(fill: silver)[
+  $
+    S_X (ν) = lim_(T → ∞) 1/T EE[ abs(hat(X_T)(ν))^2 ] , quad forall ν in RR ,
+  $
+]
+where $hat(X_T)(ν)$ is the Fourier transform of the truncated signal $X_T (t) = X(t) thin "rect"(t / T)$.
+The power spectral density describes how the power of the random signal is distributed across different frequency components.
+
+== Wiener-Khinchin theorem
+
+The Wiener-Khinchin theorem states that the power spectral density $S_X(ν)$ of a wide-sense stationary random signal $X(t)$ is the Fourier transform of its autocorrelation function $γ_X (τ)$:
+#rect(fill: silver)[
+  #math.equation(
+    block: true,
+    $
+      S_X (ν) & = ∫_RR γ_X (τ) thin e^(-j thin 2 π thin ν thin τ) thin dif τ \
+      γ_X (τ) & = ∫_RR S_X (ν) thin e^(j thin 2 π thin ν thin τ) thin dif ν thin .
+    $,
+  )
+]
+
+
+Demonstration:
+
+Consider the truncated signal $X_T (t) = X(t) thin "rect"(t / T)$. Its Fourier transform is:
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+    hat(X_T)(ν) & = ∫_RR X_T (t) thin e^(-j thin 2 π thin ν thin t) thin dif t \
+                & = ∫_(-T/2)^(T/2) X (t) thin e^(-j thin 2 π thin ν thin t) thin dif t
+  $,
+)
+The expected value of the squared magnitude of the Fourier transform is:
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+    1/T EE[ abs(hat(X_T)(ν))^2 ] & = 1/T EE[ hat(X_T)(ν) thin conj(hat(X_T)(ν)) ] \
+    & = 1/T EE[ ∫_(-T/2)^(T/2) X (t_1) thin e^(-j thin 2 π thin ν thin t_1) thin dif t_1 thin ∫_(-T/2)^(T/2) conj(X (t_2)) thin e^(j thin 2 π thin ν thin t_2) thin dif t_2 ] \
+    & = 1/T ∫_(-T/2)^(T/2) ∫_(-T/2)^(T/2) EE[ X (t_1) thin conj(X (t_2)) ] thin e^(-j thin 2 π thin ν thin (t_1 - t_2)) thin dif t_1 thin dif t_2 \
+    & =1/T ∫_(-T/2)^(T/2) ∫_(-T/2)^(T/2) γ_X (t_1 - t_2) thin e^(-j thin 2 π thin ν thin (t_1 - t_2)) thin dif t_1 thin dif t_2 \
+    & = 1/T (∫_(-T/2)^(T/2) γ_X (τ) thin e^(-j thin 2 π thin ν thin τ) thin dif τ) thin (∫_(-T/2)^(T/2) thin dif t_2) \
+    & = ∫_(-T/2)^(T/2) γ_X (τ) thin e^(-j thin 2 π thin ν thin τ) thin dif τ
+  $,
+)
+
+Taking the limit when $T$ goes to infinity, we obtain the Wiener-Khinchin theorem.
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+    S_X (ν) & = lim_(T → ∞) 1/T EE[ abs(hat(X_T)(ν))^2 ] \
+            & = hat(γ_X)(ν)
+  $,
+)
+
+== White noise
+A random signal $X(t)$ is called *white noise* if its power spectral density is constant across all frequencies:
+#rect(fill: silver)[
+  $
+    S_X (ν) = σ^2_X , quad forall ν in RR ,
+  $
+]
+where $σ^2_X$ is the variance of the noise.
+This implies that the autocorrelation function of white noise is a Dirac delta function:
+#rect(fill: silver)[
+  $ γ_X (τ) = σ^2_X thin δ(τ) , quad forall τ in RR . $
+]
+This means that white noise has no correlation between its values at different times and its covariance matrix is proportional to the identity matrix.
+
+=== Signal to noise ratio
+For a signal $y(t) = x(t) + n(t)$ that is the sum of a signal of interest $x$ and an additive noise term $n$,
+the Signal-to-Noise Ratio (SNR) is a measure used to quantify the level of the desired signal relative to the level of background noise. It is defined as the ratio of the power of the signal to the power of the noise:
+#math.equation(
+  block: true,
+  $
+    "SNR" & = 10 thin log_10 (P_x / P_n) thin "dB" \
+          & = 10 thin log_10 (∫_RR EE(abs(x(t))^2) dt)/ (∫_RR EE(abs(n(t))^2) dt) \
+          & = 10 thin log_10 (∫_RR EE(abs(hat(x)(ν))^2) dif ν)/ (∫_RR EE(abs(hat(n)(ν))^2) dif ν)
+  $,
+)
+If the noise is white: $P_n =σ^2_n$  and the SNR becomes:
+#math.equation(
+  block: true,
+  $
+    "SNR" & = 10 thin log_10 (σ^2_x / σ^2_n) \
+          & = 20 log_10 (σ_x / σ_x)
+  $,
+)
+where $σ_x$ is the standard deviation of the signal
+
+
+
+== Filtering random signal
+When a wide-sense stationary random signal $X(t)$ is passed through a linear time-invariant (LTI) system with impulse response $h(t)$, the output random signal $Y(t)$ is also wide-sense stationary. The power spectral density of the output signal $Y(t)$ can be determined using the transfer function of the LTI system $hat(h)$.
+The power spectral density of the output signal $Y(t)$ is given by:
+#rect(fill: silver)[
+  $ S_Y (ν) = abs(hat(h(ν)))^2 thin S_X (ν) , quad forall ν in RR . $
+]
+
+
+
+=== Whitening
+Whitening is the process of transforming a random signal so that its power spectral density becomes equal to one across all frequencies, effectively converting it into white noise.
+The Whitening filter $w$ is defined such  that:
+#math.equation(
+  block: true,
+  $
+    S_Y (ν) & = abs(hat(w(ν)))^2 thin S_X (ν) , quad forall ν in RR \
+       w(ν) & = (S_X (ν))^(-1/2)
+  $,
+)
+
+For discrete signal the whitening matrix $MM(B)$  is the square-root of the precision matrix:
+#math.equation(
+  block: true,
+  $
+    MM(B) & = MM(C)^(-1/2) \
+          & = MM(B)^(1/2) \
+          & = MM(F)^(-1) ⋅ diag(1/sqrt(hat(VV(hat(γ))_X)))⋅ MM(F)
+  $,
+)
+
+=== Gaussian process generation
+A Gaussian process is a random signal where any finite collection of samples follows a multivariate normal distribution.
+To generate such a Gaussian process with a specified autocovariance function $γ_X (τ)$, we just need to filter white Gaussian noise signal $n(t)$ with zero mean and unit variance by the inverse of the whitening filter.
+
+In the discrete case, if $VV(n)$ white Gaussian noise signal with zero mean and unit variance:
+#math.equation(
+  block: true,
+  numbering: none,
+  $
+      VV(x) & = MM(B)^(-1) ⋅ VV(n) \
+    MM(C)_X & = EE(VV(x) ⋅ VV(x)^H) \
+            & = EE(MM(B)^(-1) ⋅ VV(n) ⋅ (MM(B)^(-1) ⋅ VV(n))^H) \
+            & = EE(MM(B)^(-1) ⋅ VV(n)⋅ VV(n)^H ⋅ MM(B)^(-H)) \
+            & =MM(B)^(-1) ⋅ EE(VV(n)⋅ VV(n)^H) ⋅ MM(B)^(-H) \
+            & = MM(B)^(-1) ⋅ MM(B)^(-H) \
+            & = MM(F)^(-1) ⋅ diag(sqrt(hat(VV(hat(γ))_X)))⋅ MM(F) ⋅ MM(F)^(-1) ⋅ diag(sqrt(hat(VV(hat(γ))_X)))⋅ MM(F) \
+            & = MM(F)^(-1) ⋅ diag(hat(VV(hat(γ))_X)))⋅ MM(F) \
+  $,
+)
+//The covariance function of random  process $x$  follows the autocovariance function $γ_X$ as ex
+This process ensures that the generated Gaussian process $X(t)$ has the desired autocovariance function
+
+=== Connection with Principal Component Analysis
+
+Principal Component Analysis (PCA) is closely related to the whitening process and provides a complementary perspective on signal decorrelation. Indeed, PCA is based on the diagonalization of the covariance matrix $MM(C)$ and for stationary signal this matrix is naturaly diagonalized by the DTF:
+$
+  MM(C)_X = MM(F)^(-1) diag(VV(hat(γ_X))) MM(F)
+$
+Then the principal components are the row of the DFT matrix (some complex exponentials)  corresponding to the highest values of $abs(VV(hat(γ_X)))^2$.
+
 
 
 #bibliography("reference.bib", style: "american-geophysical-union")
