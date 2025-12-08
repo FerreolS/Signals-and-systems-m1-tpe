@@ -43,8 +43,8 @@ jobs:
           typst compile  --input solutions=true TDs/TD2.typ TD2-correction.pdf --font-path /usr/share/fonts
           typst compile  --input solutions=false TDs/TD3.typ TD3.pdf  --font-path /usr/share/fonts
           typst compile  --input solutions=true TDs/TD3.typ TD3-correction.pdf --font-path /usr/share/fonts
-          typst compile  --input solutions=false TDs/TD3.typ TD4.pdf  --font-path /usr/share/fonts
-          typst compile  --input solutions=true TDs/TD3.typ TD4-correction.pdf --font-path /usr/share/fonts
+          typst compile  --input solutions=false TDs/TD4.typ TD4.pdf  --font-path /usr/share/fonts
+          typst compile  --input solutions=true TDs/TD4.typ TD4-correction.pdf --font-path /usr/share/fonts
 
       - name: Convert first page from PDF to SVG
         run: |
