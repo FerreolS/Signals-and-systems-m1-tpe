@@ -20,6 +20,10 @@
 #let etc = [_etc._]
 
 
+#let dt = $dif t$
+#let FT = $cal(F)$
+#let comb = $\u{0428}$ //0448
+
 #let exam(
   title: "Final Examination",
   course: "Course Name",
@@ -57,7 +61,7 @@
 
   // Document settings
   set text(font: "New Computer Modern", size: 11pt)
-  set par(justify: true, leading: 0.65em)
+  set par(justify: true, leading: 0.85em, spacing: 1em)
   set heading(numbering: "1.")
 
   // Store show-solutions state
@@ -136,6 +140,7 @@
 // Question counter and formatting
 #let question(points: none, body) = {
   counter("question").step()
+  counter("subquestion").update(0)
   block(
     width: 100%,
     breakable: true,
@@ -167,6 +172,7 @@
 
 // Subquestion formatting
 #let subquestion(label: none, points: none, body) = {
+  counter("subquestion").step()
   block(
     width: 100%,
     inset: (left: 0em),
@@ -175,7 +181,13 @@
         columns: (auto, 1fr, auto),
         column-gutter: 0.5em,
         align: (left, left, right),
-        [ #if label != none [*(#label)*] else [*•*]],
+        [
+          #if (
+            label != none
+          ) [*(#label)*] else [#context { counter("question").display() }-#context {
+              counter("subquestion").display("a)")
+            }]
+        ],
         [#body],
         if points != none [
           (#points #if points == 1 [pt] else [pts])

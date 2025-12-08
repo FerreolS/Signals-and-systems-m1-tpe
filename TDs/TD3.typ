@@ -17,9 +17,6 @@
 )
 
 
-#let dt = $dif t$
-#let FT = $cal(F)$
-#let comb = $\u{0428}$ //0448
 #let opts = (
   x-tick-step: none,
   y-tick-step: none,
