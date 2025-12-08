@@ -22,7 +22,7 @@
 
 A geophysicist measures a seismic signal
 $ y(t)=x(t)+n(t) $ where:
-- $x(t)$ is the stationary seismic signal of interest with autocorrelation function $γ_x (τ) = σ_x^2 thin e^(-α abs(τ)) $
+- $x(t)$ is the stationary seismic signal of interest with autocorrelation function $γ_x (τ) = σ_x^2 thin e^(-α abs(τ))$
 - $n(t)$ is stationary measurement noise, independent of $x(t)$
 - the signal and the noise are uncorrelated: $EE{x(t) thin n(t')} = 0$
 
