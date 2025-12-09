@@ -10,7 +10,7 @@
 #show: exam.with(
   title: "Data Science",
   course: "TD 3",
-  date: "25 November 2025",
+  date: "9 December 2025",
   duration: none,
   student-info: none,
   show-solutions: sys.inputs.at("solutions", default: "true") == "true", // Set to true to display solutions
