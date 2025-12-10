@@ -22,8 +22,8 @@
 
 A geophysicist measures a seismic signal
 $ y(t)=x(t)+n(t) $ where:
-- $x(t)$ is the stationary seismic signal of interest with autocorrelation function $γ_x (τ) = σ_x^2 thin e^(-α abs(τ))$
-- $n(t)$ is stationary measurement noise, independent of $x(t)$
+- $x(t)$ is the stationary seismic signal of interest. It is centered ($μ_x=0$) with autocorrelation function $γ_x (τ) = σ_x^2 thin e^(-α abs(τ))$
+- $n(t)$ is stationary measurement noise, it is centered and independent of $x(t)$
 - the signal and the noise are uncorrelated: $EE{x(t) thin n(t')} = 0$
 
 The goal is to design an *optimal linear filter* $h(t)$ that estimates $x(t)$ from the noisy measurements $y(t)$. We seek an estimate $x^+ (t)$ that minimizes the *mean square error (MSE)*:
