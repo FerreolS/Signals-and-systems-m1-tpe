@@ -10,7 +10,7 @@
 #show: exam.with(
   title: "Data Science",
   course: "TD 4",
-  date: "10 December 2025",
+  date: none,
   duration: none,
   student-info: none,
   show-solutions: sys.inputs.at("solutions", default: "true") == "true", // Set to true to display solutions
@@ -36,7 +36,7 @@ $
   The noise is assumed independent, white, and identically distributed with variance $σ^2_n$.
   #subquestion()[Write its autocorrelation function.
     #solution(lines: 0)[
-      $γ_n(τ) = σ^2_n thin δ(τ)$
+      $γ_n (τ) = σ^2_n thin δ(τ)$
     ]
   ]
   #subquestion()[
@@ -44,7 +44,7 @@ $
     #solution(lines: 0)[
       Since $x(t)$ and $n(t)$ are uncorrelated, we have:
       $
-        γ_y(τ) = γ_x(τ) + γ_n (τ) = σ_x^2 thin e^(-α abs(τ)) + σ^2_n thin δ(τ)
+        γ_y (τ) = γ_x(τ) + γ_n (τ) = σ_x^2 thin e^(-α abs(τ)) + σ^2_n thin δ(τ)
       $
     ]
   ]
