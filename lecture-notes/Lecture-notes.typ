@@ -47,7 +47,7 @@
   firstpage: firstpage,
   abstract: abstract,
   license: "cc-by-nc-sa",
-  date: "Fall 2025",
+  date: "Fall 2026",
 )
 
 
@@ -199,7 +199,7 @@ A periodic signal is a signal that repeats itself at regular intervals over time
   block: true,
   $x(t) = x(t + T), quad forall t in RR$,
 ) <eq-continuous-periodic>
-In other words, a periodic signal is unchanged by a time shift of $T$. In this case, we say that $x(t)$ is periodic with period $T$. If a signal is periodic of period $T$, any integer multiple $n T$ (for a positive integer $n$) is also a period. The least positive period is called the fundamental period. Often, "the" period of a signal is used to refer to its fundamental period.
+In other words, a periodic signal is unchanged by a time shift of $T$. In this case, we say that $x(t)$ is periodic with period $T$. If a signal is periodic of period $T$, any integer multiple $n T$ (for a positive integer $n$) is also a period. The least positive period is called the fundamental period. Often, "the" period of a signal is used to refer to its fundamental period. The fundamental  frequency and the fundamental angular frequency are defined as $f_0 = 1/T$ and $omega_0 = 2 pi f_0 = (2 pi) / T$ respectively.
 
 Discrete periodic signals are defined analogously. A discrete signal $x[n]$ is periodic if there exists a positive period $N$ where:
 #math.equation(
@@ -730,7 +730,7 @@ $
             1/2 (b_n - j thin c_n) quad & "if" n < 0 thin ",",
             a_n quad & "if" n = 0 thin ",",
             1/2 (b_n + j thin c_n) quad & "if" n > 0 thin ".",
-          )                            &
+          )                            &                                                 
 $
 $b_n$ and $c_n$ will describe the even and odd components of $x$ respectively.
 
