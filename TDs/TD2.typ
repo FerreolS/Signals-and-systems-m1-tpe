@@ -89,7 +89,10 @@
   #solution(lines: 0)[
     The Fourier series coefficients are given by:
     $
-      hat(y)[k] = 1/T ∫_(-T/2)^(T/2) x(t) e^(-j k ω_0 t ) dif t
+      hat(y)[k] & = 1/T ∫_(-T/2)^(T/2) x(t) e^(-j k ω_0 t ) dif t \
+                & = 1/T ∫_(-T/2)^(T/2) δ(t) e^(-j k ω_0 t ) dif t \
+                & = 1/T e^(-j k ω_0 0) \
+                & = 1/T
     $
     Evaluating the integral, we find that all coefficients are equal to $1/T$.
   ]
@@ -110,7 +113,7 @@
 ]
 
 #subquestion(label: "d")[
-  Derive the solution of question (a) from the answer of question (c)
+  Noticing the link between $x$ and $z$, derive the solution of question (a) from the answer of question (c)
   #solution(lines: 0)[
     We can notice $z(t)$ is the derivative of $x(t)$, we can use the differentiation property
     $

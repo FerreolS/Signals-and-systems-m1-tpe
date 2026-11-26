@@ -10,6 +10,6 @@
 |     |     |  |
 | --- | --- |---|
 | TD 1  | [Convolution](https://ferreols.github.io/Signals-and-systems-m1-tpe/TD1.pdf) | [Correction](https://ferreols.github.io/Signals-and-systems-m1-tpe/TD1-correction.pdf)  | 
-| TD 2  | [Fourier Series](https://ferreols.github.io/Signals-and-systems-m1-tpe/TD2.pdf) | | 
+| TD 2  | [Fourier Series](https://ferreols.github.io/Signals-and-systems-m1-tpe/TD2.pdf) | [Correction](https://ferreols.github.io/Signals-and-systems-m1-tpe/TD2-correction.pdf)  | 
 | TD 3  | [Filtering  and Sampling](https://ferreols.github.io/Signals-and-systems-m1-tpe/TD3.pdf) | |  
 | TD 4 | [Wiener  and Kriging](https://ferreols.github.io/Signals-and-systems-m1-tpe/TD4.pdf) | |
